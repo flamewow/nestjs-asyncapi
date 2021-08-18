@@ -6,7 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './src/app.module';
 import data from './asyncapi-spec.json';
 
-import { AsyncApiModule } from 'lib/async-api-module';
+import { AsyncApiModule } from 'lib/main';
 
 const port = 4001;
 const host = '0.0.0.0';
@@ -20,6 +20,8 @@ async function bootstrap() {
 }
 
 const baseUrl = `http://${host}:${port}`;
-const startMessage = `Server started at ${baseUrl}; AsyncApi at ${baseUrl + docRelPath};`;
+const startMessage = `Server started at ${baseUrl}; AsyncApi at ${
+  baseUrl + docRelPath
+};`;
 
 bootstrap().then(() => console.log(startMessage));

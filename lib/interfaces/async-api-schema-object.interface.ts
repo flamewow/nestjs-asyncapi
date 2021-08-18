@@ -23,7 +23,10 @@ export interface AsyncApiSchemaObject {
   not?: AsyncApiSchemaObject | AsyncApiReferenceObject;
   items?: AsyncApiSchemaObject | AsyncApiReferenceObject;
   properties?: Record<string, AsyncApiSchemaObject | AsyncApiReferenceObject>;
-  additionalProperties?: AsyncApiSchemaObject | AsyncApiReferenceObject | boolean;
+  additionalProperties?:
+    | AsyncApiSchemaObject
+    | AsyncApiReferenceObject
+    | boolean;
   description?: string;
   format?: string;
   default?: any;

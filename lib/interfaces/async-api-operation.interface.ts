@@ -5,7 +5,9 @@ import { AsyncApiMessageMetadata } from './async-api-message-metadata.interface'
 import { AsyncApiTraits } from './async-api-traits.interface';
 import { AsyncApiReferenceObject } from './async-api-reference-object.interface';
 
-export class AsyncApiOperation<MessageType = AsyncApiMessageMetadata | AsyncApiReferenceObject> {
+export class AsyncApiOperation<
+  MessageType = AsyncApiMessageMetadata | AsyncApiReferenceObject,
+> {
   summary?: string;
   /** @default we generate **/
   operationId?: string;

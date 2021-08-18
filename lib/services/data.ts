@@ -3,7 +3,8 @@ export const contractData = {
   info: {
     title: 'Board Service [socket.io v4; namespace: /board-ws]',
     version: '1.0.0',
-    description: 'This service is in charge of broadcasting realtime updates to board users',
+    description:
+      'This service is in charge of broadcasting realtime updates to board users',
   },
   channels: {
     board: {
@@ -122,7 +123,15 @@ export const contractData = {
               type: 'number',
             },
           },
-          required: ['uuid', 'createdAt', 'updatedAt', 'name', 'role', 'boardUUID', 'currentCanvas'],
+          required: [
+            'uuid',
+            'createdAt',
+            'updatedAt',
+            'name',
+            'role',
+            'boardUUID',
+            'currentCanvas',
+          ],
         },
       },
       FigureDto: {
@@ -145,7 +154,8 @@ export const contractData = {
             },
             canvas: {
               type: 'number',
-              description: 'canvas index (0, 1, ...). 0 = current state, 1 = future state 1, ...',
+              description:
+                'canvas index (0, 1, ...). 0 = current state, 1 = future state 1, ...',
             },
             boardUUID: {
               type: 'string',
@@ -168,7 +178,18 @@ export const contractData = {
               type: 'object',
             },
           },
-          required: ['uuid', 'createdAt', 'updatedAt', 'canvas', 'boardUUID', 'creatorUUID', 'type', 'depth', 'data', 'transform'],
+          required: [
+            'uuid',
+            'createdAt',
+            'updatedAt',
+            'canvas',
+            'boardUUID',
+            'creatorUUID',
+            'type',
+            'depth',
+            'data',
+            'transform',
+          ],
         },
       },
     },

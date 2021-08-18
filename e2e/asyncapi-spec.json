@@ -86,12 +86,7 @@
               "example": "b6b7d521-805e-458a-8595-4a671373bdb6"
             }
           },
-          "required": [
-            "uuid",
-            "createdAt",
-            "updatedAt",
-            "name"
-          ]
+          "required": ["uuid", "createdAt", "updatedAt", "name"]
         }
       },
       "UserDto": {
@@ -117,11 +112,7 @@
               "example": "Jack"
             },
             "role": {
-              "enum": [
-                "admin",
-                "facilitator",
-                "user"
-              ],
+              "enum": ["admin", "facilitator", "user"],
               "type": "string"
             },
             "boardUUID": {

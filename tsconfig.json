@@ -13,19 +13,6 @@
     "baseUrl": "./",
     "allowJs": true,
     "resolveJsonModule": true,
-    "paths": {
-      "@core/*": ["src/core/*"],
-      "@dtos/*": ["src/dtos/*"],
-      "@modules/*": ["src/modules/*"],
-      "@database/*": ["src/database/*"],
-      "@shared/*": ["src/shared/*"],
-      "@src/*": ["src/*"],
-      "@tests/*": ["tests/*"]
-    },
-    "incremental": true
-  },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+    "incremental": true,
+  }
 }

@@ -1,10 +1,17 @@
 {
   "name": "nestjs-asyncapi",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
   "author": "Ilya Moroz",
   "url": "https://github.com/flamewow/nestjs-asyncapi",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "main": "./dist/lib/main.js",
+  "types": "./dist/lib/main.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typestack/class-validator.git"
+  },
+
   "dependencies": {
     "@asyncapi/generator": "^1.1.0",
     "@asyncapi/html-template": "^0.15.4",
@@ -64,8 +71,8 @@
   "scripts": {
     "build": "rimraf dist && nest build",
     "prepare": "husky install",
-    "format": "prettier --write \"src/**/*.{js,ts,json}\" \"tests/**/*.{js,ts,json}\"",
-    "lint": "eslint --fix \"src/**/*.{js,ts}\" \"tests/**/*.{js,ts}\"",
+    "format": "prettier --write \"lib/**/*.{js,ts,json}\"  \"e2e/**/*.{js,ts,json}\"",
+    "lint": "eslint --fix \"lib/**/*.{js,ts}\"  \"e2e/**/*.{js,ts}\"",
     "pre-commit": "lint-staged",
     "prestart": "npm install && npm run build",
     "---execution---": "",

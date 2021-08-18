@@ -8,11 +8,19 @@ import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 export class AsyncApiModule {
   private readonly logger = new Logger(AsyncApiModule.name);
 
-  public static async setup(path: string, app: INestApplication, contact: any, templateOptions?: AsyncApiTemplateOptions) {
+  public static async setup(
+    path: string,
+    app: INestApplication,
+    contact: any,
+    templateOptions?: AsyncApiTemplateOptions,
+  ) {
     return this.setupExpress(path, app, contact, templateOptions);
   }
 
-  static async build(contract: AsyncApiContract, templateOptions?: AsyncApiTemplateOptions) {
+  static async build(
+    contract: AsyncApiContract,
+    templateOptions?: AsyncApiTemplateOptions,
+  ) {
     const generator = new AsyncApiGenerator(templateOptions);
     const html = await generator.generate(contract).catch((e) => {
       console.error(e);
@@ -22,7 +30,12 @@ export class AsyncApiModule {
     return html;
   }
 
-  private static async setupExpress(path: string, app: INestApplication, contract: AsyncApiContract, templateOptions?: AsyncApiTemplateOptions) {
+  private static async setupExpress(
+    path: string,
+    app: INestApplication,
+    contract: AsyncApiContract,
+    templateOptions?: AsyncApiTemplateOptions,
+  ) {
     const httpAdapter = app.getHttpAdapter();
     const finalPath = validatePath(path);
 
@@ -32,6 +45,8 @@ export class AsyncApiModule {
 
     httpAdapter.get(finalPath, (req, res) => res.send(html));
     httpAdapter.get(finalPath + '-json', (req, res) => res.json(contract));
-    httpAdapter.get(finalPath + '-yml', (req, res) => res.json(parser.parse(contract)));
+    httpAdapter.get(finalPath + '-yml', (req, res) =>
+      res.json(parser.parse(contract)),
+    );
   }
 }
