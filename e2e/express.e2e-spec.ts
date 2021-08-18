@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './src/app.module';
 import { contractData } from 'lib/services/data';
-import { AsyncApiModule } from 'lib/async-api-module';
+import { AsyncApiModule } from 'lib/main';
 
 describe('Express AsyncAPI', () => {
   let app: NestExpressApplication;

@@ -1,17 +1,15 @@
 {
   "name": "nestjs-asyncapi",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "author": "Ilya Moroz",
-  "url": "https://github.com/flamewow/nestjs-asyncapi",
   "license": "MIT",
   "main": "./dist/lib/main.js",
   "types": "./dist/lib/main.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/typestack/class-validator.git"
+    "url": "https://github.com/flamewow/nestjs-asyncapi"
   },
-
   "dependencies": {
     "@asyncapi/generator": "^1.1.0",
     "@asyncapi/html-template": "^0.15.4",
