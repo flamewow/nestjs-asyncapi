@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@dtos/*": ["src/dtos/*"],
+      "@modules/*": ["src/modules/*"],
+      "@database/*": ["src/database/*"],
+      "@shared/*": ["src/shared/*"],
+      "@src/*": ["src/*"],
+      "@tests/*": ["tests/*"]
+    },
+    "incremental": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
