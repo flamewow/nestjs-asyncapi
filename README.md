@@ -20,4 +20,14 @@
 
 ## Description
 
-will be added later
+The idea is to generate asyncapi documentation (for event based services, like websockets) similar to nestjs/swagger.
+
+Current state: package can generate html (similar to swagger-ui) from asyncapi json (contract) file.
+Ideal state: generate asyncapi json (contract) file based on decorators (similar to swagger)
+
+Usage example:
+
+```typescript
+const app = await NestFactory.create<NestExpressApplication>(AppModule);
+await AsyncApiModule.setup(docRelPath, app, data);
+```
