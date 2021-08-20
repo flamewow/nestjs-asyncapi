@@ -7,12 +7,23 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "target": "es2017",
     "sourceMap": true,
-    "outDir": "./dist",
     "baseUrl": "./",
     "allowJs": true,
     "resolveJsonModule": true,
     "incremental": true,
+    "noImplicitAny": false,
+    "noLib": false,
+    "target": "es6",
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    "paths": {
+      "@lib": [
+        "./lib/index"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ]
+    }
   }
 }
