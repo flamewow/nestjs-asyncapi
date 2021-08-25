@@ -14,7 +14,7 @@ import { Injectable } from '@nestjs/common/interfaces';
 import { AsyncAPIObject, AsyncApiExplorer } from './index';
 import { AsyncApiDocumentOptions } from './asyncapi.module';
 import { AsyncapiTransformer } from './asyncapi.transformer';
-import { DenormalizedDoc } from '@lib/interfaces';
+import { DenormalizedDoc } from './interfaces';
 
 export class AsyncapiScanner {
   private readonly transformer = new AsyncapiTransformer();

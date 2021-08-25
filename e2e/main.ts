@@ -3,7 +3,7 @@ import 'source-map-support/register';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './src/app.module';
-import { AsyncApiDocumentBuilder, AsyncApiModule, AsyncServerObject } from '@lib';
+import { AsyncApiDocumentBuilder, AsyncApiModule, AsyncServerObject } from '../lib';
 
 const port = 4001;
 const host = '0.0.0.0';

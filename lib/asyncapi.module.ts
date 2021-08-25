@@ -6,7 +6,7 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { AsyncApiGenerator } from './services/async-api-generator';
 import { ContractParser } from './services/contract-parser';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
-import { AsyncApiTemplateOptions } from '@lib/interfaces/async-api-template-options.interface';
+import { AsyncApiTemplateOptions } from './interfaces';
 
 export interface AsyncApiDocumentOptions extends SwaggerDocumentOptions {}
 

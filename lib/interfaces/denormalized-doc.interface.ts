@@ -1,4 +1,4 @@
-import { AsyncAPIObject, AsyncChannelObject, AsyncOperationObject } from '@lib';
+import { AsyncAPIObject, AsyncChannelObject, AsyncOperationObject } from '..';
 
 export interface DenormalizedDoc extends Partial<AsyncAPIObject> {
   root?: { name: string } & AsyncChannelObject;

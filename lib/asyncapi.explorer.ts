@@ -5,7 +5,7 @@ import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.inte
 
 import { DECORATORS } from './index';
 import { exploreAsyncapiOperationMetadata, exploreAsyncapiServiceMetadata } from './explorers';
-import { DenormalizedDocResolvers, DenormalizedDoc } from '@lib/interfaces';
+import { DenormalizedDocResolvers, DenormalizedDoc } from './interfaces';
 
 export class AsyncApiExplorer {
   private readonly metadataScanner = new MetadataScanner();

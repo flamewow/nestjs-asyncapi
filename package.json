@@ -76,7 +76,7 @@
     "*.js": "eslint --cache --fix"
   },
   "scripts": {
-    "build": "rimraf dist && nest build",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "prepare": "husky install",
     "format": "prettier --write \"lib/**/*.{js,ts,json}\"  \"e2e/**/*.{js,ts,json}\"",
     "lint": "eslint --fix \"lib/**/*.{js,ts}\"  \"e2e/**/*.{js,ts}\"",

@@ -8,7 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "baseUrl": "./",
     "allowJs": true,
     "resolveJsonModule": true,
     "incremental": true,
@@ -17,13 +16,5 @@
     "target": "es6",
     "outDir": "./dist",
     "skipLibCheck": true,
-    "paths": {
-      "@lib": [
-        "./lib/index"
-      ],
-      "@lib/*": [
-        "./lib/*"
-      ]
-    }
   }
 }

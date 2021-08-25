@@ -1,5 +1,5 @@
 import js2yaml from 'js-yaml';
-import { AsyncAPIObject } from '@lib';
+import { AsyncAPIObject } from '..';
 
 export class ContractParser {
   parse(contract: AsyncAPIObject) {
