@@ -23,7 +23,19 @@ export interface AsyncAPIObject {
   info: InfoObject;
   servers?: Record<string, AsyncServerObject>;
   channels: AsyncChannelsObject;
-  components?: AyncComponentsObject;
+  components?: AsyncComponentsObject;
+  tags?: AsyncTagObject[];
+  externalDocs?: ExternalDocumentationObject;
+  defaultContentType?: string;
+}
+
+export interface AsyncAPIObject {
+  asyncapi: string;
+  id?: string;
+  info: InfoObject;
+  servers?: Record<string, AsyncServerObject>;
+  channels: AsyncChannelsObject;
+  components?: AsyncComponentsObject;
   tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
   defaultContentType?: string;
@@ -52,7 +64,7 @@ export interface AsyncServerObject extends Omit<ServerObject, 'variables'> {
 
 export type SecurityObject = Record<string, string[]>;
 
-export interface AyncComponentsObject {
+export interface AsyncComponentsObject {
   schemas?: Record<string, SchemaObject>;
   messages?: Record<string, AsyncMessageObject>;
   securitySchemes?: Record<string, AsyncSecuritySchemeObject>;

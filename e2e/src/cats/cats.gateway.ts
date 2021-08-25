@@ -6,7 +6,6 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsException,
 } from '@nestjs/websockets';
 import { Namespace, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
@@ -14,7 +13,7 @@ import { Socket } from 'socket.io-client';
 import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '@lib';
 
 @AsyncApiService()
-@WebSocketGateway({ transports: ['websocket'], namespace: 'board-ws' })
+@WebSocketGateway({ transports: ['websocket'], namespace: 'cats-ws' })
 export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;

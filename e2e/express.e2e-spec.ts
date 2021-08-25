@@ -27,10 +27,10 @@ describe('Express AsyncAPI', () => {
   });
 
   // it('should setup multiple routes', async () => {
-  //   const document1 = SwaggerModule.createDocument(app, builder.build());
+  //   const document1 = SwaggerModule.createDocument(app, builder.composeHtml());
   //   SwaggerModule.setup('/swagger1', app, document1);
   //
-  //   const document2 = SwaggerModule.createDocument(app, builder.build());
+  //   const document2 = SwaggerModule.createDocument(app, builder.composeHtml());
   //   SwaggerModule.setup('/swagger2', app, document2);
   //
   //   await app.init();

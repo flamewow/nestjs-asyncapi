@@ -5,6 +5,8 @@ import { isUndefined, negate, pickBy } from 'lodash';
 import { AsyncAPIObject, AsyncSecuritySchemeObject, AsyncServerObject } from './interfaces';
 
 export class AsyncApiDocumentBuilder {
+  private readonly logger = new Logger(AsyncApiDocumentBuilder.name);
+
   private readonly buildDocumentBase = (): Omit<AsyncAPIObject, 'channels'> => ({
     asyncapi: '2.1.0',
     info: {
@@ -18,7 +20,6 @@ export class AsyncApiDocumentBuilder {
     components: {},
   });
 
-  private readonly logger = new Logger(AsyncApiDocumentBuilder.name);
   private readonly document: Omit<AsyncAPIObject, 'channels'> = this.buildDocumentBase();
 
   public setTitle(title: string): this {
