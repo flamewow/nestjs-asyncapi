@@ -1,8 +1,8 @@
 import js2yaml from 'js-yaml';
-import { AsyncApiContract } from '../interfaces/async-api-contract.interface';
+import { AsyncAPIObject } from '@lib';
 
 export class ContractParser {
-  parse(contract: AsyncApiContract) {
-    return js2yaml.safeDump(contract);
+  parse(contract: AsyncAPIObject) {
+    return js2yaml.safeDump(JSON.parse(JSON.stringify(contract)));
   }
 }
