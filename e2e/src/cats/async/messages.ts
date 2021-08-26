@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, getSchemaPath } from '@nestjs/swagger';
 import { CreateCatDto } from '../dto/create-cat.dto';
 
-export class MessageBase<T> {
+export class MessageBase<T extends Record<string, any>> {
   @ApiProperty({ format: 'uuid', description: 'Identify a flow' })
   correlationId: string;
 
@@ -21,7 +21,10 @@ export class MessageBase<T> {
   payload: T;
 }
 
-export class CreateCatCommand extends MessageBase<CreateCatDto> {}
+export class CreateCatCommand extends MessageBase<CreateCatDto[]> {
+  @ApiProperty({ description: 'Message payload', type: CreateCatDto, isArray: true })
+  payload: CreateCatDto[];
+}
 
 export class CreateCatReplyCommand extends MessageBase<any> {}
 

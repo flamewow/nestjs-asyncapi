@@ -11,6 +11,8 @@ import { Namespace, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io-client';
 import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '../../../lib';
+import { CreateCatCommand, MessageBase } from './async/messages';
+import { CreateCatDto } from './dto/create-cat.dto';
 
 @AsyncApiService()
 @WebSocketGateway({ transports: ['websocket'], namespace: 'cats-ws' })
@@ -51,7 +53,7 @@ export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
     message: {
       name: 'test data signal',
       payload: {
-        type: String,
+        type: CreateCatCommand,
       },
     },
   })

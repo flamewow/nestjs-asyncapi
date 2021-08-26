@@ -1,7 +1,7 @@
 import Generator from '@asyncapi/generator';
-import { ContractParser } from './contract-parser';
-import { AsyncApiTemplateOptions } from '../interfaces/async-api-template-options.interface';
+import { AsyncApiTemplateOptions } from '../interfaces';
 import { Logger } from '@nestjs/common';
+import jsyaml from 'js-yaml';
 import os from 'os';
 
 interface IGenerator {
@@ -27,7 +27,6 @@ interface IGenerator {
 
 export class AsyncApiGenerator {
   private readonly logger = new Logger(AsyncApiGenerator.name);
-  private readonly parser = new ContractParser();
 
   private readonly generator: IGenerator;
 
@@ -44,9 +43,7 @@ export class AsyncApiGenerator {
   }
 
   public async generate(contract: any): Promise<string> {
-    this.logger.log('Parsing AsyncAPI YAML from AsyncApiContract');
-    const yaml = this.parser.parse(contract);
-    this.logger.log('Generating yaml template to files');
+    const yaml = jsyaml.dump(contract);
     return await this.generator.generateFromString(yaml, {
       resolve: {
         file: false,

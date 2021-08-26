@@ -40,7 +40,7 @@ Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
     message: {
       name: 'test data',
       payload: {
-        type: String,
+        type: AnySwaggerDto,
       },
     },
   })
@@ -52,7 +52,7 @@ Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
     message: {
       name: 'test data signal',
       payload: {
-        type: String,
+        type: AnySwaggerDto,
       },
     },
   })

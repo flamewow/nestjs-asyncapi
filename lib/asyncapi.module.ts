@@ -4,9 +4,9 @@ import { AsyncAPIObject } from './index';
 import { AsyncapiScanner } from './asyncapi.scanner';
 import { INestApplication, Logger } from '@nestjs/common';
 import { AsyncApiGenerator } from './services/async-api-generator';
-import { ContractParser } from './services/contract-parser';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 import { AsyncApiTemplateOptions } from './interfaces';
+import jsyaml from 'js-yaml';
 
 export interface AsyncApiDocumentOptions extends SwaggerDocumentOptions {}
 
@@ -49,10 +49,16 @@ export class AsyncApiModule {
 
     const html = await this.composeHtml(document, templateOptions);
 
-    const parser = new ContractParser();
+    const yamlDocument = jsyaml.dump(document);
 
     httpAdapter.get(finalPath, (req, res) => res.send(html));
-    httpAdapter.get(finalPath + '-json', (req, res) => res.json(document));
-    httpAdapter.get(finalPath + '-yml', (req, res) => res.json(parser.parse(document)));
+    httpAdapter.get(finalPath + '-json', (req, res) => {
+      res.type('.json');
+      res.send(document);
+    });
+    httpAdapter.get(finalPath + '-yaml', (req, res) => {
+      res.type('.yaml');
+      res.send(yamlDocument);
+    });
   }
 }
