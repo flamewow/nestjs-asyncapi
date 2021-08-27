@@ -20,12 +20,25 @@
 
 ## Description
 
-The idea is to generate [AsyncApi](https://www.asyncapi.com/) documentation (for event-based services like websockets) similar to nestjs/swagger.
+[AsyncApi](https://www.asyncapi.com/) module for [Nest](https://github.com/nestjs/nest).
+
+The idea is to generate [AsyncApi](https://www.asyncapi.com/) documentation (for event-based services like websockets) similar to [nestjs/swagger](https://github.com/nestjs/swagger).
+
+[Documentation example](https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/v2.1.0/examples/simple.yml)
 
 Current state: package can generate [AsyncApi](https://www.asyncapi.com/) contract document and serve html (similar to swagger-ui).
 Early beta, any contribution is welcomed.
 
+## Installation
+
+```bash
+$ npm i --save nestjs-asyncapi
+```
+
+## Quick Start
+
 Document is composed via decorators.
+
 Define [AsyncApi](https://www.asyncapi.com/) service class by AsyncApiService decorator <br/>
 ```typescript
   @AsyncApiService()
@@ -33,6 +46,11 @@ Define [AsyncApi](https://www.asyncapi.com/) service class by AsyncApiService de
 
 Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
 ```typescript
+  class AnySwaggerExampleDto {
+    @ApiProperty()
+    readonly name: string;
+  }
+
   @AsyncApiPub({
     channel: 'test',
     summary: 'Send test packet',
@@ -40,7 +58,7 @@ Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
     message: {
       name: 'test data',
       payload: {
-        type: AnySwaggerDto,
+        type: AnySwaggerExampleDto,
       },
     },
   })
@@ -52,13 +70,13 @@ Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
     message: {
       name: 'test data signal',
       payload: {
-        type: AnySwaggerDto,
+        type: AnySwaggerExampleDto,
       },
     },
   })
 ```
 
-Usage example:
+### Usage example:
 
 gateway file:
 ```typescript
@@ -99,7 +117,7 @@ export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
     message: {
       name: 'test data',
       payload: {
-        type: String,
+        type: AnySwaggerExampleDto,
       },
     },
   })
@@ -115,7 +133,7 @@ export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
     message: {
       name: 'test data signal',
       payload: {
-        type: String,
+        type: AnySwaggerExampleDto,
       },
     },
   })
