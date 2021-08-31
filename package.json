@@ -10,12 +10,14 @@
     "type": "git",
     "url": "https://github.com/flamewow/nestjs-asyncapi"
   },
+  "peerDependencies": {
+    "@nestjs/common": "^8.0.6",
+    "@nestjs/core": "^8.0.6",
+    "@nestjs/swagger": "^5.0.9"
+  },
   "dependencies": {
     "@asyncapi/generator": "^1.8.3",
     "@asyncapi/html-template": "^0.23.7",
-    "@nestjs/common": "^8.0.6",
-    "@nestjs/core": "^8.0.6",
-    "@nestjs/swagger": "^5.0.9",
     "js-yaml": "^4.1.0",
     "reflect-metadata": "^0.1.13"
   },
