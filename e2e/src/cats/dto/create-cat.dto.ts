@@ -4,7 +4,6 @@ import { LettersEnum } from './pagination-query.dto';
 import { TagDto } from './tag.dto';
 
 export class CreateCatDto {
-  @ApiProperty()
   readonly name: string;
 
   @ApiProperty({ minimum: 1, maximum: 200 })
@@ -16,12 +15,8 @@ export class CreateCatDto {
   })
   readonly breed: BreadCoonDto;
 
-  @ApiProperty({
-    type: [String],
-  })
   readonly tags?: string[];
 
-  @ApiProperty()
   createdAt: Date;
 
   @ApiProperty({
@@ -43,18 +38,9 @@ export class CreateCatDto {
   })
   readonly options?: Record<string, any>[];
 
-  @ApiProperty({
-    enum: LettersEnum,
-    enumName: 'LettersEnum',
-  })
   readonly enum: LettersEnum;
 
-  @ApiProperty({
-    enum: LettersEnum,
-    enumName: 'LettersEnum',
-    isArray: true,
-  })
-  readonly enumArr: LettersEnum;
+  readonly enumArr: LettersEnum[];
 
   @ApiProperty({ description: 'tag', required: false })
   readonly tag: TagDto;

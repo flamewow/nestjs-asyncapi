@@ -1,6 +1,5 @@
 import Generator from '@asyncapi/generator';
 import { AsyncApiTemplateOptions } from '../interfaces';
-import { Logger } from '@nestjs/common';
 import jsyaml from 'js-yaml';
 import os from 'os';
 
@@ -14,10 +13,8 @@ interface IGenerator {
   forceWrite: boolean;
   debug: boolean;
   install: boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  templateConfig: object;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  hooks: object;
+  templateConfig: Record<string, any>;
+  hooks: Record<string, any>;
   templateParams: AsyncApiTemplateOptions;
   generate: (document: any) => Promise<void>;
   generateFromURL: (url: string) => Promise<void>;
@@ -26,8 +23,6 @@ interface IGenerator {
 }
 
 export class AsyncApiGenerator {
-  private readonly logger = new Logger(AsyncApiGenerator.name);
-
   private readonly generator: IGenerator;
 
   constructor(readonly templateOptions?: AsyncApiTemplateOptions) {

@@ -3,9 +3,8 @@ import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-pro
 import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { getSchemaPath } from '@nestjs/swagger/dist/utils';
-import { omit } from 'lodash';
 
-import { AsyncOperationObject } from '../index';
+import { AsyncOperationObject } from '..';
 import { AsyncOperationOptions } from '../decorators';
 
 export class OperationObjectFactory {

@@ -48,9 +48,5 @@ export class Cat {
   })
   enum: LettersEnum;
 
-  @ApiProperty({
-    enum: LettersEnum,
-    isArray: true,
-  })
-  enumArr: LettersEnum;
+  enumArr: LettersEnum[];
 }
