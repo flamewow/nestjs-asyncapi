@@ -1,7 +1,7 @@
 import { Type } from '@nestjs/common';
 import { createMixedDecorator } from '@nestjs/swagger/dist/decorators/helpers';
 
-import { AsyncOperationObject } from '../index';
+import { AsyncOperationObject } from '..';
 
 import { DECORATORS } from '../constants';
 

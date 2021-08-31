@@ -10,9 +10,9 @@ import {
 import { Namespace, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io-client';
-import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '../../../lib';
 import { CreateCatCommand, MessageBase } from './async/messages';
 import { CreateCatDto } from './dto/create-cat.dto';
+import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '../../../lib';
 
 @AsyncApiService()
 @WebSocketGateway({ transports: ['websocket'], namespace: 'cats-ws' })

@@ -166,12 +166,6 @@ export interface OAuthFlowObject {
 
 export type ScopesObject = Record<string, any>;
 
-export interface DiscriminatorObject {
-  propertyName: string;
-  mapping?: Record<string, string>;
-}
-
-// tslint:disable-next-line: no-empty-interface
 export type ParameterObject = BaseParameterObject;
 
 export interface BaseParameterObject {

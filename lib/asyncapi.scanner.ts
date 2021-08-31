@@ -1,4 +1,6 @@
+import { flatten, isEmpty } from 'lodash';
 import { INestApplication, Type } from '@nestjs/common';
+import { Injectable } from '@nestjs/common/interfaces';
 import { MODULE_PATH } from '@nestjs/common/constants';
 import { NestContainer } from '@nestjs/core/injector/container';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
@@ -8,8 +10,6 @@ import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-pro
 import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { stripLastSlash } from '@nestjs/swagger/dist/utils/strip-last-slash.util';
-import { flatten, isEmpty } from 'lodash';
-import { Injectable } from '@nestjs/common/interfaces';
 
 import { AsyncAPIObject, AsyncApiExplorer } from './index';
 import { AsyncApiDocumentOptions } from './asyncapi.module';

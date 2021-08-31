@@ -56,6 +56,7 @@ export class AsyncApiExplorer {
       const targetCallback = prototype[name];
       const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
         const serviceMetadata = fn(metatype);
+
         const operations = documentResolvers.operations.reduce((_metadata2, fn2) => {
           return fn2(this.schemas, this.schemaRefsStack, instance, prototype, targetCallback);
         }, {});
@@ -68,6 +69,7 @@ export class AsyncApiExplorer {
       return methodMetadata;
     });
 
+    console.table(denormalizedAsyncapiServices);
     return denormalizedAsyncapiServices;
   }
 }

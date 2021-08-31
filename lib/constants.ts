@@ -4,3 +4,5 @@ export const DECORATORS = {
   ASYNCAPI_PUB: `${DECORATORS_PREFIX}/pub`,
   ASYNCAPI_SUB: `${DECORATORS_PREFIX}/sub`,
 };
+
+export const FASTIFY = 'fastify';

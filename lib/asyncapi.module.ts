@@ -1,9 +1,9 @@
 import { SwaggerDocumentOptions } from '@nestjs/swagger';
 
-import { AsyncAPIObject } from './index';
+import { AsyncAPIObject, FASTIFY } from './index';
 import { AsyncapiScanner } from './asyncapi.scanner';
 import { INestApplication, Logger } from '@nestjs/common';
-import { AsyncApiGenerator } from './services/async-api-generator';
+import { AsyncapiGenerator } from './services';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 import { AsyncApiTemplateOptions } from './interfaces';
 import jsyaml from 'js-yaml';
@@ -14,6 +14,11 @@ export class AsyncApiModule {
   private static readonly logger = new Logger(AsyncApiModule.name);
 
   public static async setup(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
+    const httpAdapter = app.getHttpAdapter();
+    if (httpAdapter && httpAdapter.getType() === FASTIFY) {
+      return this.setupFastify(path, app, document, templateOptions);
+    }
+
     return this.setupExpress(path, app, document, templateOptions);
   }
 
@@ -24,10 +29,9 @@ export class AsyncApiModule {
   ): AsyncAPIObject {
     const asyncapiScanner = new AsyncapiScanner();
     const document = asyncapiScanner.scanApplication(app, options);
-    document.components = {
-      ...(config.components || {}),
-      ...document.components,
-    };
+
+    document.components = { ...(config.components || {}), ...document.components };
+
     return {
       asyncapi: '2.1.0',
       ...config,
@@ -36,7 +40,7 @@ export class AsyncApiModule {
   }
 
   static async composeHtml(contract: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
-    const generator = new AsyncApiGenerator(templateOptions);
+    const generator = new AsyncapiGenerator(templateOptions);
     return await generator.generate(contract).catch((e) => {
       this.logger.error(e);
       throw e;
@@ -60,5 +64,10 @@ export class AsyncApiModule {
       res.type('.yaml');
       res.send(yamlDocument);
     });
+  }
+
+  private static async setupFastify(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
+    throw Error('fastify is not supported yet, but will be added later. ');
+    // toDo: add fastify support
   }
 }

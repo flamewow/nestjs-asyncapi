@@ -22,7 +22,7 @@ interface IGenerator {
   generateFromString: (yaml: string, args?: any) => Promise<string>;
 }
 
-export class AsyncApiGenerator {
+export class AsyncapiGenerator {
   private readonly generator: IGenerator;
 
   constructor(readonly templateOptions?: AsyncApiTemplateOptions) {
