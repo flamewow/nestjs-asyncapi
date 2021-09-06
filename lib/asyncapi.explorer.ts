@@ -69,7 +69,7 @@ export class AsyncApiExplorer {
       return methodMetadata;
     });
 
-    console.table(denormalizedAsyncapiServices);
+    // console.table(denormalizedAsyncapiServices);
     return denormalizedAsyncapiServices;
   }
 }

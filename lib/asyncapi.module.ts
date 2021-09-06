@@ -1,10 +1,10 @@
 import { SwaggerDocumentOptions } from '@nestjs/swagger';
-
-import { AsyncAPIObject, FASTIFY } from './index';
-import { AsyncapiScanner } from './asyncapi.scanner';
-import { INestApplication, Logger } from '@nestjs/common';
-import { AsyncapiGenerator } from './services';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
+import { INestApplication, Logger } from '@nestjs/common';
+
+import { AsyncAPIObject } from './index';
+import { AsyncapiScanner } from './asyncapi.scanner';
+import { AsyncapiGenerator } from './services';
 import { AsyncApiTemplateOptions } from './interfaces';
 import jsyaml from 'js-yaml';
 
@@ -12,15 +12,6 @@ export interface AsyncApiDocumentOptions extends SwaggerDocumentOptions {}
 
 export class AsyncApiModule {
   private static readonly logger = new Logger(AsyncApiModule.name);
-
-  public static async setup(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
-    const httpAdapter = app.getHttpAdapter();
-    if (httpAdapter && httpAdapter.getType() === FASTIFY) {
-      return this.setupFastify(path, app, document, templateOptions);
-    }
-
-    return this.setupExpress(path, app, document, templateOptions);
-  }
 
   public static createDocument(
     app: INestApplication,
@@ -47,27 +38,27 @@ export class AsyncApiModule {
     });
   }
 
-  private static async setupExpress(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
+  public static async setup(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
     const httpAdapter = app.getHttpAdapter();
     const finalPath = validatePath(path);
 
     const html = await this.composeHtml(document, templateOptions);
-
     const yamlDocument = jsyaml.dump(document);
+    const jsonDocument = JSON.stringify(document);
 
-    httpAdapter.get(finalPath, (req, res) => res.send(html));
+    httpAdapter.get(finalPath, (req, res) => {
+      res.type('html');
+      res.send(html);
+    });
+
     httpAdapter.get(finalPath + '-json', (req, res) => {
       res.type('.json');
-      res.send(document);
+      res.send(jsonDocument);
     });
+
     httpAdapter.get(finalPath + '-yaml', (req, res) => {
       res.type('.yaml');
       res.send(yamlDocument);
     });
-  }
-
-  private static async setupFastify(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
-    throw Error('fastify is not supported yet, but will be added later. ');
-    // toDo: add fastify support
   }
 }
