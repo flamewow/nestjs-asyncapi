@@ -30,8 +30,8 @@ export class AsyncapiScanner {
     const modules: Module[] = this.getModules(container.getModules(), includedModules);
     const globalPrefix = !ignoreGlobalPrefix ? stripLastSlash(this.getGlobalPrefix(app)) : '';
 
-    const denormalizedChannels = modules.map(({ components, metatype, relatedModules }) => {
-      let allComponents = new Map(components);
+    const denormalizedChannels = modules.map(({ components, metatype, relatedModules, routes }) => {
+      let allComponents = new Map([...components, ...routes]);
 
       if (deepScanRoutes) {
         // only load submodules routes if asked
@@ -39,9 +39,9 @@ export class AsyncapiScanner {
 
         Array.from(relatedModules.values())
           .filter(isGlobal as any)
-          .map(({ components: relatedComponents }) => relatedComponents)
-          .forEach((relatedComponents) => {
-            allComponents = new Map([...allComponents, ...relatedComponents]);
+          .map(({ components: relatedComponents, routes: relatedRoutes }) => ({ relatedComponents, relatedRoutes }))
+          .forEach(({ relatedComponents, relatedRoutes }) => {
+            allComponents = new Map([...allComponents, ...relatedComponents, ...relatedRoutes]);
           });
       }
       const path = metatype ? Reflect.getMetadata(MODULE_PATH, metatype) : undefined;
