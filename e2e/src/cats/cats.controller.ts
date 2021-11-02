@@ -19,6 +19,30 @@ export class CatsController {
       },
     },
   })
+  @AsyncApiPub(
+    {
+      channel: 'test-controller/reply',
+      summary: 'Send test packet',
+      description: 'method is used for test purposes',
+      message: {
+        name: 'test data',
+        payload: {
+          type: String,
+        },
+      },
+    },
+    {
+      channel: 'test-controller',
+      summary: 'Send test packet',
+      description: 'method is used for test purposes',
+      message: {
+        name: 'test data',
+        payload: {
+          type: String,
+        },
+      },
+    },
+  )
   async handleRequestResponse() {
     this.logger.log(`received event`);
   }

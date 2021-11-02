@@ -30,7 +30,7 @@ export class AsyncapiScanner {
     const modules: Module[] = this.getModules(container.getModules(), includedModules);
     const globalPrefix = !ignoreGlobalPrefix ? stripLastSlash(this.getGlobalPrefix(app)) : '';
 
-    const denormalizedChannels = modules.map(({ components, metatype, relatedModules, routes }) => {
+    const denormalizedChannels = modules.reduce((channels, { components, metatype, relatedModules, routes }) => {
       let allComponents = new Map([...components, ...routes]);
 
       if (deepScanRoutes) {
@@ -46,8 +46,8 @@ export class AsyncapiScanner {
       }
       const path = metatype ? Reflect.getMetadata(MODULE_PATH, metatype) : undefined;
 
-      return this.scanModuleComponents(allComponents, path, globalPrefix, operationIdFactory);
-    });
+      return [...channels, ...this.scanModuleComponents(allComponents, path, globalPrefix, operationIdFactory)];
+    }, []);
 
     const schemas = this.explorer.getSchemas();
     this.addExtraModels(schemas, extraModels);
@@ -64,9 +64,10 @@ export class AsyncapiScanner {
     globalPrefix?: string,
     operationIdFactory?: (controllerKey: string, methodKey: string) => string,
   ): DenormalizedDoc[] {
-    const denormalizedArray = [...components.values()].map((comp) =>
-      this.explorer.explorerAsyncapiServices(comp, modulePath, globalPrefix, operationIdFactory),
-    );
+    const denormalizedArray = [...components.values()].reduce((denormalized, comp) => {
+      const object = this.explorer.explorerAsyncapiServices(comp, modulePath, globalPrefix, operationIdFactory);
+      return [...denormalized, ...object];
+    }, []);
 
     return flatten(denormalizedArray) as any;
   }
