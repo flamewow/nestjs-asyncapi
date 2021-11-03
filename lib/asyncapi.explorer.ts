@@ -78,42 +78,6 @@ export class AsyncApiExplorer {
           root: { ...serviceMetadata, name: channel },
           operations: channels[channel],
         }));
-
-        // const pubs = documentResolvers.operations[0](this.schemas, instance, prototype, targetCallback);
-        // const subs = documentResolvers.operations[1](this.schemas, instance, prototype, targetCallback);
-
-        // if (!pubs) {
-        //   if (!subs) {
-        //     return [];
-        //   }
-
-        //   return [subs.map(())
-        //     {
-        //       root: { ...serviceMetadata, name: sub.channel },
-        //       operations: { ...sub },
-        //     },
-        //   ];
-        // }
-
-        // if (!sub || pub.channel === sub.channel) {
-        //   return [
-        //     {
-        //       root: { ...serviceMetadata, name: pub.channel },
-        //       operations: { ...pub, ...sub },
-        //     },
-        //   ];
-        // } else {
-        //   return [
-        //     {
-        //       root: { ...serviceMetadata, name: pub.channel },
-        //       operations: { ...pub },
-        //     },
-        //     {
-        //       root: { ...serviceMetadata, name: sub.channel },
-        //       operations: { ...sub },
-        //     },
-        //   ];
-        // }
       }, []);
       return methodMetadata;
     });
