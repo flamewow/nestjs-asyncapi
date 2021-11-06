@@ -4,8 +4,9 @@ import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 import { DECORATORS } from './index';
-import { exploreAsyncapiOperationMetadata, exploreAsyncapiServiceMetadata } from './explorers';
+import { exploreAsyncapiPubMetadata, exploreAsyncapiServiceMetadata, exploreAsyncapiSubMetadata } from './explorers';
 import { DenormalizedDocResolvers, DenormalizedDoc } from './interfaces';
+import { flatten } from 'lodash';
 
 export class AsyncApiExplorer {
   private readonly metadataScanner = new MetadataScanner();
@@ -33,7 +34,7 @@ export class AsyncApiExplorer {
       root: [exploreAsyncapiServiceMetadata],
       security: [],
       tags: [],
-      operations: [exploreAsyncapiOperationMetadata],
+      operations: [exploreAsyncapiPubMetadata, exploreAsyncapiSubMetadata],
     };
 
     return this.generateDenormalizedDocument(metatype as Type<unknown>, prototype, instance, documentResolvers, modulePath, globalPrefix);
@@ -52,24 +53,35 @@ export class AsyncApiExplorer {
     _modulePath?: string,
     _globalPrefix?: string,
   ): DenormalizedDoc[] {
-    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<any, DenormalizedDoc>(instance, prototype, (name) => {
+    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<any, DenormalizedDoc[]>(instance, prototype, (name) => {
       const targetCallback = prototype[name];
       const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
         const serviceMetadata = fn(metatype);
 
-        const operations = documentResolvers.operations.reduce((_metadata2, fn2) => {
-          return fn2(this.schemas, this.schemaRefsStack, instance, prototype, targetCallback);
+        const channels = documentResolvers.operations.reduce((operations, exploreOperationsMeta) => {
+          const meta = exploreOperationsMeta(this.schemas, instance, prototype, targetCallback);
+          if (!meta) {
+            return operations;
+          }
+
+          meta.forEach((op) => {
+            if (operations.hasOwnProperty(op.channel)) {
+              operations[op.channel] = { ...operations[op.channel], ...op };
+            } else {
+              operations[op.channel] = op;
+            }
+          });
+          return operations;
         }, {});
 
-        return {
-          root: { ...serviceMetadata, name: operations.channel },
-          operations,
-        };
-      }, {});
+        return Object.keys(channels).map((channel) => ({
+          root: { ...serviceMetadata, name: channel },
+          operations: channels[channel],
+        }));
+      }, []);
       return methodMetadata;
     });
 
-    // console.table(denormalizedAsyncapiServices);
-    return denormalizedAsyncapiServices;
+    return flatten(denormalizedAsyncapiServices);
   }
 }
