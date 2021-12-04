@@ -44,7 +44,7 @@
     "husky": "7.0.4",
     "jest": "27.4.3",
     "lint-staged": "12.1.2",
-    "prettier": "2.5.0",
+    "prettier": "2.5.1",
     "release-it": "14.11.8",
     "socket.io": "4.4.0",
     "socket.io-client": "4.4.0",
