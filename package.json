@@ -53,7 +53,7 @@
     "jest": "27.5.1",
     "lint-staged": "12.3.3",
     "prettier": "2.5.1",
-    "release-it": "14.12.4",
+    "release-it": "14.12.5",
     "socket.io": "4.4.1",
     "socket.io-client": "4.4.1",
     "supertest": "6.2.2",
