@@ -38,7 +38,7 @@
     "@nestjs/testing": "8.3.1",
     "@nestjs/websockets": "8.3.1",
     "@types/express": "4.17.13",
-    "@types/jest": "27.4.0",
+    "@types/jest": "27.4.1",
     "@types/js-yaml": "4.0.5",
     "@types/lodash": "4.14.178",
     "@types/node": "16.11.24",
