@@ -64,8 +64,15 @@ Early beta, any contribution is welcomed.
 
 ## Installation
 
+full installation
+
 ```bash
 $ npm i --save nestjs-asyncapi
+```
+
+nestjs-async api package doesn't require chromium (which is required by asyncapi lib), so u can skip chromium installation by setting PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true environment variable.
+```bash
+$ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm i --save nestjs-asyncapi
 ```
 
 ## Quick Start
