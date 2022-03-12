@@ -30,7 +30,7 @@ Foreign warriors who are willing to join the resistance can [join the Internatio
 ## 🇷🇺 [Обращение](/docs/ToRussianPeople.md) к Русским Гражданам
 
 # REPOSITORY README:
-å
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
