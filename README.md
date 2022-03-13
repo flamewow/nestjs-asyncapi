@@ -15,12 +15,12 @@ Please opt-in for monthly payment, if possible.
 
 ## Other ways to help
 
-- Spread the word. Add [**banners**](/README.md) to your projects
+- Spread the word. Add banners to your projects
 - Demand severe sanctions against Russia and support for Ukraine from your leaders
-- Cancel any business with [**Russian companies**](/docs/Boycott.md) (stop supporting Russian economy, and reduce your own risks)
+- Cancel any business with Russian companies (stop supporting Russian economy, and reduce your own risks)
 - Reach out to Ukrainian friends, offer help
-- Get rid of Russian [**software, dependencies and infrastructure**](/docs/Boycott.md)
-- Educate yourself and others on the Russian threat, read [**reputable news**](/docs/WarNews.md). Check out [**common misbeliefs**](/docs/Misconceptions.md).
+- Get rid of Russian software, dependencies and infrastructure
+- Educate yourself and others on the Russian threat, read reputable news. Check out common misbelief.
 - Protest against war. **Don’t be silent**
 
 ## For foreign warriors
