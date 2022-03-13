@@ -17,6 +17,15 @@ export class CatsController {
       payload: {
         type: CreateCatCommand,
       },
+      headers: {
+        type: 'object',
+        properties: {
+          sampleHeader: {
+            description: 'sample header description',
+            type: 'string',
+          },
+        },
+      },
     },
   })
   @AsyncApiPub(

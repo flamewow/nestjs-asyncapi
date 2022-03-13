@@ -11,6 +11,16 @@ export interface AsyncOperationOptions extends Omit<AsyncOperationObject, 'messa
     payload: {
       type: Type<unknown> | Function | [Function] | string;
     };
+    headers?: {
+      type: 'object';
+      properties: {
+        [key: string]: {
+          description: string;
+          type: 'string';
+          [key: string]: any;
+        };
+      };
+    };
   };
 }
 

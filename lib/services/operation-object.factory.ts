@@ -25,6 +25,7 @@ export class OperationObjectFactory {
       ...operation,
       message: {
         name: operation.message.name,
+        headers: operation.message.headers,
         payload: {
           $ref: getSchemaPath(name),
         },
