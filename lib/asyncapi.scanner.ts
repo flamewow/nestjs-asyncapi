@@ -1,5 +1,5 @@
 import { flatten, isEmpty } from 'lodash';
-import { INestApplication, Type } from '@nestjs/common';
+import { INestApplicationContext, Type } from '@nestjs/common';
 import { Injectable } from '@nestjs/common/interfaces';
 import { MODULE_PATH } from '@nestjs/common/constants';
 import { NestContainer } from '@nestjs/core/injector/container';
@@ -23,7 +23,7 @@ export class AsyncapiScanner {
   private readonly swaggerTypesMapper = new SwaggerTypesMapper();
   private readonly schemaObjectFactory = new SchemaObjectFactory(this.modelPropertiesAccessor, this.swaggerTypesMapper);
 
-  public scanApplication(app: INestApplication, options: AsyncApiDocumentOptions): Omit<AsyncAPIObject, 'asyncapi' | 'info'> {
+  public scanApplication(app: INestApplicationContext, options: AsyncApiDocumentOptions): Omit<AsyncAPIObject, 'asyncapi' | 'info'> {
     const { deepScanRoutes, include: includedModules = [], extraModels = [], ignoreGlobalPrefix = false, operationIdFactory } = options;
 
     const container: NestContainer = (app as any).container;
@@ -79,7 +79,7 @@ export class AsyncapiScanner {
     return [...modulesContainer.values()].filter(({ metatype }) => include.some((item) => item === metatype));
   }
 
-  private getGlobalPrefix(app: INestApplication): string {
+  private getGlobalPrefix(app: INestApplicationContext): string {
     const internalConfigRef = (app as any).config;
     return (internalConfigRef && internalConfigRef.getGlobalPrefix()) || '';
   }

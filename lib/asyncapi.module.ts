@@ -1,6 +1,6 @@
 import { SwaggerDocumentOptions } from '@nestjs/swagger';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
-import { INestApplication, Logger } from '@nestjs/common';
+import { INestApplication, INestApplicationContext, Logger } from '@nestjs/common';
 
 import { AsyncAPIObject } from './index';
 import { AsyncapiScanner } from './asyncapi.scanner';
@@ -14,7 +14,7 @@ export class AsyncApiModule {
   private static readonly logger = new Logger(AsyncApiModule.name);
 
   public static createDocument(
-    app: INestApplication,
+    app: INestApplicationContext,
     config: Omit<AsyncAPIObject, 'channels'>,
     options: AsyncApiDocumentOptions = {},
   ): AsyncAPIObject {
