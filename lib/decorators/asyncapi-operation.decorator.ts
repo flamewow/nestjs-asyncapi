@@ -8,7 +8,7 @@ import { DECORATORS } from '../constants';
 export interface AsyncOperationOptions extends Omit<AsyncOperationObject, 'message'> {
   message: {
     name?: string;
-    payload?: {
+    payload: {
       type: Type<unknown> | Function | [Function] | string;
     };
     headers?: {
