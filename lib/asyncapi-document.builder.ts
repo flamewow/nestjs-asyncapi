@@ -90,7 +90,7 @@ export class AsyncApiDocumentBuilder {
   }
 
   public addSecurityRequirements(name: string, requirements: string[] = []): this {
-    /* TODO: Check this shit.
+    /* TODO: Check this
         this.document.security = (this.document.security || []).concat({
             [name]: requirements
         });*/

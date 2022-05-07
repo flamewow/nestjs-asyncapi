@@ -1,5 +1,5 @@
-import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { BreadCoonDto, BritishShorthairCatDto, MaineCoonDto } from './bread-cat.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { BreadCoonDto } from './bread-cat.dto';
 import { LettersEnum } from './pagination-query.dto';
 import { TagDto } from './tag.dto';
 

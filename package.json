@@ -10,6 +10,10 @@
     "type": "git",
     "url": "https://github.com/flamewow/nestjs-asyncapi"
   },
+  "validate-branch-name": {
+    "pattern": "^(main|develop){1}$|^(feat|fix|release|test|refactor|docs|perf|style|chore)/.+$",
+    "errorMsg": "The branch name isn't valid."
+  },
   "keywords": [
     "asyncapi",
     "nest",
@@ -84,11 +88,10 @@
     "testEnvironment": "node"
   },
   "lint-staged": {
-    "lib/*.{js,ts,json} e2e/*.{js,ts,json}": [
-      "eslint --cache --fix",
-      "prettier --write"
-    ],
-    "*.js": "eslint --cache --fix"
+    "*.ts": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ]
   },
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
