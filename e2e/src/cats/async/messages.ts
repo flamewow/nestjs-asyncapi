@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional, getSchemaPath } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateCatDto } from '../dto/create-cat.dto';
 
 export class MessageBase<T extends Record<string, any>> {

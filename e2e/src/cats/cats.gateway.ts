@@ -10,8 +10,7 @@ import {
 import { Namespace, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io-client';
-import { CreateCatCommand, MessageBase } from './async/messages';
-import { CreateCatDto } from './dto/create-cat.dto';
+import { CreateCatCommand } from './async/messages';
 import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '../../../lib';
 
 @AsyncApiService()

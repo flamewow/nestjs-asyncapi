@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './src/app.module';
-import { contractData } from 'lib/services/data';
-import { AsyncApiModule } from 'lib/main';
+import { AsyncApiModule } from '../lib';
+import { makeAsyncapiDocument } from './common';
 
 describe('Express AsyncAPI', () => {
   let app: NestExpressApplication;
@@ -12,7 +12,8 @@ describe('Express AsyncAPI', () => {
   });
 
   it('should server doc', async () => {
-    await AsyncApiModule.setup('/asyncapi', app, contractData);
+    const asyncapiDocument = await makeAsyncapiDocument(app);
+    await AsyncApiModule.setup('/asyncapi', app, asyncapiDocument);
 
     const instance = await app.getHttpAdapter().getInstance().ready();
 
