@@ -18,10 +18,14 @@ describe('Express AsyncAPI', () => {
     const instance = await app.getHttpAdapter().getInstance().ready();
 
     instance.ready(async () => {
-      const response = await instance.inject({
-        method: 'GET',
-        url: '/asyncapi',
-      });
+      const response = await instance
+        .inject({
+          method: 'GET',
+          url: '/asyncapi',
+        })
+        .catch((err) => {
+          console.error(err);
+        });
 
       expect(response.statusCode).toEqual(200);
     });
