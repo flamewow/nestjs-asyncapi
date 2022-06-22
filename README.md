@@ -29,7 +29,6 @@ The idea is to generate [AsyncApi](https://www.asyncapi.com/) documentation (for
 [Documentation example](https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/v2.1.0/examples/simple.yml)
 
 Current state: package can generate [AsyncApi](https://www.asyncapi.com/) contract document and serve html (similar to swagger-ui).
-Early beta, any contribution is welcomed.
 
 ## Installation
 
