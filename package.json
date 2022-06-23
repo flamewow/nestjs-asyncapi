@@ -38,7 +38,7 @@
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.2.6",
+    "@nestjs/cli": "8.2.7",
     "@nestjs/platform-express": "8.4.7",
     "@nestjs/platform-fastify": "8.4.7",
     "@nestjs/platform-socket.io": "8.4.7",
