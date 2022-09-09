@@ -32,7 +32,7 @@
     "@nestjs/swagger": "^6.0.4"
   },
   "dependencies": {
-    "@asyncapi/generator": "1.9.7",
+    "@asyncapi/generator": "1.9.8",
     "@asyncapi/html-template": "0.25.1",
     "js-yaml": "4.1.0",
     "reflect-metadata": "0.1.13"
