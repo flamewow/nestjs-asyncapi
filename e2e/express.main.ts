@@ -3,6 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './src/app.module';
 import { AsyncApiModule } from '../lib';
 import { makeAsyncapiDocument } from './common';
+import { Logger } from '@nestjs/common';
 
 const port = 4001;
 const host = '0.0.0.0';
@@ -13,10 +14,10 @@ async function bootstrap() {
   const asyncapiDocument = await makeAsyncapiDocument(app);
   await AsyncApiModule.setup(docRelPath, app, asyncapiDocument);
 
-  return app.listen(port, host);
+  await app.listen(port, host);
+
+  const baseUrl = `http://${host}:${port}`;
+  Logger.log(`Server started at ${baseUrl}; AsyncApi at ${baseUrl + docRelPath};`, 'Bootstrap');
 }
 
-const baseUrl = `http://${host}:${port}`;
-const startMessage = `Server started at ${baseUrl}; AsyncApi at ${baseUrl + docRelPath};`;
-
-bootstrap().then(() => console.log(startMessage));
+bootstrap();

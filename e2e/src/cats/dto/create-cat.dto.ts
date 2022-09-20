@@ -10,7 +10,7 @@ export class CreateCatDto {
   readonly age: number;
 
   @ApiProperty({
-    name: '_breed',
+    name: 'breed',
     type: BreadCoonDto,
   })
   readonly breed: BreadCoonDto;
