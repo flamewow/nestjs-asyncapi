@@ -1,6 +1,5 @@
 import { Controller, Logger } from '@nestjs/common';
-import { AsyncApiPub, AsyncApiService } from '../../../lib';
-import { AsyncApiSub } from '../../../lib/decorators/asyncapi-operation.decorator';
+import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '../../../lib';
 import { CreateCatCommand } from './async/messages';
 
 @AsyncApiService()
