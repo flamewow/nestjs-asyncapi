@@ -47,17 +47,17 @@ export class AsyncApiModule {
     const jsonDocument = JSON.stringify(document);
 
     httpAdapter.get(finalPath, (req, res) => {
-      res.type('html');
+      res.type('text/html');
       res.send(html);
     });
 
     httpAdapter.get(finalPath + '-json', (req, res) => {
-      res.type('.json');
+      res.type('application/json');
       res.send(jsonDocument);
     });
 
     httpAdapter.get(finalPath + '-yaml', (req, res) => {
-      res.type('.yaml');
+      res.type('text/yaml');
       res.send(yamlDocument);
     });
   }
