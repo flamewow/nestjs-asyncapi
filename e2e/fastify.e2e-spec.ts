@@ -1,21 +1,22 @@
 import { NestFactory } from '@nestjs/core';
-import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './src/app.module';
 import { AsyncApiModule } from '../lib';
 import { makeAsyncapiDocument } from './common';
 import request from 'supertest';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { DOC_RELATIVE_PATH } from './constants';
-import * as fs from 'fs/promises';
+import fs from 'fs/promises';
 
-describe('Express AsyncAPI', () => {
-  let app: NestExpressApplication;
+describe('Fastify AsyncAPI', () => {
+  let app: NestFastifyApplication;
 
   beforeEach(async () => {
-    app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), { logger: false });
+    app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), { logger: false });
     const asyncapiDocument = await makeAsyncapiDocument(app);
     await AsyncApiModule.setup(DOC_RELATIVE_PATH, app, asyncapiDocument);
 
     await app.init();
+    await app.getHttpAdapter().getInstance().ready();
   });
 
   it('should serve doc html', async () => {

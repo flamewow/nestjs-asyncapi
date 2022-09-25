@@ -1,9 +1,10 @@
 import { INestApplicationContext } from '@nestjs/common';
 import { AsyncApiDocumentBuilder, AsyncApiModule, AsyncServerObject } from '../lib';
+import { HOST, PORT } from './constants';
 
 export async function makeAsyncapiDocument(app: INestApplicationContext) {
   const asyncApiServer: AsyncServerObject = {
-    url: 'ws://localhost:4001',
+    url: `ws://${HOST}:${PORT}`,
     protocol: 'socket.io',
     protocolVersion: '4',
     description: 'Allows you to connect using the websocket protocol to our Socket.io server.',
