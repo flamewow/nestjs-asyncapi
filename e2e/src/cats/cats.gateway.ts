@@ -1,17 +1,17 @@
+import { Logger } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
-  OnGatewayInit,
   OnGatewayDisconnect,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Namespace, Server } from 'socket.io';
-import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io-client';
-import { CreateCatCommand } from './async/messages';
 import { AsyncApiPub, AsyncApiService, AsyncApiSub } from '../../../lib';
+import { CreateCatCommand } from './async/messages';
 
 @AsyncApiService()
 @WebSocketGateway({ transports: ['websocket'], namespace: 'cats-ws' })

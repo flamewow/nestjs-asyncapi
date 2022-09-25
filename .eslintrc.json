@@ -5,7 +5,8 @@
     "sourceType": "module"
   },
   "plugins": [
-    "@typescript-eslint/eslint-plugin"
+    "@typescript-eslint/eslint-plugin",
+    "import"
   ],
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
@@ -27,16 +28,24 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": 1,
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-empty-interface": "off",
-
     "max-len": [
       1,
       {
         "code": 200,
         "tabWidth": 2,
         "ignoreUrls": true
+      }
+    ],
+    "sort-imports": ["warn", { "ignoreDeclarationSort": true, "ignoreCase": true }],
+    "import/order": [
+      "warn",
+      {
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "groups": [["builtin", "external"], "parent", "sibling", "index"],
+        "newlines-between": "never"
       }
     ]
   }

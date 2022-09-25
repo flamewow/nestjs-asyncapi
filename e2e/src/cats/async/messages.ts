@@ -22,7 +22,11 @@ export class MessageBase<T extends Record<string, any>> {
 }
 
 export class CreateCatCommand extends MessageBase<CreateCatDto[]> {
-  @ApiProperty({ description: 'Message payload', type: CreateCatDto, isArray: true })
+  @ApiProperty({
+    description: 'Message payload',
+    type: CreateCatDto,
+    isArray: true,
+  })
   payload: CreateCatDto[];
 }
 

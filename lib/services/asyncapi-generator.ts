@@ -1,7 +1,7 @@
 import Generator from '@asyncapi/generator';
-import { AsyncApiTemplateOptions } from '../interfaces';
 import jsyaml from 'js-yaml';
 import os from 'os';
+import { AsyncApiTemplateOptions } from '../interfaces';
 
 interface IGenerator {
   templateName: string;
