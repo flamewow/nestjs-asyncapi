@@ -1,6 +1,5 @@
 import { Type } from '@nestjs/common';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-
 import { DECORATORS } from '..';
 import { OperationObjectFactory } from '../services';
 
@@ -13,13 +12,28 @@ export const exploreAsyncapiOperationMetadata = (
   prototype: Type<unknown>,
   method: object,
 ) => {
-  const pubObject = exploreAsyncapiPubMetadata(schemas, instance, prototype, method);
-  const subObject = exploreAsyncapiSubMetadata(schemas, instance, prototype, method);
+  const pubObject = exploreAsyncapiPubMetadata(
+    schemas,
+    instance,
+    prototype,
+    method,
+  );
+  const subObject = exploreAsyncapiSubMetadata(
+    schemas,
+    instance,
+    prototype,
+    method,
+  );
 
   return { ...pubObject, ...subObject };
 };
 
-export const exploreAsyncapiPubMetadata = (schemas: Record<string, SchemaObject>, _instance: object, _prototype: Type<unknown>, method: object) => {
+export const exploreAsyncapiPubMetadata = (
+  schemas: Record<string, SchemaObject>,
+  _instance: object,
+  _prototype: Type<unknown>,
+  method: object,
+) => {
   const metadata = Reflect.getMetadata(DECORATORS.ASYNCAPI_PUB, method);
 
   if (!metadata) {
@@ -35,7 +49,12 @@ export const exploreAsyncapiPubMetadata = (schemas: Record<string, SchemaObject>
     },
   }));
 };
-export const exploreAsyncapiSubMetadata = (schemas: Record<string, SchemaObject>, _instance: object, _prototype: Type<unknown>, method: object) => {
+export const exploreAsyncapiSubMetadata = (
+  schemas: Record<string, SchemaObject>,
+  _instance: object,
+  _prototype: Type<unknown>,
+  method: object,
+) => {
   const metadata = Reflect.getMetadata(DECORATORS.ASYNCAPI_SUB, method);
 
   if (!metadata) {

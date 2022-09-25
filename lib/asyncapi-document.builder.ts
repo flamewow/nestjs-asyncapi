@@ -1,13 +1,23 @@
 import { Logger } from '@nestjs/common';
-import { ExternalDocumentationObject, SecuritySchemeObject, TagObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import {
+  ExternalDocumentationObject,
+  SecuritySchemeObject,
+  TagObject,
+} from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { isUndefined, negate, pickBy } from 'lodash';
-
-import { AsyncAPIObject, AsyncSecuritySchemeObject, AsyncServerObject } from './interfaces';
+import {
+  AsyncAPIObject,
+  AsyncSecuritySchemeObject,
+  AsyncServerObject,
+} from './interfaces';
 
 export class AsyncApiDocumentBuilder {
   private readonly logger = new Logger(AsyncApiDocumentBuilder.name);
 
-  private readonly buildDocumentBase = (): Omit<AsyncAPIObject, 'channels'> => ({
+  private readonly buildDocumentBase = (): Omit<
+    AsyncAPIObject,
+    'channels'
+  > => ({
     asyncapi: '2.1.0',
     info: {
       title: '',
@@ -20,7 +30,8 @@ export class AsyncApiDocumentBuilder {
     components: {},
   });
 
-  private readonly document: Omit<AsyncAPIObject, 'channels'> = this.buildDocumentBase();
+  private readonly document: Omit<AsyncAPIObject, 'channels'> =
+    this.buildDocumentBase();
 
   public setTitle(title: string): this {
     this.document.info.title = title;
@@ -67,7 +78,11 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public addTag(name: string, description = '', externalDocs?: ExternalDocumentationObject): this {
+  public addTag(
+    name: string,
+    description = '',
+    externalDocs?: ExternalDocumentationObject,
+  ): this {
     this.document.tags = this.document.tags.concat(
       pickBy(
         {
@@ -89,7 +104,10 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public addSecurityRequirements(name: string, requirements: string[] = []): this {
+  public addSecurityRequirements(
+    name: string,
+    requirements: string[] = [],
+  ): this {
     /* TODO: Check this
         this.document.security = (this.document.security || []).concat({
             [name]: requirements

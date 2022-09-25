@@ -1,12 +1,15 @@
+import {
+  INestApplication,
+  INestApplicationContext,
+  Logger,
+} from '@nestjs/common';
 import { SwaggerDocumentOptions } from '@nestjs/swagger';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
-import { INestApplication, INestApplicationContext, Logger } from '@nestjs/common';
-
-import { AsyncAPIObject } from './index';
-import { AsyncapiScanner } from './asyncapi.scanner';
-import { AsyncapiGenerator } from './services';
-import { AsyncApiTemplateOptions } from './interfaces';
 import jsyaml from 'js-yaml';
+import { AsyncapiScanner } from './asyncapi.scanner';
+import { AsyncApiTemplateOptions } from './interfaces';
+import { AsyncapiGenerator } from './services';
+import { AsyncAPIObject } from './index';
 
 export interface AsyncApiDocumentOptions extends SwaggerDocumentOptions {}
 
@@ -21,16 +24,22 @@ export class AsyncApiModule {
     const asyncapiScanner = new AsyncapiScanner();
     const document = asyncapiScanner.scanApplication(app, options);
 
-    document.components = { ...(config.components || {}), ...document.components };
+    document.components = {
+      ...(config.components || {}),
+      ...document.components,
+    };
 
     return {
-      asyncapi: '2.1.0',
+      asyncapi: '2.4.0',
       ...config,
       ...document,
     };
   }
 
-  static async composeHtml(contract: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
+  static async composeHtml(
+    contract: AsyncAPIObject,
+    templateOptions?: AsyncApiTemplateOptions,
+  ) {
     const generator = new AsyncapiGenerator(templateOptions);
     return await generator.generate(contract).catch((e) => {
       this.logger.error(e);
@@ -38,7 +47,12 @@ export class AsyncApiModule {
     });
   }
 
-  public static async setup(path: string, app: INestApplication, document: AsyncAPIObject, templateOptions?: AsyncApiTemplateOptions) {
+  public static async setup(
+    path: string,
+    app: INestApplication,
+    document: AsyncAPIObject,
+    templateOptions?: AsyncApiTemplateOptions,
+  ) {
     const httpAdapter = app.getHttpAdapter();
     const finalPath = validatePath(path);
 

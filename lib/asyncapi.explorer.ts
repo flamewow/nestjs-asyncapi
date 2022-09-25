@@ -2,17 +2,21 @@ import { Type } from '@nestjs/common';
 import { MetadataScanner } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-
-import { DECORATORS } from './index';
-import { exploreAsyncapiPubMetadata, exploreAsyncapiServiceMetadata, exploreAsyncapiSubMetadata } from './explorers';
-import { DenormalizedDocResolvers, DenormalizedDoc } from './interfaces';
 import { flatten } from 'lodash';
+import {
+  exploreAsyncapiPubMetadata,
+  exploreAsyncapiServiceMetadata,
+  exploreAsyncapiSubMetadata,
+} from './explorers';
+import { DenormalizedDoc, DenormalizedDocResolvers } from './interfaces';
+import { DECORATORS } from './index';
 
 export class AsyncApiExplorer {
   private readonly metadataScanner = new MetadataScanner();
   private readonly schemas: SchemaObject[] = [];
   private readonly schemaRefsStack: string[] = [];
-  private operationIdFactory = (controllerKey: string, methodKey: string) => (controllerKey ? `${controllerKey}_${methodKey}` : methodKey);
+  private operationIdFactory = (controllerKey: string, methodKey: string) =>
+    controllerKey ? `${controllerKey}_${methodKey}` : methodKey;
 
   public explorerAsyncapiServices(
     wrapper: InstanceWrapper<any>,
@@ -25,7 +29,13 @@ export class AsyncApiExplorer {
     }
 
     const { instance, metatype } = wrapper;
-    if (!instance || !metatype || !Reflect.getMetadataKeys(metatype).find((x) => x === DECORATORS.ASYNCAPI_SERVICE)) {
+    if (
+      !instance ||
+      !metatype ||
+      !Reflect.getMetadataKeys(metatype).find(
+        (x) => x === DECORATORS.ASYNCAPI_SERVICE,
+      )
+    ) {
       return [];
     }
 
@@ -37,7 +47,14 @@ export class AsyncApiExplorer {
       operations: [exploreAsyncapiPubMetadata, exploreAsyncapiSubMetadata],
     };
 
-    return this.generateDenormalizedDocument(metatype as Type<unknown>, prototype, instance, documentResolvers, modulePath, globalPrefix);
+    return this.generateDenormalizedDocument(
+      metatype as Type<unknown>,
+      prototype,
+      instance,
+      documentResolvers,
+      modulePath,
+      globalPrefix,
+    );
   }
 
   public getSchemas(): Record<string, SchemaObject> {
@@ -53,26 +70,37 @@ export class AsyncApiExplorer {
     _modulePath?: string,
     _globalPrefix?: string,
   ): DenormalizedDoc[] {
-    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<any, DenormalizedDoc[]>(instance, prototype, (name) => {
+    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<
+      any,
+      DenormalizedDoc[]
+    >(instance, prototype, (name) => {
       const targetCallback = prototype[name];
       const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
         const serviceMetadata = fn(metatype);
 
-        const channels = documentResolvers.operations.reduce((operations, exploreOperationsMeta) => {
-          const meta = exploreOperationsMeta(this.schemas, instance, prototype, targetCallback);
-          if (!meta) {
-            return operations;
-          }
-
-          meta.forEach((op) => {
-            if (operations.hasOwnProperty(op.channel)) {
-              operations[op.channel] = { ...operations[op.channel], ...op };
-            } else {
-              operations[op.channel] = op;
+        const channels = documentResolvers.operations.reduce(
+          (operations, exploreOperationsMeta) => {
+            const meta = exploreOperationsMeta(
+              this.schemas,
+              instance,
+              prototype,
+              targetCallback,
+            );
+            if (!meta) {
+              return operations;
             }
-          });
-          return operations;
-        }, {});
+
+            meta.forEach((op) => {
+              if (operations.hasOwnProperty(op.channel)) {
+                operations[op.channel] = { ...operations[op.channel], ...op };
+              } else {
+                operations[op.channel] = op;
+              }
+            });
+            return operations;
+          },
+          {},
+        );
 
         return Object.keys(channels).map((channel) => ({
           root: { ...serviceMetadata, name: channel },

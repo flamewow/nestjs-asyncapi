@@ -1,5 +1,4 @@
 import { Type } from '@nestjs/common';
-
 import { DECORATORS } from '..';
 
 export const exploreAsyncapiServiceMetadata = (metatype: Type<unknown>) => {
