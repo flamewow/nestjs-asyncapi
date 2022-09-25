@@ -2,7 +2,6 @@ name: nodejs
 
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -15,7 +14,10 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-      - run: npm ci
+      - name: 'install dependencies'
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       - run: npm run build --if-present
 
   test:
@@ -27,5 +29,8 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-      - run: npm ci
+      - name: 'install dependencies'
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       - run: npm test
