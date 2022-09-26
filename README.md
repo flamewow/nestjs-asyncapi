@@ -12,7 +12,7 @@ Generate [AsyncApi](https://www.asyncapi.com/) documentation (for event-based se
 
 ## Installation
 
-full installation
+full installation (with chromium)
 
 ```bash
 $ npm i --save nestjs-asyncapi
