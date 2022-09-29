@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@asyncapi/generator": "1.9.11",
-    "@asyncapi/html-template": "0.25.2",
+    "@asyncapi/html-template": "0.26.0",
     "js-yaml": "4.1.0",
     "reflect-metadata": "0.1.13"
   },
