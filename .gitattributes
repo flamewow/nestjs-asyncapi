@@ -1,2 +1,1 @@
-misc/* linguist-vendored
-husky/* linguist-vendored
+./misc/** linguist-vendored
