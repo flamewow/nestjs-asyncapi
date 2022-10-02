@@ -4,11 +4,12 @@ import {
   NestExpressApplication,
 } from '@nestjs/platform-express';
 import * as fs from 'fs/promises';
+import jsyaml from 'js-yaml';
 import request from 'supertest';
-import { AsyncApiModule } from '../lib';
-import { makeAsyncapiDocument } from './common';
-import { DOC_RELATIVE_PATH } from './constants';
-import { AppModule } from './src/app.module';
+import { AsyncApiModule } from '#lib';
+import { AppModule } from '#sample/app.module';
+import { makeAsyncapiDocument } from '#sample/common';
+import { DOC_RELATIVE_PATH } from '#sample/constants';
 
 describe('Express AsyncAPI', () => {
   let app: NestExpressApplication;
@@ -41,10 +42,15 @@ describe('Express AsyncAPI', () => {
       .get(`${DOC_RELATIVE_PATH}-json`)
       .expect(200)
       .expect('Content-Type', /application\/json/);
-    const jsonSample = await fs.readFile('./misc/samples/sample.json', {
-      encoding: 'utf8',
-    });
-    expect(text).toEqual(jsonSample);
+
+    const jsonFetched = JSON.parse(text);
+    const jsonReferenceSample = JSON.parse(
+      await fs.readFile('./misc/samples/sample.json', {
+        encoding: 'utf8',
+      }),
+    );
+
+    expect(jsonFetched).toEqual(jsonReferenceSample);
   });
 
   it('should serve doc yaml', async () => {
@@ -52,9 +58,14 @@ describe('Express AsyncAPI', () => {
       .get(`${DOC_RELATIVE_PATH}-yaml`)
       .expect(200)
       .expect('Content-Type', /text\/yaml/);
-    const yamlSample = await fs.readFile('./misc/samples/sample.yaml', {
-      encoding: 'utf8',
-    });
-    expect(text).toEqual(yamlSample);
+
+    const yamlFetched = jsyaml.load(text);
+    const yamlReferenceSample = jsyaml.load(
+      await fs.readFile('./misc/samples/sample.yaml', {
+        encoding: 'utf8',
+      }),
+    );
+
+    expect(yamlFetched).toEqual(yamlReferenceSample);
   });
 });

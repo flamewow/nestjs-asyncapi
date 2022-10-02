@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class BreadCoonDto {
-  @ApiProperty()
   readonly name: string;
 }
 

@@ -1,9 +1,16 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "e2e",
-  "entryFile": "e2e/manual-e2e",
+  "sourceRoot": "sample",
+  "entryFile": "sample/src/main",
   "compilerOptions": {
-    "assets": ["**/*.ejs"],
-    "plugins": ["@nestjs/swagger"]
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true,
+          "dtoFileNameSuffix": [".dto.ts", ".dtos.ts"]
+        }
+      }
+    ]
   }
 }

@@ -1,4 +1,4 @@
-asyncapi: 2.1.0
+asyncapi: 2.5.0
 info:
   title: Cats SocketIO
   description: Cats SocketIO description here
@@ -68,11 +68,36 @@ components:
           description: tag
           allOf:
             - $ref: '#/components/schemas/TagDto'
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+        enum:
+          type: string
+          enum:
+            - A
+            - B
+            - C
+        enumArr:
+          type: array
+          items:
+            type: string
+            enum:
+              - A
+              - B
+              - C
       required:
         - age
         - breed
-        - urls
-        - options
+        - name
+        - createdAt
+        - enum
+        - enumArr
     CreateCatCommand:
       type: object
       properties:

@@ -74,23 +74,6 @@
   "config": {
     "puppeteer_skip_chromium_download": true
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  },
   "lint-staged": {
     "*.ts": [
       "prettier --write",
@@ -101,7 +84,7 @@
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "prepare": "husky install",
     "format": "prettier --write \"lib/**/*.{js,ts,json}\"  \"e2e/**/*.{js,ts,json}\"",
-    "lint": "eslint --fix \"lib/**/*.{js,ts}\"  \"e2e/**/*.{js,ts}\"",
+    "lint": "eslint --fix \"lib/**/*.{js,ts}\"  \"sample/**/*.{js,ts}\" \"test/**/*.{js,ts}\"",
     "pre-commit": "lint-staged",
     "prestart": "npm install && npm run build",
     "---execution---": "",
@@ -109,11 +92,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --watch --debug",
     "---tests---": "",
-    "test": "jest --config ./jest.json",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --runInBand --config jest-e2e.json",
+    "test:e2e": "jest --runInBand --config test/configs/jest-e2e.config.ts",
     "---npm---": "",
     "publish:next": "npm publish --access public --tag next",
     "prepublish:npm": "npm run build",

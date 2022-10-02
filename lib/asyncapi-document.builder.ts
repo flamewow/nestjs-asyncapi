@@ -18,7 +18,7 @@ export class AsyncApiDocumentBuilder {
     AsyncAPIObject,
     'channels'
   > => ({
-    asyncapi: '2.1.0',
+    asyncapi: '2.5.0',
     info: {
       title: '',
       description: '',

@@ -16,5 +16,17 @@
     "target": "es6",
     "outDir": "./dist",
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "#lib": [
+        "lib"
+      ],
+      "#sample/*": [
+        "sample/*"
+      ],
+      "#test/*": [
+        "test/*"
+      ]
+    }
   }
 }

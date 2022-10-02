@@ -30,7 +30,7 @@ export class AsyncApiModule {
     };
 
     return {
-      asyncapi: '2.4.0',
+      asyncapi: '2.5.0',
       ...config,
       ...document,
     };

@@ -2,10 +2,10 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
-import { AsyncApiModule } from '../lib';
+import { AppModule } from './app.module';
 import { makeAsyncapiDocument } from './common';
 import { BOOTSTRAP, DOC_RELATIVE_PATH, HOST, PORT } from './constants';
-import { AppModule } from './src/app.module';
+import { AsyncApiModule } from '#lib';
 
 const USE_FASTIFY = false;
 

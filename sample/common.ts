@@ -1,10 +1,10 @@
 import { INestApplicationContext } from '@nestjs/common';
+import { HOST, PORT } from './constants';
 import {
   AsyncApiDocumentBuilder,
   AsyncApiModule,
   AsyncServerObject,
-} from '../lib';
-import { HOST, PORT } from './constants';
+} from '#lib';
 
 export async function makeAsyncapiDocument(app: INestApplicationContext) {
   const asyncApiServer: AsyncServerObject = {
