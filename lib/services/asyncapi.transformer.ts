@@ -1,5 +1,5 @@
-import { DenormalizedDoc } from './interfaces';
-import { AsyncChannelObject, AsyncChannelsObject } from './index';
+import { DenormalizedDoc } from '../interfaces';
+import { AsyncChannelObject, AsyncChannelsObject } from '#lib';
 
 export class AsyncapiTransformer {
   public normalizeChannels(

@@ -1,40 +1,28 @@
 import { Type } from '@nestjs/common';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { DECORATORS } from '..';
+import { DECORATORS } from '../constants';
 import { OperationObjectFactory } from '../services';
 
 const operationObjectFactory = new OperationObjectFactory();
 
-export const exploreAsyncapiOperationMetadata = (
-  schemas: Record<string, SchemaObject>,
-  _schemaRefsStack: [],
-  instance: object,
-  prototype: Type<unknown>,
-  method: object,
-) => {
-  const pubObject = exploreAsyncapiPubMetadata(
-    schemas,
-    instance,
-    prototype,
-    method,
-  );
-  const subObject = exploreAsyncapiSubMetadata(
-    schemas,
-    instance,
-    prototype,
-    method,
-  );
+enum AsyncapiMetadataType {
+  pub = 'pub',
+  sub = 'sub',
+}
 
-  return { ...pubObject, ...subObject };
+const typeDecoratorsMap = {
+  [AsyncapiMetadataType.pub]: DECORATORS.AsyncapiPub,
+  [AsyncapiMetadataType.sub]: DECORATORS.AsyncapiSub,
 };
 
-export const exploreAsyncapiPubMetadata = (
+export const exploreAsyncapiMetadata = (
+  type: AsyncapiMetadataType,
   schemas: Record<string, SchemaObject>,
   _instance: object,
   _prototype: Type<unknown>,
   method: object,
 ) => {
-  const metadata = Reflect.getMetadata(DECORATORS.ASYNCAPI_PUB, method);
+  const metadata = Reflect.getMetadata(typeDecoratorsMap[type], method);
 
   if (!metadata) {
     return;
@@ -42,31 +30,40 @@ export const exploreAsyncapiPubMetadata = (
 
   return metadata.map((option) => ({
     channel: option.channel,
-    pub: {
+    [type]: {
       ...option,
       ...operationObjectFactory.create(option, ['application/json'], schemas),
       channel: undefined,
     },
   }));
 };
-export const exploreAsyncapiSubMetadata = (
+
+export function exploreAsyncapiPubMetadata(
   schemas: Record<string, SchemaObject>,
   _instance: object,
   _prototype: Type<unknown>,
   method: object,
-) => {
-  const metadata = Reflect.getMetadata(DECORATORS.ASYNCAPI_SUB, method);
+) {
+  return exploreAsyncapiMetadata(
+    AsyncapiMetadataType.pub,
+    schemas,
+    _instance,
+    _prototype,
+    method,
+  );
+}
 
-  if (!metadata) {
-    return;
-  }
-
-  return metadata.map((option) => ({
-    channel: option.channel,
-    sub: {
-      ...option,
-      ...operationObjectFactory.create(option, ['application/json'], schemas),
-      channel: undefined,
-    },
-  }));
-};
+export function exploreAsyncapiSubMetadata(
+  schemas: Record<string, SchemaObject>,
+  _instance: object,
+  _prototype: Type<unknown>,
+  method: object,
+) {
+  return exploreAsyncapiMetadata(
+    AsyncapiMetadataType.sub,
+    schemas,
+    _instance,
+    _prototype,
+    method,
+  );
+}

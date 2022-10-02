@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { LettersEnum } from '../cats.enums';
 import { BreadCoonDto } from './bread-cat.dto';
-import { LettersEnum } from './pagination-query.dto';
 import { TagDto } from './tag.dto';
 
 export class CreateCatDto {

@@ -15,7 +15,7 @@ const adapter = USE_FASTIFY
     })
   : new ExpressAdapter();
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<INestApplication>(AppModule, adapter);
   const asyncapiDocument = await makeAsyncapiDocument(app);
   await AsyncApiModule.setup(DOC_RELATIVE_PATH, app, asyncapiDocument);

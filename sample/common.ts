@@ -1,12 +1,15 @@
 import { INestApplicationContext } from '@nestjs/common';
-import { HOST, PORT } from './constants';
+import { HOST, PORT, SERVER } from './constants';
 import {
   AsyncApiDocumentBuilder,
   AsyncApiModule,
+  AsyncAPIObject,
   AsyncServerObject,
 } from '#lib';
 
-export async function makeAsyncapiDocument(app: INestApplicationContext) {
+export async function makeAsyncapiDocument(
+  app: INestApplicationContext,
+): Promise<AsyncAPIObject> {
   const asyncApiServer: AsyncServerObject = {
     url: `ws://${HOST}:${PORT}`,
     protocol: 'socket.io',
@@ -29,7 +32,9 @@ export async function makeAsyncapiDocument(app: INestApplicationContext) {
     .setVersion('1.0')
     .setDefaultContentType('application/json')
     .addSecurity('user-password', { type: 'userPassword' })
-    .addServer('cats-server', asyncApiServer)
+    .addServer(SERVER.maineCoon, asyncApiServer)
+    .addServer(SERVER.british, asyncApiServer)
+    .addServer(SERVER.persian, asyncApiServer)
     .build();
 
   return AsyncApiModule.createDocument(app, asyncApiOptions);
