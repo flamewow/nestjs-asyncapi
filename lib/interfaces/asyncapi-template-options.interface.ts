@@ -2,7 +2,9 @@
 export interface AsyncApiTemplateOptions {
   /** @default byTagsNoRoot **/
   sidebarOrganization?: 'byTags' | 'byTagsNoRoot';
-  /** @example /docs **/
+  /**
+   * @example /docs
+   **/
   baseHref?: string;
   /** @default true **/
   singleFile?: boolean;

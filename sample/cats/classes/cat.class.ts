@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { LettersEnum } from '../dto/pagination-query.dto';
+import { LettersEnum } from '#sample/cats/cats.enums';
 
 export class Cat {
   @ApiProperty({ example: 'Kitty', description: 'The name of the Cat' })

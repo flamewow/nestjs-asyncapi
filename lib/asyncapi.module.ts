@@ -6,9 +6,9 @@ import {
 import { SwaggerDocumentOptions } from '@nestjs/swagger';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 import jsyaml from 'js-yaml';
-import { AsyncapiScanner } from './asyncapi.scanner';
 import { AsyncApiTemplateOptions } from './interfaces';
 import { AsyncapiGenerator } from './services';
+import { AsyncapiScanner } from './services/asyncapi.scanner';
 import { AsyncAPIObject } from './index';
 
 export interface AsyncApiDocumentOptions extends SwaggerDocumentOptions {}
@@ -41,9 +41,9 @@ export class AsyncApiModule {
     templateOptions?: AsyncApiTemplateOptions,
   ) {
     const generator = new AsyncapiGenerator(templateOptions);
-    return await generator.generate(contract).catch((e) => {
-      this.logger.error(e);
-      throw e;
+    return await generator.generate(contract).catch((err) => {
+      this.logger.error(err);
+      throw err;
     });
   }
 

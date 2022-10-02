@@ -1,6 +1,6 @@
 import { Type } from '@nestjs/common';
-import { DECORATORS } from '..';
+import { DECORATORS } from '../constants';
 
 export const exploreAsyncapiServiceMetadata = (metatype: Type<unknown>) => {
-  return Reflect.getMetadata(DECORATORS.ASYNCAPI_SERVICE, metatype);
+  return Reflect.getMetadata(DECORATORS.AsyncapiService, metatype);
 };

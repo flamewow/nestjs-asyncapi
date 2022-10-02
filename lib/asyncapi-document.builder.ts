@@ -1,4 +1,3 @@
-import { Logger } from '@nestjs/common';
 import {
   ExternalDocumentationObject,
   SecuritySchemeObject,
@@ -12,8 +11,6 @@ import {
 } from './interfaces';
 
 export class AsyncApiDocumentBuilder {
-  private readonly logger = new Logger(AsyncApiDocumentBuilder.name);
-
   private readonly buildDocumentBase = (): Omit<
     AsyncAPIObject,
     'channels'

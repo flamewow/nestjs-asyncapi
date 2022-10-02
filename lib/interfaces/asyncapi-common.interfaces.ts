@@ -28,18 +28,6 @@ export interface AsyncAPIObject {
   defaultContentType?: string;
 }
 
-export interface AsyncAPIObject {
-  asyncapi: string;
-  id?: string;
-  info: InfoObject;
-  servers?: Record<string, AsyncServerObject>;
-  channels: AsyncChannelsObject;
-  components?: AsyncComponentsObject;
-  tags?: AsyncTagObject[];
-  externalDocs?: ExternalDocumentationObject;
-  defaultContentType?: string;
-}
-
 export type AsyncChannelsObject = Record<string, AsyncChannelObject>;
 export interface AsyncChannelObject {
   description?: string;

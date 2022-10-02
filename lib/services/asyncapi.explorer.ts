@@ -3,13 +3,13 @@ import { MetadataScanner } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { flatten } from 'lodash';
+import { DECORATORS } from '../constants';
 import {
   exploreAsyncapiPubMetadata,
   exploreAsyncapiServiceMetadata,
   exploreAsyncapiSubMetadata,
-} from './explorers';
-import { DenormalizedDoc, DenormalizedDocResolvers } from './interfaces';
-import { DECORATORS } from './index';
+} from '../explorers';
+import { DenormalizedDoc, DenormalizedDocResolvers } from '../interfaces';
 
 export class AsyncApiExplorer {
   private readonly metadataScanner = new MetadataScanner();
@@ -33,7 +33,7 @@ export class AsyncApiExplorer {
       !instance ||
       !metatype ||
       !Reflect.getMetadataKeys(metatype).find(
-        (x) => x === DECORATORS.ASYNCAPI_SERVICE,
+        (x) => x === DECORATORS.AsyncapiService,
       )
     ) {
       return [];

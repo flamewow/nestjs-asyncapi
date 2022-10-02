@@ -15,5 +15,5 @@ export interface AsyncApiServiceOptions {
 }
 
 export function AsyncApiService(options?: AsyncApiServiceOptions) {
-  return createMixedDecorator(DECORATORS.ASYNCAPI_SERVICE, options);
+  return createMixedDecorator(DECORATORS.AsyncapiService, options);
 }
