@@ -87,6 +87,7 @@
     "lint": "eslint --fix \"lib/**/*.ts\"  \"sample/**/*.ts\" \"test/**/*.ts\"",
     "pre-commit": "lint-staged",
     "prestart": "npm install && npm run build",
+    "make:snapshots": "bash misc/take-snaphots.sh",
     "---execution---": "",
     "start": "nest start",
     "start:dev": "nest start --watch",

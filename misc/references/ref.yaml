@@ -6,7 +6,7 @@ info:
   contact: {}
 tags: []
 servers:
-  cats-server:
+  europe: &ref_0
     url: ws://0.0.0.0:4001
     protocol: socket.io
     protocolVersion: '4'
@@ -20,161 +20,231 @@ servers:
         description: Secure connection (TLS) is available through port 443.
         default: '443'
     bindings: {}
+  asia: *ref_0
+  north-america: *ref_0
+  south-america: *ref_0
+  africa: *ref_0
+  australia: *ref_0
 components:
   securitySchemes:
     user-password:
       type: userPassword
   schemas:
-    String:
-      type: object
-      properties: {}
-    BreadCoonDto:
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-        - name
-    TagDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: name
-      required:
-        - name
-    CreateCatDto:
-      type: object
-      properties:
-        age:
-          type: number
-          minimum: 1
-          maximum: 200
-        breed:
-          allOf:
-            - $ref: '#/components/schemas/BreadCoonDto'
-        urls:
-          type: array
-          items:
-            type: string
-        options:
-          type: array
-          items:
-            type: object
-            properties:
-              isReadonly:
-                type: string
-        tag:
-          description: tag
-          allOf:
-            - $ref: '#/components/schemas/TagDto'
-        name:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        createdAt:
-          format: date-time
-          type: string
-        enum:
-          type: string
-          enum:
-            - A
-            - B
-            - C
-        enumArr:
-          type: array
-          items:
-            type: string
-            enum:
-              - A
-              - B
-              - C
-      required:
-        - age
-        - breed
-        - name
-        - createdAt
-        - enum
-        - enumArr
-    CreateCatCommand:
+    CreateFelineDto:
       type: object
       properties:
         correlationId:
           type: string
           format: uuid
-          description: Identify a flow
-        messageId:
-          type: string
-          format: uuid
-          description: Identify a request
-        messageType:
-          type: string
-          description: Type of message
-        timestamp:
-          type: string
-          format: date-time
         version:
           type: string
-          format: X.Y.Z
-          description: Message Version
+          format: x.y.z
+          example: 1.0.1
         payload:
-          description: Message payload
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateCatDto'
+          oneOf:
+            - $ref: '#/components/schemas/Cat'
+            - $ref: '#/components/schemas/Lion'
+            - $ref: '#/components/schemas/Tiger'
+        timestamp:
+          format: date-time
+          type: string
       required:
         - correlationId
-        - messageId
-        - messageType
-        - timestamp
         - version
         - payload
+        - timestamp
+    FelineRto:
+      type: object
+      properties:
+        correlationId:
+          type: string
+          format: uuid
+        version:
+          type: string
+          format: x.y.z
+          example: 1.0.1
+        payload:
+          oneOf:
+            - $ref: '#/components/schemas/Cat'
+            - $ref: '#/components/schemas/Lion'
+            - $ref: '#/components/schemas/Tiger'
+        timestamp:
+          format: date-time
+          type: string
+      required:
+        - correlationId
+        - version
+        - payload
+        - timestamp
+    Cat:
+      type: object
+      properties:
+        breed:
+          type: string
+          example: Maine Coon
+        id:
+          type: number
+        name:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+        dominantPaw:
+          type: string
+          enum:
+            - left
+            - right
+        tags:
+          type: array
+          items:
+            type: string
+        birthDatetime:
+          format: date-time
+          type: string
+      required:
+        - breed
+        - id
+        - name
+        - age
+        - gender
+        - dominantPaw
+        - tags
+        - birthDatetime
+    Lion:
+      type: object
+      properties:
+        roarVolume:
+          type: number
+        id:
+          type: number
+        name:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+        dominantPaw:
+          type: string
+          enum:
+            - left
+            - right
+        tags:
+          type: array
+          items:
+            type: string
+        birthDatetime:
+          format: date-time
+          type: string
+      required:
+        - roarVolume
+        - id
+        - name
+        - age
+        - gender
+        - dominantPaw
+        - tags
+        - birthDatetime
+    Tiger:
+      type: object
+      properties:
+        numberOfStripes:
+          type: number
+        id:
+          type: number
+        name:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+        dominantPaw:
+          type: string
+          enum:
+            - left
+            - right
+        tags:
+          type: array
+          items:
+            type: string
+        birthDatetime:
+          format: date-time
+          type: string
+      required:
+        - numberOfStripes
+        - id
+        - name
+        - age
+        - gender
+        - dominantPaw
+        - tags
+        - birthDatetime
+    Feline:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+        dominantPaw:
+          type: string
+          enum:
+            - left
+            - right
+        tags:
+          type: array
+          items:
+            type: string
+        birthDatetime:
+          format: date-time
+          type: string
+      required:
+        - id
+        - name
+        - age
+        - gender
+        - dominantPaw
+        - tags
+        - birthDatetime
 defaultContentType: application/json
 channels:
-  test:
+  ws/feline/demo/sub:
     publish:
-      summary: Send test packet
-      description: method is used for test purposes
       message:
-        name: test data
         payload:
-          $ref: '#/components/schemas/String'
-  signal:
+          $ref: '#/components/schemas/CreateFelineDto'
+  ws/feline/demo/pub:
     subscribe:
-      summary: Subscribe to signal packet
-      description: method is used for test purposes
       message:
-        name: test data signal
         payload:
-          $ref: '#/components/schemas/CreateCatCommand'
-  test-controller/reply:
-    publish:
-      summary: Send test packet
-      description: method is used for test purposes
-      message:
-        name: test data
-        payload:
-          $ref: '#/components/schemas/String'
-  test-controller:
+          $ref: '#/components/schemas/FelineRto'
+  controller/demo/sub:
+    description: example of AsyncApiService decorator usage on Controller class
     subscribe:
-      summary: Subscribe to events on this topic
-      description: method is used for test purposes
       message:
-        name: test event
-        headers:
-          type: object
-          properties:
-            sampleHeader:
-              description: sample header description
-              type: string
+        name: controller sub demo
         payload:
-          $ref: '#/components/schemas/CreateCatCommand'
+          $ref: '#/components/schemas/CreateFelineDto'
+  controller/demo/pub:
+    description: example of AsyncApiService decorator usage on Controller class
     publish:
-      summary: Send test packet
-      description: method is used for test purposes
       message:
-        name: test data
+        name: controller pub demo
         payload:
-          $ref: '#/components/schemas/String'
+          $ref: '#/components/schemas/FelineRto'

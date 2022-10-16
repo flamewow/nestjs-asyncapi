@@ -10,10 +10,10 @@ import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { stripLastSlash } from '@nestjs/swagger/dist/utils/strip-last-slash.util';
 import { flatten, isEmpty } from 'lodash';
-import { AsyncApiDocumentOptions } from '../asyncapi.module';
-import { AsyncAPIObject, DenormalizedDoc } from '../interfaces';
-import { AsyncApiExplorer } from '../services/asyncapi.explorer';
+import { AsyncApiDocument, DenormalizedDoc } from '../interface';
+import { AsyncApiExplorer } from './asyncapi.explorer';
 import { AsyncapiTransformer } from './asyncapi.transformer';
+import { AsyncApiDocumentOptions } from '#lib';
 
 export class AsyncapiScanner {
   private readonly transformer = new AsyncapiTransformer();
@@ -28,7 +28,7 @@ export class AsyncapiScanner {
   public scanApplication(
     app: INestApplicationContext,
     options: AsyncApiDocumentOptions,
-  ): Omit<AsyncAPIObject, 'asyncapi' | 'info'> {
+  ): Omit<AsyncApiDocument, 'asyncapi' | 'info'> {
     const {
       deepScanRoutes,
       include: includedModules = [],

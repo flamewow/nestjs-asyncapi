@@ -3,8 +3,7 @@ import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-pro
 import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { getSchemaPath } from '@nestjs/swagger/dist/utils';
-import { AsyncOperationObject } from '..';
-import { AsyncOperationOptions } from '../decorators';
+import { AsyncOperationObject, AsyncOperationOptions } from '../interface';
 
 export class OperationObjectFactory {
   private readonly modelPropertiesAccessor = new ModelPropertiesAccessor();

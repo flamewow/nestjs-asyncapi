@@ -40,11 +40,11 @@ Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
   }
 
   @AsyncApiPub({
-    channel: 'test',
-    summary: 'Send test packet',
-    description: 'method is used for test purposes',
+    channel: 'createFeline',
+    summary: 'Send createFeline packet',
+    description: 'method is used for createFeline purposes',
     message: {
-      name: 'test data',
+      name: 'createFeline data',
       payload: {
         type: AnySwaggerExampleDto,
       },
@@ -54,9 +54,9 @@ Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
   @AsyncApiSub({
     channel: 'signal',
     summary: 'Subscribe to signal packet',
-    description: 'method is used for test purposes',
+    description: 'method is used for createFeline purposes',
     message: {
-      name: 'test data signal',
+      name: 'createFeline data signal',
       payload: {
         type: AnySwaggerExampleDto,
       },
@@ -84,10 +84,10 @@ import { AsyncApiPub, AsyncApiService, AsyncApiSub } from 'nestjs-asyncapi';
 
 @AsyncApiService()
 @WebSocketGateway({ transports: ['websocket'], namespace: 'cats-ws' })
-export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
+export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
-  private logger: Logger = new Logger(CatsGateway.name);
+  private logger: Logger = new Logger(FelinesGateway.name);
 
   afterInit(nsp: Namespace) {
     this.logger.log(`WS server init: ${nsp?.name}`);
@@ -97,36 +97,36 @@ export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
     this.logger.log(`IOClient disconnected: ${client.id}`);
   }
 
-  @SubscribeMessage('test')
+  @SubscribeMessage('createFeline')
   @AsyncApiPub({
-    channel: 'test',
-    summary: 'Send test packet',
-    description: 'method is used for test purposes',
+    channel: 'createFeline',
+    summary: 'Send createFeline packet',
+    description: 'method is used for createFeline purposes',
     message: {
-      name: 'test data',
+      name: 'createFeline data',
       payload: {
         type: AnySwaggerExampleDto,
       },
     },
   })
-  test(@ConnectedSocket() client: Socket, @MessageBody() data: string) {
+  createFeline(@ConnectedSocket() client: Socket, @MessageBody() data: string) {
     this.logger.log(`data from client ${client.id} : ${JSON.stringify(data)}`);
-    this.server.emit('test', data);
+    this.server.emit('createFeline', data);
   }
 
   @AsyncApiSub({
     channel: 'signal',
     summary: 'Subscribe to signal packet',
-    description: 'method is used for test purposes',
+    description: 'method is used for createFeline purposes',
     message: {
-      name: 'test data signal',
+      name: 'createFeline data signal',
       payload: {
         type: AnySwaggerExampleDto,
       },
     },
   })
-  async emitSignal(boardUUID: string, data: Record<string, any>) {
-    this.server.to('test').emit('signal', data);
+  async emitCreatedFeline(boardUUID: string, data: Record<string, any>) {
+    this.server.to('createFeline').emit('signal', data);
   }
 }
 

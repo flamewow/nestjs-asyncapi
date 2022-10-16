@@ -1,5 +1,4 @@
 export * from './asyncapi-document.builder';
-export * from './interfaces';
-export * from './binding-interfaces';
+export * from './interface';
 export * from './asyncapi.module';
 export * from './decorators';

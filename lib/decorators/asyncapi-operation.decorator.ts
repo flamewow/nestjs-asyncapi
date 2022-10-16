@@ -1,34 +1,19 @@
-import { Type } from '@nestjs/common';
 import { createMixedDecorator } from '@nestjs/swagger/dist/decorators/helpers';
-import { AsyncOperationObject } from '..';
 import { DECORATORS } from '../constants';
+import { AsyncOperationOptions } from '../interface';
 
-export interface AsyncOperationOptions
-  extends Omit<AsyncOperationObject, 'message'> {
-  message: {
-    name?: string;
-    payload: {
-      type: Type<unknown> | Function | [Function] | string;
-    };
-    headers?: {
-      type: 'object';
-      properties: {
-        [key: string]: {
-          description: string;
-          type: 'string';
-          [key: string]: any;
-        };
-      };
-    };
-  };
-}
-
+/**
+ * @deprecated use AsyncApiPublish instead
+ */
 export function AsyncApiPub(
   ...options: AsyncOperationOptions[]
 ): MethodDecorator & ClassDecorator {
   return createMixedDecorator(DECORATORS.AsyncapiPub, options);
 }
 
+/**
+ * @deprecated use AsyncApiSubscribe instead
+ */
 export function AsyncApiSub(
   ...options: AsyncOperationOptions[]
 ): MethodDecorator & ClassDecorator {
