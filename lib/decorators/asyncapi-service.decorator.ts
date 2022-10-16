@@ -2,7 +2,7 @@ import { createMixedDecorator } from '@nestjs/swagger/dist/decorators/helpers';
 import {
   AmqpChannelBindingObject,
   KafkaChannelBindingObject,
-} from '../binding-interfaces';
+} from '../binding';
 import { DECORATORS } from '../constants';
 
 export interface AsyncApiServiceOptions {

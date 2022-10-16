@@ -2,7 +2,6 @@ import {
   InfoObject,
   ReferenceObject,
   SchemaObject,
-  ServerObject,
   ServerVariableObject,
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import {
@@ -14,9 +13,10 @@ import {
   KafkaMessageBindingObject,
   KafkaOperationBindingObject,
   KafkaServerBindingObject,
-} from '../binding-interfaces';
+} from '../binding';
+import { AsyncServerObject } from './asyncapi-server.interface';
 
-export interface AsyncAPIObject {
+export interface AsyncApiDocument {
   asyncapi: string;
   id?: string;
   info: InfoObject;
@@ -42,14 +42,6 @@ export interface AsyncChannelObject {
 
 export interface AsyncServerVariableObject extends ServerVariableObject {
   examples?: string[];
-}
-
-export interface AsyncServerObject extends Omit<ServerObject, 'variables'> {
-  variables?: Record<string, AsyncServerVariableObject>;
-  protocol: string;
-  protocolVersion?: string;
-  security?: SecurityObject[];
-  bindings?: Record<string, KafkaServerBindingObject | AmqpServerBindingObject>;
 }
 
 export type SecurityObject = Record<string, string[]>;
@@ -184,17 +176,6 @@ export interface BaseParameterObject {
   schema?: SchemaObject | ReferenceObject;
   location?: string;
 }
-
-export type EncodingObject = Record<string, EncodingPropertyObject>;
-export interface EncodingPropertyObject {
-  contentType?: string;
-  headers?: Record<string, HeaderObject | ReferenceObject>;
-  style?: string;
-  explode?: boolean;
-  allowReserved?: boolean;
-}
-
-export type HeaderObject = BaseParameterObject;
 
 export interface ExternalDocumentationObject {
   description?: string;

@@ -5,14 +5,14 @@ import {
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { isUndefined, negate, pickBy } from 'lodash';
 import {
-  AsyncAPIObject,
+  AsyncApiDocument,
   AsyncSecuritySchemeObject,
   AsyncServerObject,
-} from './interfaces';
+} from './interface';
 
 export class AsyncApiDocumentBuilder {
   private readonly buildDocumentBase = (): Omit<
-    AsyncAPIObject,
+    AsyncApiDocument,
     'channels'
   > => ({
     asyncapi: '2.5.0',
@@ -27,7 +27,7 @@ export class AsyncApiDocumentBuilder {
     components: {},
   });
 
-  private readonly document: Omit<AsyncAPIObject, 'channels'> =
+  private readonly document: Omit<AsyncApiDocument, 'channels'> =
     this.buildDocumentBase();
 
   public setTitle(title: string): this {
@@ -62,6 +62,16 @@ export class AsyncApiDocumentBuilder {
 
   public addServer(name: string, server: AsyncServerObject): this {
     this.document.servers[name] = server;
+    return this;
+  }
+
+  public addServers(
+    servers: { name: string; server: AsyncServerObject }[],
+  ): this {
+    for (const { name, server } of servers) {
+      this.document.servers[name] = server;
+    }
+
     return this;
   }
 
@@ -185,7 +195,7 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public build(): Omit<AsyncAPIObject, 'components' | 'channels'> {
+  public build(): Omit<AsyncApiDocument, 'components' | 'channels'> {
     return this.document;
   }
 }

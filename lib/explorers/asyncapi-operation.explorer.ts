@@ -1,16 +1,12 @@
 import { Type } from '@nestjs/common';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { DECORATORS } from '../constants';
+import { AsyncapiMetadataType } from '../enums';
 import { OperationObjectFactory } from '../services';
 
 const operationObjectFactory = new OperationObjectFactory();
 
-enum AsyncapiMetadataType {
-  pub = 'pub',
-  sub = 'sub',
-}
-
-const typeDecoratorsMap = {
+export const typeDecoratorsMap = {
   [AsyncapiMetadataType.pub]: DECORATORS.AsyncapiPub,
   [AsyncapiMetadataType.sub]: DECORATORS.AsyncapiSub,
 };

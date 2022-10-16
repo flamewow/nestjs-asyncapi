@@ -3,24 +3,23 @@ import {
   INestApplicationContext,
   Logger,
 } from '@nestjs/common';
-import { SwaggerDocumentOptions } from '@nestjs/swagger';
 import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 import jsyaml from 'js-yaml';
-import { AsyncApiTemplateOptions } from './interfaces';
-import { AsyncapiGenerator } from './services';
-import { AsyncapiScanner } from './services/asyncapi.scanner';
-import { AsyncAPIObject } from './index';
-
-export interface AsyncApiDocumentOptions extends SwaggerDocumentOptions {}
+import {
+  AsyncApiDocument,
+  AsyncApiDocumentOptions,
+  AsyncApiTemplateOptions,
+} from './interface';
+import { AsyncapiGenerator, AsyncapiScanner } from './services';
 
 export class AsyncApiModule {
   private static readonly logger = new Logger(AsyncApiModule.name);
 
   public static createDocument(
     app: INestApplicationContext,
-    config: Omit<AsyncAPIObject, 'channels'>,
+    config: Omit<AsyncApiDocument, 'channels'>,
     options: AsyncApiDocumentOptions = {},
-  ): AsyncAPIObject {
+  ): AsyncApiDocument {
     const asyncapiScanner = new AsyncapiScanner();
     const document = asyncapiScanner.scanApplication(app, options);
 
@@ -37,7 +36,7 @@ export class AsyncApiModule {
   }
 
   static async composeHtml(
-    contract: AsyncAPIObject,
+    contract: AsyncApiDocument,
     templateOptions?: AsyncApiTemplateOptions,
   ) {
     const generator = new AsyncapiGenerator(templateOptions);
@@ -50,7 +49,7 @@ export class AsyncApiModule {
   public static async setup(
     path: string,
     app: INestApplication,
-    document: AsyncAPIObject,
+    document: AsyncApiDocument,
     templateOptions?: AsyncApiTemplateOptions,
   ) {
     const httpAdapter = app.getHttpAdapter();
