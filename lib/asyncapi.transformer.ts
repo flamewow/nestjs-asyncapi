@@ -1,4 +1,9 @@
-import { DenormalizedDoc } from './interfaces';
+import {
+  AsyncOneOfMessageObject,
+  AsyncOperationMessageObject,
+  AsyncOperationObject,
+  DenormalizedDoc,
+} from './interfaces';
 import { AsyncChannelObject, AsyncChannelsObject } from './index';
 
 export class AsyncapiTransformer {
@@ -18,8 +23,14 @@ export class AsyncapiTransformer {
     });
     const channels = flatChannels.reduce((acc, it) => {
       if (acc[it.key]) {
-        acc[it.key].publish = acc[it.key].publish || it.value.publish;
-        acc[it.key].subscribe = acc[it.key].subscribe || it.value.subscribe;
+        acc[it.key].publish = this.mergeOperation(
+          acc[it.key].publish,
+          it.value.publish,
+        );
+        acc[it.key].subscribe = this.mergeOperation(
+          acc[it.key].subscribe,
+          it.value.subscribe,
+        );
       } else {
         acc[it.key] = it.value;
       }
@@ -28,5 +39,40 @@ export class AsyncapiTransformer {
     }, {});
 
     return { channels };
+  }
+
+  private mergeOperation(
+    prevOperation: AsyncOperationObject | undefined,
+    currentOperation: AsyncOperationObject | undefined,
+  ): AsyncOperationObject {
+    const baseOperation = prevOperation || currentOperation;
+    if (baseOperation === undefined) return baseOperation;
+
+    const prevMessage = prevOperation?.message,
+      currentMessage = currentOperation?.message;
+
+    const messageList: AsyncOneOfMessageObject['oneOf'] = [];
+    [prevMessage, currentMessage].forEach((messageObject) => {
+      if (messageObject === undefined) return;
+
+      const oneOfMessage = messageObject as AsyncOneOfMessageObject;
+      if (oneOfMessage?.oneOf !== undefined) {
+        oneOfMessage.oneOf.forEach((message) => {
+          messageList.push(message);
+        });
+      } else {
+        messageList.push(messageObject as AsyncOperationMessageObject);
+      }
+    });
+
+    if (messageList.length === 1) {
+      baseOperation.message = messageList[0];
+    } else if (messageList.length > 1) {
+      baseOperation.message = {
+        oneOf: messageList,
+      };
+    }
+
+    return baseOperation;
   }
 }
