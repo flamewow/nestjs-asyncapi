@@ -3,11 +3,12 @@ import { MetadataScanner } from '@nestjs/core';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { flatten } from 'lodash';
-import { DECORATORS } from '../constants';
 import {
-  exploreAsyncapiPubMetadata,
-  exploreAsyncapiServiceMetadata,
-  exploreAsyncapiSubMetadata,
+  asyncApiClassAnnotationLabels,
+  exploreAsyncapiClassMetadata,
+  exploreAsyncApiOperationMetadata,
+  exploreControllerMetadata,
+  exploreGatewayMetadata,
 } from '../explorers';
 import { DenormalizedDoc, DenormalizedDocResolvers } from '../interface';
 
@@ -33,8 +34,8 @@ export class AsyncApiExplorer {
     if (
       !instance ||
       !metatype ||
-      !Reflect.getMetadataKeys(metatype).find(
-        (x) => x === DECORATORS.AsyncapiService,
+      !Reflect.getMetadataKeys(metatype).find((label) =>
+        asyncApiClassAnnotationLabels.includes(label),
       )
     ) {
       return [];
@@ -42,10 +43,14 @@ export class AsyncApiExplorer {
 
     const prototype = Object.getPrototypeOf(instance);
     const documentResolvers: DenormalizedDocResolvers = {
-      root: [exploreAsyncapiServiceMetadata],
+      root: [
+        exploreAsyncapiClassMetadata,
+        exploreControllerMetadata,
+        exploreGatewayMetadata,
+      ],
       security: [],
       tags: [],
-      operations: [exploreAsyncapiPubMetadata, exploreAsyncapiSubMetadata],
+      operations: [exploreAsyncApiOperationMetadata],
     };
 
     return this.generateDenormalizedDocument(

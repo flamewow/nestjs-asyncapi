@@ -1,4 +1,4 @@
-export enum AsyncapiMetadataType {
-  pub = 'pub',
-  sub = 'sub',
+export enum AsyncApiOperationType {
+  pub = 'publish',
+  sub = 'subscribe',
 }

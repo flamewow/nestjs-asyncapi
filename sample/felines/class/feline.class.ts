@@ -22,4 +22,8 @@ export abstract class Feline {
   tags: string[];
 
   birthDatetime: Date;
+
+  constructor(initializer: Record<string, any>) {
+    Object.assign(this, initializer);
+  }
 }

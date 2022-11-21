@@ -135,7 +135,7 @@ export class AsyncapiScanner {
 
   private getGlobalPrefix(app: INestApplicationContext): string {
     const internalConfigRef = (app as any).config;
-    return (internalConfigRef && internalConfigRef.getGlobalPrefix()) || '';
+    return internalConfigRef?.getGlobalPrefix() || '';
   }
 
   private addExtraModels(

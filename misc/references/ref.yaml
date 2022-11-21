@@ -1,7 +1,7 @@
 asyncapi: 2.5.0
 info:
-  title: Cats SocketIO
-  description: Cats SocketIO description here
+  title: Feline
+  description: Feline server description here
   version: '1.0'
   contact: {}
 tags: []
@@ -68,6 +68,26 @@ components:
             - $ref: '#/components/schemas/Cat'
             - $ref: '#/components/schemas/Lion'
             - $ref: '#/components/schemas/Tiger'
+        timestamp:
+          format: date-time
+          type: string
+      required:
+        - correlationId
+        - version
+        - payload
+        - timestamp
+    JournalingDataDto:
+      type: object
+      properties:
+        correlationId:
+          type: string
+          format: uuid
+        version:
+          type: string
+          format: x.y.z
+          example: 1.0.1
+        payload:
+          type: object
         timestamp:
           format: date-time
           type: string
@@ -224,27 +244,31 @@ components:
         - birthDatetime
 defaultContentType: application/json
 channels:
-  ws/feline/demo/sub:
-    publish:
-      message:
-        payload:
-          $ref: '#/components/schemas/CreateFelineDto'
-  ws/feline/demo/pub:
+  ws/create/feline:
     subscribe:
       message:
+        name: FelinesGateway#emitCreatedFeline
         payload:
           $ref: '#/components/schemas/FelineRto'
-  controller/demo/sub:
-    description: example of AsyncApiService decorator usage on Controller class
-    subscribe:
-      message:
-        name: controller sub demo
-        payload:
-          $ref: '#/components/schemas/CreateFelineDto'
-  controller/demo/pub:
-    description: example of AsyncApiService decorator usage on Controller class
     publish:
       message:
-        name: controller pub demo
+        name: FelinesGateway#createFeline
+        payload:
+          $ref: '#/components/schemas/CreateFelineDto'
+  ms/journal:
+    subscribe:
+      message:
+        name: FelinesController#journal
+        payload:
+          $ref: '#/components/schemas/JournalingDataDto'
+  ms/create/feline:
+    subscribe:
+      message:
+        name: FelinesController#publishCreatedFeline
         payload:
           $ref: '#/components/schemas/FelineRto'
+    publish:
+      message:
+        name: FelinesController#createFeline
+        payload:
+          $ref: '#/components/schemas/CreateFelineDto'

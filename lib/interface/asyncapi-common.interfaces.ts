@@ -5,15 +5,16 @@ import {
   ServerVariableObject,
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import {
-  AmqpChannelBindingObject,
-  AmqpMessageBindingObject,
-  AmqpOperationBindingObject,
-  AmqpServerBindingObject,
-  KafkaChannelBindingObject,
-  KafkaMessageBindingObject,
-  KafkaOperationBindingObject,
-  KafkaServerBindingObject,
+  AmqpChannelBinding,
+  AmqpMessageBinding,
+  AmqpOperationBinding,
+  AmqpServerBinding,
+  KafkaChannelBinding,
+  KafkaMessageBinding,
+  KafkaOperationBinding,
+  KafkaServerBinding,
 } from '../binding';
+import { AsyncOperationPayload } from './asyncapi-operation-payload.interface';
 import { AsyncServerObject } from './asyncapi-server.interface';
 
 export interface AsyncApiDocument {
@@ -34,10 +35,7 @@ export interface AsyncChannelObject {
   subscribe?: AsyncOperationObject;
   publish?: AsyncOperationObject;
   parameters?: Record<string, ParameterObject>;
-  bindings?: Record<
-    string,
-    KafkaChannelBindingObject | AmqpChannelBindingObject
-  >;
+  bindings?: Record<string, KafkaChannelBinding | AmqpChannelBinding>;
 }
 
 export interface AsyncServerVariableObject extends ServerVariableObject {
@@ -54,27 +52,20 @@ export interface AsyncComponentsObject {
   correlationIds?: Record<string, AsyncCorrelationObject>;
   operationTraits?: Record<string, AsyncOperationTraitObject>;
   messageTraits?: Record<string, AsyncMessageTraitObject>;
-  serverBindings?: Record<
-    string,
-    KafkaServerBindingObject | AmqpServerBindingObject
-  >;
-  channelBindings?: Record<
-    string,
-    KafkaChannelBindingObject | AmqpChannelBindingObject
-  >;
+  serverBindings?: Record<string, KafkaServerBinding | AmqpServerBinding>;
+  channelBindings?: Record<string, KafkaChannelBinding | AmqpChannelBinding>;
   operationBindings?: Record<
     string,
-    KafkaOperationBindingObject | AmqpOperationBindingObject
+    KafkaOperationBinding | AmqpOperationBinding
   >;
-  messageBindings?: Record<
-    string,
-    KafkaMessageBindingObject | AmqpMessageBindingObject
-  >;
+  messageBindings?: Record<string, KafkaMessageBinding | AmqpMessageBinding>;
 }
 
 export interface AsyncMessageObject extends AsyncMessageTraitObject {
-  payload?: any;
-  traits?: AsyncMessageTraitObject;
+  payload?: {
+    type?: AsyncOperationPayload;
+    $ref?: AsyncOperationPayload;
+  };
 }
 
 export interface AsyncOperationObject {
@@ -84,10 +75,7 @@ export interface AsyncOperationObject {
   description?: string;
   tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
-  bindings?: Record<
-    string,
-    KafkaOperationBindingObject | AmqpOperationBindingObject
-  >;
+  bindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
   traits?: Record<string, AsyncOperationTraitObject>;
   message?: AsyncMessageObject | ReferenceObject;
 }
@@ -98,10 +86,7 @@ export interface AsyncOperationTraitObject {
   description?: string;
   tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
-  bindings?: Record<
-    string,
-    KafkaOperationBindingObject | AmqpOperationBindingObject
-  >;
+  bindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
 }
 
 export interface AsyncMessageTraitObject {
@@ -115,10 +100,7 @@ export interface AsyncMessageTraitObject {
   description?: string;
   tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
-  bindings?: Record<
-    string,
-    KafkaMessageBindingObject | AmqpMessageBindingObject
-  >;
+  bindings?: Record<string, KafkaMessageBinding | AmqpMessageBinding>;
 }
 
 export interface AsyncCorrelationObject {
@@ -144,6 +126,7 @@ export interface AsyncSecuritySchemeObject {
 }
 
 export declare type SecuritySchemeType =
+  | 'public'
   | 'userPassword'
   | 'apiKey'
   | 'X509'

@@ -1,21 +1,53 @@
-import { createMixedDecorator } from '@nestjs/swagger/dist/decorators/helpers';
-import { DECORATORS } from '../constants';
-import { AsyncOperationOptions } from '../interface';
+import { createMethodDecorator } from '@nestjs/swagger/dist/decorators/helpers';
+import { DECORATORS } from '../asyncapi.constants';
+import { AsyncApiOperationOptions, AsyncOperationObject } from '../interface';
 
-/**
- * @deprecated use AsyncApiPublish instead
- */
-export function AsyncApiPub(
-  ...options: AsyncOperationOptions[]
-): MethodDecorator & ClassDecorator {
-  return createMixedDecorator(DECORATORS.AsyncapiPub, options);
-}
+export function AsyncApiOperation(
+  ...options: AsyncApiOperationOptions[]
+): MethodDecorator {
+  return (target, propertyKey: string | symbol, descriptor) => {
+    const defaultMessageName = `${target.constructor.name}#${String(
+      propertyKey,
+    )}`;
 
-/**
- * @deprecated use AsyncApiSubscribe instead
- */
-export function AsyncApiSub(
-  ...options: AsyncOperationOptions[]
-): MethodDecorator & ClassDecorator {
-  return createMixedDecorator(DECORATORS.AsyncapiSub, options);
+    const transformedOptions: AsyncOperationObject[] = options.map((i) => {
+      const transformedOptionInstance = {
+        ...i,
+        message: {
+          ...i.message,
+          name: i.name || defaultMessageName,
+          payload: {
+            type: i.payload,
+          },
+          headers: i.headers
+            ? {
+                type: 'object',
+                properties: Object.entries(i.headers)
+                  .map(([key, value]) => ({
+                    [key]: {
+                      type: 'string',
+                      ...value,
+                    },
+                  }))
+                  .reduce((acc, j) => ({ ...acc, ...j }), {}),
+              }
+            : undefined,
+        },
+        name: undefined,
+        headers: undefined,
+        payload: undefined,
+      };
+
+      // delete transformedOptionInstance.name;
+      // delete transformedOptionInstance.headers;
+      // delete transformedOptionInstance.payload;
+
+      return transformedOptionInstance;
+    });
+
+    return createMethodDecorator(
+      DECORATORS.AsyncApiOperation,
+      transformedOptions,
+    )(target, propertyKey, descriptor);
+  };
 }

@@ -13,14 +13,16 @@ import { Socket } from 'socket.io-client';
 import { FelinesService } from './/felines.service';
 import { CreateFelineDto } from './dto';
 import { FelineRto } from './rto';
-import { AsyncApiPublish, AsyncApiService, AsyncApiSubscribe } from '#lib';
+import { AsyncApiPub, AsyncApiSub } from '#lib';
 
-@AsyncApiService()
-@AsyncApiService({
-  serviceName: 'ws/feline',
-  description: 'example of AsyncApiService decorator usage in Gateway class',
-})
-@WebSocketGateway({ transports: ['websocket'], namespace: 'ws/feline' })
+const EventPatternsWS = {
+  createFeline: 'ws/create/feline',
+};
+
+/**
+ * How to use AsyncApi in a websockets
+ */
+@WebSocketGateway({ transports: ['websocket'], namespace: 'ws' })
 export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
   @WebSocketServer()
   private readonly server: Server;
@@ -36,10 +38,10 @@ export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  @SubscribeMessage('ws/feline/demo/sub')
-  @AsyncApiPublish({
-    channel: 'ws/feline/demo/sub',
-    type: CreateFelineDto,
+  @SubscribeMessage(EventPatternsWS.createFeline)
+  @AsyncApiPub({
+    channel: EventPatternsWS.createFeline,
+    payload: CreateFelineDto,
   })
   async createFeline(
     @ConnectedSocket() client: Socket,
@@ -53,11 +55,16 @@ export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
     await this.emitCreatedFeline(new FelineRto(feline));
   }
 
-  @AsyncApiSubscribe({
-    channel: 'ws/feline/demo/pub',
-    type: FelineRto,
+  @AsyncApiSub({
+    channel: EventPatternsWS.createFeline,
+    payload: FelineRto,
+    headers: {
+      headerName: {
+        description: 'demo header',
+      },
+    },
   })
   async emitCreatedFeline(felineRto: FelineRto) {
-    this.server.to('demo').emit('ws/feline/demo/pub', felineRto);
+    this.server.emit(EventPatternsWS.createFeline, felineRto);
   }
 }
