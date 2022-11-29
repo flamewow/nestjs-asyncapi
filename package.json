@@ -40,7 +40,7 @@
   "devDependencies": {
     "@nestjs/cli": "9.1.5",
     "@nestjs/platform-express": "9.2.0",
-    "@nestjs/platform-fastify": "9.2.0",
+    "@nestjs/platform-fastify": "9.2.1",
     "@nestjs/platform-socket.io": "9.2.0",
     "@nestjs/schematics": "9.0.3",
     "@nestjs/testing": "9.2.0",
