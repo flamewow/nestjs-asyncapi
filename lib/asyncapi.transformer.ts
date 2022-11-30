@@ -43,7 +43,7 @@ export class AsyncapiTransformer {
 
   private mergeOperation(
     prevOperation: AsyncOperationObject | undefined,
-    currentOperation: AsyncOperationObject | undefined,
+    currentOperation?: AsyncOperationObject,
   ): AsyncOperationObject {
     const baseOperation = prevOperation || currentOperation;
     if (baseOperation === undefined) return baseOperation;
