@@ -51,7 +51,7 @@ export class AsyncapiTransformer {
     const prevMessage = prevOperation?.message,
       const currentMessage = currentOperation?.message;
 
-    const messageList: AsyncOneOfMessageObject['oneOf'] = [];
+    const messageList: AsyncOperationMessageObject[] = [];
     [prevMessage, currentMessage].forEach((messageObject) => {
       if (messageObject === undefined) return;
 
