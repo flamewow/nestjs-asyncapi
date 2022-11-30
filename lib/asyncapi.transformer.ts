@@ -46,7 +46,7 @@ export class AsyncapiTransformer {
     currentOperation?: AsyncOperationObject,
   ): AsyncOperationObject {
     const baseOperation = prevOperation || currentOperation;
-    if (baseOperation === undefined) return baseOperation;
+    if (!baseOperation) return baseOperation;
 
     const prevMessage = prevOperation?.message,
       currentMessage = currentOperation?.message;
