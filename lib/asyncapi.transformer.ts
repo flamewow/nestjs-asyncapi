@@ -49,7 +49,7 @@ export class AsyncapiTransformer {
     if (!baseOperation) return baseOperation;
 
     const prevMessage = prevOperation?.message,
-      currentMessage = currentOperation?.message;
+      const currentMessage = currentOperation?.message;
 
     const messageList: AsyncOneOfMessageObject['oneOf'] = [];
     [prevMessage, currentMessage].forEach((messageObject) => {
