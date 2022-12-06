@@ -20,14 +20,13 @@ export class AsyncapiTransformer {
       return { key, value };
     });
 
-    // TODO: prettify channels
-    const channels = flatChannels.reduce((acc, it) => {
-      if (acc[it.key]) {
-        acc[it.key].publish = acc[it.key].publish || it.value.publish;
-        acc[it.key].subscribe = acc[it.key].subscribe || it.value.subscribe;
-      } else {
-        acc[it.key] = it.value;
+    const channels = flatChannels.reduce((acc, { key, value }) => {
+      if (!acc[key]) {
+        acc[key] = value;
       }
+
+      acc[key].publish = acc[key].publish ?? value.publish;
+      acc[key].subscribe = acc[key].subscribe ?? value.subscribe;
 
       return acc;
     }, {});

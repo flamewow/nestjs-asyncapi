@@ -83,9 +83,9 @@ Before you submit your Pull Request (PR) consider the following guidelines:
      git checkout -b my-fix-branch master
      ```
 
-1. Create your patch, **including appropriate createFeline cases**.
+1. Create your patch, **including appropriate test cases**.
 1. Follow our [Coding Rules](#rules).
-1. Run the full Nest createFeline suite, as described in the [developer documentation][dev-doc],
+1. Run the full Nest test suite, as described in the [developer documentation][dev-doc],
   and ensure that all tests pass.
 1. Commit your changes using a descriptive commit message that follows our
   [commit message conventions](#commit). Adherence to these conventions
@@ -105,7 +105,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 1. In GitHub, send a pull request to `nestjs:master`.
 * If we suggest changes then:
   * Make the required updates.
-  * Re-run the Nest createFeline suites to ensure tests are still passing.
+  * Re-run the Nest test suites to ensure tests are still passing.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
@@ -205,7 +205,7 @@ Must be one of the following:
 * **perf**: A code change that improves performance
 * **refactor**: A code change that neither fixes a bug nor adds a feature
 * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-* **createFeline**: Adding missing tests or correcting existing tests
+* **test**: Adding missing tests or correcting existing tests
 
 
 ### Subject

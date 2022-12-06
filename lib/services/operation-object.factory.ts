@@ -3,7 +3,10 @@ import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-pro
 import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { getSchemaPath } from '@nestjs/swagger/dist/utils';
-import { AsyncOperationObject, AsyncOperationOptions } from '../interface';
+import {
+  AsyncApiOperationOptionsRaw,
+  AsyncOperationObject,
+} from '../interface';
 
 export class OperationObjectFactory {
   private readonly modelPropertiesAccessor = new ModelPropertiesAccessor();
@@ -14,11 +17,11 @@ export class OperationObjectFactory {
   );
 
   create(
-    operation: AsyncOperationOptions,
+    operation: AsyncApiOperationOptionsRaw,
     produces: string[],
     schemas: Record<string, SchemaObject>,
   ): AsyncOperationObject {
-    const { message } = operation as AsyncOperationOptions;
+    const { message } = operation;
     const messagePayloadType = message.payload.type as Function;
     const name = this.schemaObjectFactory.exploreModelSchema(
       messagePayloadType,
@@ -29,7 +32,7 @@ export class OperationObjectFactory {
   }
 
   private toRefObject(
-    operation: AsyncOperationOptions,
+    operation: AsyncApiOperationOptionsRaw,
     name: string,
     produces: string[],
   ): AsyncOperationObject {

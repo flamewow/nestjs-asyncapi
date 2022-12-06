@@ -69,7 +69,7 @@ export class AsyncApiDocumentBuilder {
     servers: { name: string; server: AsyncServerObject }[],
   ): this {
     for (const { name, server } of servers) {
-      this.document.servers[name] = server;
+      this.addServer(name, server);
     }
 
     return this;
@@ -108,17 +108,6 @@ export class AsyncApiDocumentBuilder {
       ...(this.document.components.securitySchemes || {}),
       [name]: options,
     };
-    return this;
-  }
-
-  public addSecurityRequirements(
-    name: string,
-    requirements: string[] = [],
-  ): this {
-    /* TODO: Check this
-        this.document.security = (this.document.security || []).concat({
-            [name]: requirements
-        });*/
     return this;
   }
 

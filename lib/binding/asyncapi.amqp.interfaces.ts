@@ -1,8 +1,14 @@
-// https://github.com/asyncapi/bindings/tree/master/amqp
+/**
+ * AMPQ binding
+ * @see https://github.com/asyncapi/bindings/tree/master/amqp
+ */
 
-export interface AmqpServerBindingObject {}
+/**
+ * This object MUST NOT contain any properties. Its name is reserved for future use.
+ */
+export interface AmqpServerBinding {}
 
-export interface AmqpChannelBindingObject {
+export interface AmqpChannelBinding {
   is: string;
   exchange?: {
     name: string;
@@ -21,7 +27,7 @@ export interface AmqpChannelBindingObject {
   bindingVersion?: string;
 }
 
-export interface AmqpOperationBindingObject {
+export interface AmqpOperationBinding {
   expiration?: number;
   userId?: string;
   cc?: string[];
@@ -35,7 +41,7 @@ export interface AmqpOperationBindingObject {
   bindingVersion?: string;
 }
 
-export interface AmqpMessageBindingObject {
+export interface AmqpMessageBinding {
   contentEncoding?: string;
   messageType?: string;
   bindingVersion?: string;

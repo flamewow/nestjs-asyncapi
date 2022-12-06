@@ -1,5 +1,5 @@
 import { ServerObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { AmqpServerBindingObject, KafkaServerBindingObject } from '../binding';
+import { AmqpServerBinding, KafkaServerBinding } from '../binding';
 import {
   AsyncServerVariableObject,
   SecurityObject,
@@ -10,5 +10,5 @@ export interface AsyncServerObject extends Omit<ServerObject, 'variables'> {
   protocol: string;
   protocolVersion?: string;
   security?: SecurityObject[];
-  bindings?: Record<string, KafkaServerBindingObject | AmqpServerBindingObject>;
+  bindings?: Record<string, KafkaServerBinding | AmqpServerBinding>;
 }
