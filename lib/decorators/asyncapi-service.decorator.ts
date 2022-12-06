@@ -1,19 +1,9 @@
 import { createMixedDecorator } from '@nestjs/swagger/dist/decorators/helpers';
-import {
-  AmqpChannelBindingObject,
-  KafkaChannelBindingObject,
-} from '../binding';
-import { DECORATORS } from '../constants';
+import { DECORATORS } from '../asyncapi.constants';
 
-export interface AsyncApiServiceOptions {
-  serviceName?: string;
-  description?: string;
-  bindings?: Record<
-    string,
-    KafkaChannelBindingObject | AmqpChannelBindingObject
-  >;
-}
-
-export function AsyncApiService(options?: AsyncApiServiceOptions) {
-  return createMixedDecorator(DECORATORS.AsyncapiService, options);
+/**
+ * Mark class that has to be scanned for AsyncApi operations
+ */
+export function AsyncApi() {
+  return createMixedDecorator(DECORATORS.AsyncApiClass, true);
 }

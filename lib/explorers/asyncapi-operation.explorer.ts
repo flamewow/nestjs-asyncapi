@@ -1,65 +1,39 @@
 import { Type } from '@nestjs/common';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { DECORATORS } from '../constants';
-import { AsyncapiMetadataType } from '../enums';
+import { DECORATORS } from '../asyncapi.constants';
 import { OperationObjectFactory } from '../services';
+import { AsyncApiOperationOptionsRaw } from '#lib';
 
 const operationObjectFactory = new OperationObjectFactory();
 
-export const typeDecoratorsMap = {
-  [AsyncapiMetadataType.pub]: DECORATORS.AsyncapiPub,
-  [AsyncapiMetadataType.sub]: DECORATORS.AsyncapiSub,
-};
-
-export const exploreAsyncapiMetadata = (
-  type: AsyncapiMetadataType,
+export const exploreAsyncApiOperationMetadata = (
   schemas: Record<string, SchemaObject>,
   _instance: object,
   _prototype: Type<unknown>,
   method: object,
 ) => {
-  const metadata = Reflect.getMetadata(typeDecoratorsMap[type], method);
+  const metadata: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
+    DECORATORS.AsyncApiOperation,
+    method,
+  );
 
   if (!metadata) {
     return;
   }
 
-  return metadata.map((option) => ({
-    channel: option.channel,
-    [type]: {
+  return metadata.map((option: AsyncApiOperationOptionsRaw) => {
+    const { channel, type } = option;
+
+    const methodTypeData = {
       ...option,
       ...operationObjectFactory.create(option, ['application/json'], schemas),
       channel: undefined,
-    },
-  }));
+      type: undefined,
+    };
+
+    return {
+      channel,
+      [type]: methodTypeData,
+    };
+  });
 };
-
-export function exploreAsyncapiPubMetadata(
-  schemas: Record<string, SchemaObject>,
-  _instance: object,
-  _prototype: Type<unknown>,
-  method: object,
-) {
-  return exploreAsyncapiMetadata(
-    AsyncapiMetadataType.pub,
-    schemas,
-    _instance,
-    _prototype,
-    method,
-  );
-}
-
-export function exploreAsyncapiSubMetadata(
-  schemas: Record<string, SchemaObject>,
-  _instance: object,
-  _prototype: Type<unknown>,
-  method: object,
-) {
-  return exploreAsyncapiMetadata(
-    AsyncapiMetadataType.sub,
-    schemas,
-    _instance,
-    _prototype,
-    method,
-  );
-}

@@ -1,6 +1,6 @@
 {
   "name": "nestjs-asyncapi",
-  "version": "0.3.6",
+  "version": "1.0.3",
   "description": "NestJS AsyncAPI module - generate the documentation of your event-based services using decorators",
   "author": "Ilya Moroz",
   "license": "MIT",
@@ -27,9 +27,15 @@
     "microservices"
   ],
   "peerDependencies": {
-    "@nestjs/common": "^9.0.3",
-    "@nestjs/core": "^9.0.3",
-    "@nestjs/swagger": "^6.0.4"
+    "@nestjs/common": "^9.0.0",
+    "@nestjs/core": "^9.0.0",
+    "@nestjs/swagger": "^6.0.0",
+    "@nestjs/websockets": "^9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@nestjs/websockets": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@asyncapi/generator": "1.9.14",
@@ -39,6 +45,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "9.1.5",
+    "@nestjs/microservices": "^9.1.4",
     "@nestjs/platform-express": "9.2.1",
     "@nestjs/platform-fastify": "9.2.1",
     "@nestjs/platform-socket.io": "9.2.1",
@@ -96,6 +103,7 @@
     "test:e2e": "jest --runInBand --config test/configs/jest-e2e.config.ts",
     "---npm---": "",
     "publish:next": "npm publish --access public --tag next",
+    "publish:beta": "npm publish --access public --tag beta",
     "prepublish:npm": "npm run build",
     "publish:npm": "npm publish --access public",
     "prerelease": "npm run build",

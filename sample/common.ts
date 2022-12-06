@@ -34,8 +34,8 @@ export async function makeAsyncapiDocument(
   }));
 
   const asyncApiOptions = new AsyncApiDocumentBuilder()
-    .setTitle('Cats SocketIO')
-    .setDescription('Cats SocketIO description here')
+    .setTitle('Feline')
+    .setDescription('Feline server description here')
     .setVersion('1.0')
     .setDefaultContentType('application/json')
     .addSecurity('user-password', { type: 'userPassword' })

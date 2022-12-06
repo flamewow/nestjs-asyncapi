@@ -1,4 +1,6 @@
-/** @see https://github.com/asyncapi/html-template#supported-parameters **/
+/**
+ * @see https://github.com/asyncapi/html-template#supported-parameters
+ **/
 export interface AsyncApiTemplateOptions {
   /** @default byTagsNoRoot **/
   sidebarOrganization?: 'byTags' | 'byTagsNoRoot';

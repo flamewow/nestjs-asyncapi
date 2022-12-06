@@ -2,11 +2,11 @@ import { AsyncOperationObject } from './asyncapi-common.interfaces';
 import { AsyncApiOperationHeaders } from './asyncapi-operation-headers.interface';
 import { AsyncOperationPayload } from './asyncapi-operation-payload.interface';
 
-export interface AsyncApiOperationOptions extends AsyncOperationObject {
+export interface AsyncApiSpecificOperationOptions extends AsyncOperationObject {
   /**
-   * message type
+   * message payload
    */
-  type: AsyncOperationPayload;
+  payload: AsyncOperationPayload;
 
   /**
    * message name
@@ -17,4 +17,9 @@ export interface AsyncApiOperationOptions extends AsyncOperationObject {
    * message headers
    */
   headers?: AsyncApiOperationHeaders;
+}
+
+export interface AsyncApiOperationOptions
+  extends AsyncApiSpecificOperationOptions {
+  type: 'pub' | 'sub';
 }
