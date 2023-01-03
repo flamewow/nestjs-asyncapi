@@ -13,3 +13,7 @@ export class FelineRto extends Message<AllFelines> {
   })
   payload: Cat | Lion | Tiger;
 }
+
+export class FelineExtendedRto extends FelineRto {
+  extra: string;
+}

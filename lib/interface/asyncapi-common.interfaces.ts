@@ -68,6 +68,13 @@ export interface AsyncMessageObject extends AsyncMessageTraitObject {
   };
 }
 
+export type MessageType = AsyncMessageObject | ReferenceObject;
+export interface OneOfMessageType {
+  oneOf: MessageType[];
+}
+
+export type AsyncOperationMessage = OneOfMessageType | MessageType;
+
 export interface AsyncOperationObject {
   channel: string;
   operationId?: string;
@@ -77,7 +84,7 @@ export interface AsyncOperationObject {
   externalDocs?: ExternalDocumentationObject;
   bindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
   traits?: Record<string, AsyncOperationTraitObject>;
-  message?: AsyncMessageObject | ReferenceObject;
+  message?: AsyncOperationMessage;
 }
 
 export interface AsyncOperationTraitObject {

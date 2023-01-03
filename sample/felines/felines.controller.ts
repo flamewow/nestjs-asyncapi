@@ -28,7 +28,9 @@ export class FelinesController {
 
   @AsyncApiSub({
     channel: EventPatternsMS.journal,
-    payload: JournalingDataDto,
+    message: {
+      payload: JournalingDataDto,
+    },
   })
   @EventPattern(EventPatternsMS.journal)
   async journal(dataForJournaling: JournalingDataDto) {
@@ -38,7 +40,9 @@ export class FelinesController {
 
   @AsyncApiPub({
     channel: EventPatternsMS.createFeline,
-    payload: CreateFelineDto,
+    message: {
+      payload: CreateFelineDto,
+    },
   })
   @EventPattern(EventPatternsMS.createFeline)
   async createFeline(createFelineDto: CreateFelineDto) {
@@ -49,7 +53,9 @@ export class FelinesController {
 
   @AsyncApiSub({
     channel: EventPatternsMS.createFeline,
-    payload: FelineRto,
+    message: {
+      payload: FelineRto,
+    },
   })
   publishCreatedFeline(feline: Feline) {
     const felineRto = new FelineRto(feline);

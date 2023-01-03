@@ -1,41 +1,61 @@
 import { createMethodDecorator } from '@nestjs/swagger/dist/decorators/helpers';
 import { DECORATORS } from '../asyncapi.constants';
-import { AsyncApiOperationOptions, AsyncOperationObject } from '../interface';
+import {
+  AsyncApiOperationHeaders,
+  AsyncApiOperationOptions,
+  AsyncMessageObject,
+  AsyncOperationObject,
+} from '../interface';
+import { OneAsyncApiMessage } from '../interface/asyncapi-message.interface';
+
+function makeHeaders(headers?: AsyncApiOperationHeaders) {
+  return headers
+    ? {
+        type: 'object',
+        properties: Object.entries(headers)
+          .map(([key, value]) => ({
+            [key]: {
+              type: 'string',
+              ...value,
+            },
+          }))
+          .reduce((acc, j) => ({ ...acc, ...j }), {}),
+      }
+    : undefined;
+}
+
+function makeMessage(
+  message: OneAsyncApiMessage,
+  defaultName: string,
+): AsyncMessageObject {
+  return {
+    ...message,
+    name: message.name || defaultName,
+    payload: {
+      type: message.payload,
+    },
+    headers: makeHeaders(message.headers),
+  };
+}
 
 export function AsyncApiOperation(
   ...options: AsyncApiOperationOptions[]
 ): MethodDecorator {
   return (target, propertyKey: string | symbol, descriptor) => {
-    const defaultMessageName = `${target.constructor.name}#${String(
-      propertyKey,
-    )}`;
+    const methodName = `${target.constructor.name}#${String(propertyKey)}`;
 
     const transformedOptions: AsyncOperationObject[] = options.map((i) => {
+      const message = Array.isArray(i.message)
+        ? {
+            oneOf: i.message.map((i, index) =>
+              makeMessage(i, `${methodName}#${index}`),
+            ),
+          }
+        : makeMessage(i.message, methodName);
+
       const transformedOptionInstance = {
         ...i,
-        message: {
-          ...i.message,
-          name: i.name || defaultMessageName,
-          payload: {
-            type: i.payload,
-          },
-          headers: i.headers
-            ? {
-                type: 'object',
-                properties: Object.entries(i.headers)
-                  .map(([key, value]) => ({
-                    [key]: {
-                      type: 'string',
-                      ...value,
-                    },
-                  }))
-                  .reduce((acc, j) => ({ ...acc, ...j }), {}),
-              }
-            : undefined,
-        },
-        name: undefined,
-        headers: undefined,
-        payload: undefined,
+        message,
       };
 
       return transformedOptionInstance;

@@ -5,7 +5,9 @@ import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-
 import { getSchemaPath } from '@nestjs/swagger/dist/utils';
 import {
   AsyncApiOperationOptionsRaw,
+  AsyncMessageObject,
   AsyncOperationObject,
+  OneOfMessageType,
 } from '../interface';
 
 export class OperationObjectFactory {
@@ -22,29 +24,45 @@ export class OperationObjectFactory {
     schemas: Record<string, SchemaObject>,
   ): AsyncOperationObject {
     const { message } = operation;
-    const messagePayloadType = message.payload.type as Function;
-    const name = this.schemaObjectFactory.exploreModelSchema(
-      messagePayloadType,
-      schemas,
-    );
+    const { oneOf } = message as OneOfMessageType;
 
-    return this.toRefObject(operation, name, produces);
-  }
+    if (oneOf) {
+      return {
+        ...operation,
+        message: {
+          oneOf: oneOf.map((i) => ({
+            ...i,
+            payload: {
+              $ref: getSchemaPath(
+                this.getDtoName(i as AsyncMessageObject, schemas),
+              ),
+            },
+          })),
+        },
+      };
+    }
 
-  private toRefObject(
-    operation: AsyncApiOperationOptionsRaw,
-    name: string,
-    produces: string[],
-  ): AsyncOperationObject {
     return {
       ...operation,
       message: {
-        name: operation.message.name,
-        headers: operation.message.headers,
+        ...operation.message,
         payload: {
-          $ref: getSchemaPath(name),
+          $ref: getSchemaPath(
+            this.getDtoName(message as AsyncMessageObject, schemas),
+          ),
         },
       },
     };
+  }
+
+  private getDtoName(
+    message: AsyncMessageObject,
+    schemas: Record<string, SchemaObject>,
+  ): string {
+    const messagePayloadType = message.payload.type as Function;
+    return this.schemaObjectFactory.exploreModelSchema(
+      messagePayloadType,
+      schemas,
+    );
   }
 }

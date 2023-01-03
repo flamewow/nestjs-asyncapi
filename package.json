@@ -11,7 +11,7 @@
     "url": "https://github.com/flamewow/nestjs-asyncapi"
   },
   "validate-branch-name": {
-    "pattern": "^(main|develop){1}$|^(feat|fix|release|test|refactor|docs|perf|style|chore)/.+$",
+    "pattern": "^(main|dev){1}$|^(feat|fix|release|test|refactor|docs|perf|style|chore)/.+$",
     "errorMsg": "The branch name isn't valid."
   },
   "keywords": [

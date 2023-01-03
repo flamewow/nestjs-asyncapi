@@ -1,22 +1,9 @@
 import { AsyncOperationObject } from './asyncapi-common.interfaces';
-import { AsyncApiOperationHeaders } from './asyncapi-operation-headers.interface';
-import { AsyncOperationPayload } from './asyncapi-operation-payload.interface';
+import { AsyncApiMessage } from './asyncapi-message.interface';
 
-export interface AsyncApiSpecificOperationOptions extends AsyncOperationObject {
-  /**
-   * message payload
-   */
-  payload: AsyncOperationPayload;
-
-  /**
-   * message name
-   */
-  name?: string;
-
-  /**
-   * message headers
-   */
-  headers?: AsyncApiOperationHeaders;
+export interface AsyncApiSpecificOperationOptions
+  extends Omit<AsyncOperationObject, 'message'> {
+  message: AsyncApiMessage;
 }
 
 export interface AsyncApiOperationOptions

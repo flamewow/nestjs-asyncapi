@@ -64,10 +64,30 @@ components:
           format: x.y.z
           example: 1.0.1
         payload:
-          oneOf:
+          oneOf: &ref_1
             - $ref: '#/components/schemas/Cat'
             - $ref: '#/components/schemas/Lion'
             - $ref: '#/components/schemas/Tiger'
+        timestamp:
+          format: date-time
+          type: string
+      required:
+        - correlationId
+        - version
+        - payload
+        - timestamp
+    FelineExtendedRto:
+      type: object
+      properties:
+        correlationId:
+          type: string
+          format: uuid
+        version:
+          type: string
+          format: x.y.z
+          example: 1.0.1
+        payload:
+          oneOf: *ref_1
         timestamp:
           format: date-time
           type: string
@@ -247,28 +267,32 @@ channels:
   ws/create/feline:
     subscribe:
       message:
-        name: FelinesGateway#emitCreatedFeline
-        payload:
-          $ref: '#/components/schemas/FelineRto'
+        oneOf:
+          - name: 'oneOf demo #1'
+            payload:
+              $ref: '#/components/schemas/FelineRto'
+          - name: 'oneOf demo #2'
+            payload:
+              $ref: '#/components/schemas/FelineExtendedRto'
     publish:
       message:
-        name: FelinesGateway#createFeline
         payload:
           $ref: '#/components/schemas/CreateFelineDto'
+        name: FelinesGateway#createFeline
   ms/journal:
     subscribe:
       message:
-        name: FelinesController#journal
         payload:
           $ref: '#/components/schemas/JournalingDataDto'
+        name: FelinesController#journal
   ms/create/feline:
     subscribe:
       message:
-        name: FelinesController#publishCreatedFeline
         payload:
           $ref: '#/components/schemas/FelineRto'
+        name: FelinesController#publishCreatedFeline
     publish:
       message:
-        name: FelinesController#createFeline
         payload:
           $ref: '#/components/schemas/CreateFelineDto'
+        name: FelinesController#createFeline

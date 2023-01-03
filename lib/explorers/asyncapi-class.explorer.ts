@@ -7,7 +7,9 @@ try {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const wsConstants = require('@nestjs/websockets/constants');
   GATEWAY_METADATA = wsConstants.GATEWAY_METADATA;
-} catch {}
+} catch {
+  GATEWAY_METADATA = '__gateway__'; // in case @nestjs/websockets is not installed GATEWAY_METADATA value is irrelevant
+}
 
 export const asyncApiClassAnnotationLabels = [
   DECORATORS.AsyncApiClass,
