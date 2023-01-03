@@ -1,12 +1,17 @@
 import { INestApplicationContext } from '@nestjs/common';
-import { HOST, PORT } from './constants';
+import { HOST, PORT, SERVER } from './constants';
+import { Cat, Feline, Lion, Tiger } from './felines/class';
+import { FelinesModule } from './felines/felines.module';
 import {
+  AsyncApiDocument,
   AsyncApiDocumentBuilder,
   AsyncApiModule,
   AsyncServerObject,
 } from '#lib';
 
-export async function makeAsyncapiDocument(app: INestApplicationContext) {
+export async function makeAsyncapiDocument(
+  app: INestApplicationContext,
+): Promise<AsyncApiDocument> {
   const asyncApiServer: AsyncServerObject = {
     url: `ws://${HOST}:${PORT}`,
     protocol: 'socket.io',
@@ -23,14 +28,22 @@ export async function makeAsyncapiDocument(app: INestApplicationContext) {
     bindings: {},
   };
 
+  const servers = Object.keys(SERVER).map((i) => ({
+    name: SERVER[i],
+    server: asyncApiServer,
+  }));
+
   const asyncApiOptions = new AsyncApiDocumentBuilder()
-    .setTitle('Cats SocketIO')
-    .setDescription('Cats SocketIO description here')
+    .setTitle('Feline')
+    .setDescription('Feline server description here')
     .setVersion('1.0')
     .setDefaultContentType('application/json')
     .addSecurity('user-password', { type: 'userPassword' })
-    .addServer('cats-server', asyncApiServer)
+    .addServers(servers)
     .build();
 
-  return AsyncApiModule.createDocument(app, asyncApiOptions);
+  return AsyncApiModule.createDocument(app, asyncApiOptions, {
+    include: [FelinesModule],
+    extraModels: [Cat, Lion, Tiger, Feline],
+  });
 }

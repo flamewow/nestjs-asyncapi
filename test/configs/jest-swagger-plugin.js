@@ -9,7 +9,7 @@ module.exports.factory = (cs) => {
   return transformer.before(
     {
       introspectComments: true,
-      dtoFileNameSuffix: ['.dto.ts'],
+      dtoFileNameSuffix: ['.dto.ts', '.class.ts'],
     },
     cs.program, // "cs.tsCompiler.program" for older versions of Jest (<= v27)
   );

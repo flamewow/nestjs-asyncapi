@@ -1,36 +1,69 @@
-import { Type } from '@nestjs/common';
-import { createMixedDecorator } from '@nestjs/swagger/dist/decorators/helpers';
-import { AsyncOperationObject } from '..';
-import { DECORATORS } from '../constants';
+import { createMethodDecorator } from '@nestjs/swagger/dist/decorators/helpers';
+import { DECORATORS } from '../asyncapi.constants';
+import {
+  AsyncApiOperationHeaders,
+  AsyncApiOperationOptions,
+  AsyncMessageObject,
+  AsyncOperationObject,
+} from '../interface';
+import { OneAsyncApiMessage } from '../interface/asyncapi-message.interface';
 
-export interface AsyncOperationOptions
-  extends Omit<AsyncOperationObject, 'message'> {
-  message: {
-    name?: string;
+function makeHeaders(headers?: AsyncApiOperationHeaders) {
+  return headers
+    ? {
+        type: 'object',
+        properties: Object.entries(headers)
+          .map(([key, value]) => ({
+            [key]: {
+              type: 'string',
+              ...value,
+            },
+          }))
+          .reduce((acc, j) => ({ ...acc, ...j }), {}),
+      }
+    : undefined;
+}
+
+function makeMessage(
+  message: OneAsyncApiMessage,
+  defaultName: string,
+): AsyncMessageObject {
+  return {
+    ...message,
+    name: message.name || defaultName,
     payload: {
-      type: Type<unknown> | Function | [Function] | string;
-    };
-    headers?: {
-      type: 'object';
-      properties: {
-        [key: string]: {
-          description: string;
-          type: 'string';
-          [key: string]: any;
-        };
-      };
-    };
+      type: message.payload,
+    },
+    headers: makeHeaders(message.headers),
   };
 }
 
-export function AsyncApiPub(
-  ...options: AsyncOperationOptions[]
-): MethodDecorator & ClassDecorator {
-  return createMixedDecorator(DECORATORS.ASYNCAPI_PUB, options);
-}
+export function AsyncApiOperation(
+  ...options: AsyncApiOperationOptions[]
+): MethodDecorator {
+  return (target, propertyKey: string | symbol, descriptor) => {
+    const methodName = `${target.constructor.name}#${String(propertyKey)}`;
 
-export function AsyncApiSub(
-  ...options: AsyncOperationOptions[]
-): MethodDecorator & ClassDecorator {
-  return createMixedDecorator(DECORATORS.ASYNCAPI_SUB, options);
+    const transformedOptions: AsyncOperationObject[] = options.map((i) => {
+      const message = Array.isArray(i.message)
+        ? {
+            oneOf: i.message.map((i, index) =>
+              makeMessage(i, `${methodName}#${index}`),
+            ),
+          }
+        : makeMessage(i.message, methodName);
+
+      const transformedOptionInstance = {
+        ...i,
+        message,
+      };
+
+      return transformedOptionInstance;
+    });
+
+    return createMethodDecorator(
+      DECORATORS.AsyncApiOperation,
+      transformedOptions,
+    )(target, propertyKey, descriptor);
+  };
 }

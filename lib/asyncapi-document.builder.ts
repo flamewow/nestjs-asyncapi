@@ -1,4 +1,3 @@
-import { Logger } from '@nestjs/common';
 import {
   ExternalDocumentationObject,
   SecuritySchemeObject,
@@ -6,16 +5,14 @@ import {
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { isUndefined, negate, pickBy } from 'lodash';
 import {
-  AsyncAPIObject,
+  AsyncApiDocument,
   AsyncSecuritySchemeObject,
   AsyncServerObject,
-} from './interfaces';
+} from './interface';
 
 export class AsyncApiDocumentBuilder {
-  private readonly logger = new Logger(AsyncApiDocumentBuilder.name);
-
   private readonly buildDocumentBase = (): Omit<
-    AsyncAPIObject,
+    AsyncApiDocument,
     'channels'
   > => ({
     asyncapi: '2.5.0',
@@ -30,7 +27,7 @@ export class AsyncApiDocumentBuilder {
     components: {},
   });
 
-  private readonly document: Omit<AsyncAPIObject, 'channels'> =
+  private readonly document: Omit<AsyncApiDocument, 'channels'> =
     this.buildDocumentBase();
 
   public setTitle(title: string): this {
@@ -68,6 +65,16 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
+  public addServers(
+    servers: { name: string; server: AsyncServerObject }[],
+  ): this {
+    for (const { name, server } of servers) {
+      this.addServer(name, server);
+    }
+
+    return this;
+  }
+
   public setExternalDoc(description: string, url: string): this {
     this.document.externalDocs = { description, url };
     return this;
@@ -101,17 +108,6 @@ export class AsyncApiDocumentBuilder {
       ...(this.document.components.securitySchemes || {}),
       [name]: options,
     };
-    return this;
-  }
-
-  public addSecurityRequirements(
-    name: string,
-    requirements: string[] = [],
-  ): this {
-    /* TODO: Check this
-        this.document.security = (this.document.security || []).concat({
-            [name]: requirements
-        });*/
     return this;
   }
 
@@ -188,7 +184,7 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public build(): Omit<AsyncAPIObject, 'components' | 'channels'> {
+  public build(): Omit<AsyncApiDocument, 'components' | 'channels'> {
     return this.document;
   }
 }
