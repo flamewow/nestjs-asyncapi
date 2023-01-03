@@ -1,5 +1,6 @@
 import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
@@ -15,11 +16,14 @@ const adapter = USE_FASTIFY
     })
   : new ExpressAdapter();
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<INestApplication>(AppModule, adapter);
   const asyncapiDocument = await makeAsyncapiDocument(app);
   await AsyncApiModule.setup(DOC_RELATIVE_PATH, app, asyncapiDocument);
 
+  app.connectMicroservice<MicroserviceOptions>({ transport: Transport.TCP });
+
+  await app.startAllMicroservices();
   await app.listen(PORT, HOST);
 
   const baseUrl = `http://${HOST}:${PORT}`;

@@ -6,7 +6,8 @@
 
 [AsyncApi](https://www.asyncapi.com/) module for [Nest](https://github.com/nestjs/nest).
 
-Generate [AsyncApi](https://www.asyncapi.com/) documentation (for event-based services, like websockets) in a similar to [nestjs/swagger](https://github.com/nestjs/swagger) fashion.
+Generate [AsyncApi](https://www.asyncapi.com/) documentation (for event-based services, like websockets) in a similar
+to [nestjs/swagger](https://github.com/nestjs/swagger) fashion.
 
 [Documentation example](https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/v2.1.0/examples/simple.yml)
 
@@ -18,168 +19,81 @@ full installation (with chromium)
 $ npm i --save nestjs-asyncapi
 ```
 
-nestjs-async api package doesn't require chromium (which is required by asyncapi lib), so u can skip chromium installation by setting PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true environment variable.
+nestjs-async api package doesn't require chromium (which is required by asyncapi lib), so u can skip chromium
+installation by setting PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true environment variable.
+
 ```bash
 $ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm i --save nestjs-asyncapi
 ```
 
 ## Quick Start
 
-Document is composed via decorators.
+Include AsyncApi initialization into your bootstrap function.
 
-Define [AsyncApi](https://www.asyncapi.com/) service class by AsyncApiService decorator <br/>
 ```typescript
-  @AsyncApiService()
-```
-
-Define publish/subscribe methods by AsyncApiPub/AsyncApiSub decorators
-```typescript
-  class AnySwaggerExampleDto {
-    @ApiProperty()
-    readonly name: string;
-  }
-
-  @AsyncApiPub({
-    channel: 'test',
-    summary: 'Send test packet',
-    description: 'method is used for test purposes',
-    message: {
-      name: 'test data',
-      payload: {
-        type: AnySwaggerExampleDto,
-      },
-    },
-  })
-
-  @AsyncApiSub({
-    channel: 'signal',
-    summary: 'Subscribe to signal packet',
-    description: 'method is used for test purposes',
-    message: {
-      name: 'test data signal',
-      payload: {
-        type: AnySwaggerExampleDto,
-      },
-    },
-  })
-```
-
-### Usage example:
-
-gateway file:
-```typescript
-import {
-  ConnectedSocket,
-  MessageBody,
-  OnGatewayInit,
-  OnGatewayDisconnect,
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer,
-} from '@nestjs/websockets';
-import { Namespace, Server } from 'socket.io';
-import { Logger } from '@nestjs/common';
-import { Socket } from 'socket.io-client';
-import { AsyncApiPub, AsyncApiService, AsyncApiSub } from 'nestjs-asyncapi';
-
-@AsyncApiService()
-@WebSocketGateway({ transports: ['websocket'], namespace: 'cats-ws' })
-export class CatsGateway implements OnGatewayInit, OnGatewayDisconnect {
-  @WebSocketServer()
-  server: Server;
-  private logger: Logger = new Logger(CatsGateway.name);
-
-  afterInit(nsp: Namespace) {
-    this.logger.log(`WS server init: ${nsp?.name}`);
-  }
-
-  handleDisconnect(client: Socket) {
-    this.logger.log(`IOClient disconnected: ${client.id}`);
-  }
-
-  @SubscribeMessage('test')
-  @AsyncApiPub({
-    channel: 'test',
-    summary: 'Send test packet',
-    description: 'method is used for test purposes',
-    message: {
-      name: 'test data',
-      payload: {
-        type: AnySwaggerExampleDto,
-      },
-    },
-  })
-  test(@ConnectedSocket() client: Socket, @MessageBody() data: string) {
-    this.logger.log(`data from client ${client.id} : ${JSON.stringify(data)}`);
-    this.server.emit('test', data);
-  }
-
-  @AsyncApiSub({
-    channel: 'signal',
-    summary: 'Subscribe to signal packet',
-    description: 'method is used for test purposes',
-    message: {
-      name: 'test data signal',
-      payload: {
-        type: AnySwaggerExampleDto,
-      },
-    },
-  })
-  async emitSignal(boardUUID: string, data: Record<string, any>) {
-    this.server.to('test').emit('signal', data);
-  }
-}
-
-```
-
-main file:
-```typescript
-import 'source-map-support/register';
-
-import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { AppModule } from './src/app.module';
-import { AsyncApiDocumentBuilder, AsyncApiModule, AsyncServerObject } from 'nestjs-asyncapi';
-
-const port = 4001;
-const host = '0.0.0.0';
-const docRelPath = '/async-api';
-
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const asyncApiServer: AsyncServerObject = {
-    url: 'ws://localhost:4001',
-    protocol: 'socket.io',
-    protocolVersion: '4',
-    description: 'Allows you to connect using the websocket protocol to our Socket.io server.',
-    security: [{ 'user-password': [] }],
-    variables: {
-      port: {
-        description: 'Secure connection (TLS) is available through port 443.',
-        default: '443',
-      },
-    },
-    bindings: {},
-  };
+    const asyncApiOptions = new AsyncApiDocumentBuilder()
+        .setTitle('Feline')
+        .setDescription('Feline server description here')
+        .setVersion('1.0')
+        .setDefaultContentType('application/json')
+        .addSecurity('user-password', {type: 'userPassword'})
+        .addServers({
+            url: 'ws://localhost:3000',
+            protocol: 'socket.io',
+        })
+        .build();
 
-  const asyncApiOptions = new AsyncApiDocumentBuilder()
-    .setTitle('Cats SocketIO')
-    .setDescription('Cats SocketIO description here')
-    .setVersion('1.0')
-    .setDefaultContentType('application/json')
-    .addSecurity('user-password', { type: 'userPassword' })
-    .addServer('cats-server', asyncApiServer)
-    .build();
+    const asyncapiDocument = await AsyncApiModule.createDocument(app, asyncApiOptions);
+    await AsyncApiModule.setup(docRelPath, app, asyncapiDocument);
 
-  const asyncapiDocument = await AsyncApiModule.createDocument(app, asyncApiOptions);
-  await AsyncApiModule.setup(docRelPath, app, asyncapiDocument);
+    // other bootstrap procedures here
 
-  return app.listen(port, host);
+    return app.listen(3000);
+}
+```
+
+AsyncApi module explores `Controllers` & `WebSocketGateway` by default.
+In most cases you won't need to add extra annotation,
+but if you need to define asyncApi operations in a class that's not a controller or gateway use `AsyncApiClass`
+decorator.
+
+Mark pub/sub methods via `AsyncApiPub` or `AsyncApiSub` decorators<br/>
+
+```typescript
+class CreateFelineDto {
+    @ApiProperty()
+    demo: string;
 }
 
-const baseUrl = `http://${host}:${port}`;
-const startMessage = `Server started at ${baseUrl}; AsyncApi at ${baseUrl + docRelPath};`;
+@Controller()
+class DemoController {
+    @AsyncApiPub({
+        channel: 'create/feline',
+        message: {
+            payload: CreateFelineDto
+        },
+    })
+    async createFeline() {
+        // logic here
+    }
 
-bootstrap().then(() => console.log(startMessage));
+    @AsyncApiSub({
+        channel: 'create/feline',
+        message: {
+            payload: CreateFelineDto
+        },
+    })
+    async createFeline() {
+        // logic here
+    }
+}
+
 ```
+
+For more detailed examples please check out https://github.com/flamewow/nestjs-asyncapi/tree/main/sample sample app.
+
+<h5>Do you use this library and like it? Don't be shy to give it a star
+on <a href="https://github.com/flamewow/nestjs-asyncapi">github <span style="color:yellow;">★</span></a></h3>

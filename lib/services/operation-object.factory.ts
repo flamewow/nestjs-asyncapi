@@ -3,8 +3,12 @@ import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-pro
 import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
 import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
 import { getSchemaPath } from '@nestjs/swagger/dist/utils';
-import { AsyncOperationObject } from '..';
-import { AsyncOperationOptions } from '../decorators';
+import {
+  AsyncApiOperationOptionsRaw,
+  AsyncMessageObject,
+  AsyncOperationObject,
+  OneOfMessageType,
+} from '../interface';
 
 export class OperationObjectFactory {
   private readonly modelPropertiesAccessor = new ModelPropertiesAccessor();
@@ -15,34 +19,50 @@ export class OperationObjectFactory {
   );
 
   create(
-    operation: AsyncOperationOptions,
+    operation: AsyncApiOperationOptionsRaw,
     produces: string[],
     schemas: Record<string, SchemaObject>,
   ): AsyncOperationObject {
-    const { message } = operation as AsyncOperationOptions;
-    const messagePayloadType = message.payload.type as Function;
-    const name = this.schemaObjectFactory.exploreModelSchema(
-      messagePayloadType,
-      schemas,
-    );
+    const { message } = operation;
+    const { oneOf } = message as OneOfMessageType;
 
-    return this.toRefObject(operation, name, produces);
-  }
+    if (oneOf) {
+      return {
+        ...operation,
+        message: {
+          oneOf: oneOf.map((i) => ({
+            ...i,
+            payload: {
+              $ref: getSchemaPath(
+                this.getDtoName(i as AsyncMessageObject, schemas),
+              ),
+            },
+          })),
+        },
+      };
+    }
 
-  private toRefObject(
-    operation: AsyncOperationOptions,
-    name: string,
-    produces: string[],
-  ): AsyncOperationObject {
     return {
       ...operation,
       message: {
-        name: operation.message.name,
-        headers: operation.message.headers,
+        ...operation.message,
         payload: {
-          $ref: getSchemaPath(name),
+          $ref: getSchemaPath(
+            this.getDtoName(message as AsyncMessageObject, schemas),
+          ),
         },
       },
     };
+  }
+
+  private getDtoName(
+    message: AsyncMessageObject,
+    schemas: Record<string, SchemaObject>,
+  ): string {
+    const messagePayloadType = message.payload.type as Function;
+    return this.schemaObjectFactory.exploreModelSchema(
+      messagePayloadType,
+      schemas,
+    );
   }
 }

@@ -32,7 +32,7 @@ describe('Fastify AsyncAPI', () => {
       .get(DOC_RELATIVE_PATH)
       .expect(200)
       .expect('Content-Type', /text\/html/);
-    const htmlSample = await fs.readFile('./misc/samples/sample.html', {
+    const htmlSample = await fs.readFile('./misc/references/ref.html', {
       encoding: 'utf8',
     });
     expect(text).toEqual(htmlSample);
@@ -46,7 +46,7 @@ describe('Fastify AsyncAPI', () => {
 
     const jsonFetched = JSON.parse(text);
     const jsonReferenceSample = JSON.parse(
-      await fs.readFile('./misc/samples/sample.json', {
+      await fs.readFile('./misc/references/ref.json', {
         encoding: 'utf8',
       }),
     );
@@ -62,7 +62,7 @@ describe('Fastify AsyncAPI', () => {
 
     const yamlFetched = jsyaml.load(text);
     const yamlReferenceSample = jsyaml.load(
-      await fs.readFile('./misc/samples/sample.yaml', {
+      await fs.readFile('./misc/references/ref.yaml', {
         encoding: 'utf8',
       }),
     );
