@@ -37,7 +37,7 @@ async function bootstrap() {
       .setVersion('1.0')
       .setDefaultContentType('application/json')
       .addSecurity('user-password', { type: 'userPassword' })
-      .addServers({
+      .addServer('feline-ws', {
           url: 'ws://localhost:3000',
           protocol: 'socket.io',
       })
