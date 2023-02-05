@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@asyncapi/generator": "1.9.14",
-    "@asyncapi/html-template": "0.28.1",
+    "@asyncapi/html-template": "0.28.3",
     "js-yaml": "4.1.0",
     "reflect-metadata": "0.1.13"
   },
@@ -48,10 +48,10 @@
     "@nestjs/microservices": "^9.1.4",
     "@nestjs/platform-express": "9.2.1",
     "@nestjs/platform-fastify": "9.2.1",
-    "@nestjs/platform-socket.io": "9.2.1",
+    "@nestjs/platform-socket.io": "9.3.2",
     "@nestjs/schematics": "9.0.4",
     "@nestjs/testing": "9.2.1",
-    "@nestjs/websockets": "9.2.1",
+    "@nestjs/websockets": "9.3.2",
     "@types/express": "4.17.14",
     "@types/jest": "29.4.0",
     "@types/js-yaml": "4.0.5",

@@ -14,7 +14,7 @@ import { DOC_RELATIVE_PATH } from '#sample/constants';
 describe('Express AsyncAPI', () => {
   let app: NestExpressApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     app = await NestFactory.create<NestExpressApplication>(
       AppModule,
       new ExpressAdapter(),

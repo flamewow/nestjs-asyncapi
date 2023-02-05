@@ -14,7 +14,7 @@ import { DOC_RELATIVE_PATH } from '#sample/constants';
 describe('Fastify AsyncAPI', () => {
   let app: NestFastifyApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     app = await NestFactory.create<NestFastifyApplication>(
       AppModule,
       new FastifyAdapter(),
