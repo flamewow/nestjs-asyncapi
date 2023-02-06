@@ -44,7 +44,7 @@
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
-    "@nestjs/cli": "9.1.8",
+    "@nestjs/cli": "9.2.0",
     "@nestjs/microservices": "^9.1.4",
     "@nestjs/platform-express": "9.3.2",
     "@nestjs/platform-fastify": "9.3.2",
