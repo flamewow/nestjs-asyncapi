@@ -12,16 +12,12 @@ export const exploreAsyncApiOperationMetadata = (
   _prototype: Type<unknown>,
   method: object,
 ) => {
-  const metadata: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
-    DECORATORS.AsyncApiOperation,
-    method,
-  );
+  const metadata = Reflect.getMetadata(DECORATORS.AsyncApiOperation, method);
+  const metadataSub = Reflect.getMetadata(DECORATORS.AsyncApiSub, method);
+  const metadataPub = Reflect.getMetadata(DECORATORS.AsyncApiPub, method);
+  const metadataCombined = [...metadata || [], ...metadataSub || [], ...metadataPub || []]
 
-  if (!metadata) {
-    return;
-  }
-
-  return metadata.map((option: AsyncApiOperationOptionsRaw) => {
+  return metadataCombined.map((option: AsyncApiOperationOptionsRaw) => {
     const { channel, type } = option;
 
     const methodTypeData = {
