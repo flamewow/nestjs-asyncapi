@@ -1,4 +1,4 @@
-import { DECORATORS } from 'lib/asyncapi.constants';
+import { DECORATORS } from '../asyncapi.constants';
 import {
   AsyncApiOperationOptions,
   AsyncApiSpecificOperationOptions,
