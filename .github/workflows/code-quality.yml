@@ -1,6 +1,7 @@
 name: code-quality
 
 on:
+  pull_request_target:
   workflow_dispatch:
 
 jobs:
@@ -8,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: use node@16
+      - name: use node@18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
