@@ -38,13 +38,10 @@ function makeMessage(
   };
 }
 
-export function AsyncApiOperation(
-  ...options: AsyncApiOperationOptions[]
+export function AsyncApiOperationForMetaKey(
+  metaKey: string,
+  options: AsyncApiOperationOptions[],
 ): MethodDecorator {
-  return AsyncApiOperationForMetaKey(DECORATORS.AsyncApiOperation, options)
-}
-
-export function AsyncApiOperationForMetaKey(metaKey: string, options: AsyncApiOperationOptions[]) {
   return (target, propertyKey: string | symbol, descriptor) => {
     const methodName = `${target.constructor.name}#${String(propertyKey)}`;
 
@@ -65,9 +62,16 @@ export function AsyncApiOperationForMetaKey(metaKey: string, options: AsyncApiOp
       return transformedOptionInstance;
     });
 
-    return createMethodDecorator(
-      metaKey,
-      transformedOptions,
-    )(target, propertyKey, descriptor);
+    return createMethodDecorator(metaKey, transformedOptions)(
+      target,
+      propertyKey,
+      descriptor,
+    );
   };
+}
+
+export function AsyncApiOperation(
+  ...options: AsyncApiOperationOptions[]
+): MethodDecorator {
+  return AsyncApiOperationForMetaKey(DECORATORS.AsyncApiOperation, options);
 }
