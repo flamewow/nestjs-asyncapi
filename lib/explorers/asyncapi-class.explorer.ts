@@ -12,9 +12,9 @@ try {
 }
 
 export const asyncApiClassAnnotationLabels = [
-  DECORATORS.AsyncApiClass,
-  CONTROLLER_WATERMARK,
-  GATEWAY_METADATA,
+  // DECORATORS.AsyncApiClass,
+  // CONTROLLER_WATERMARK,
+  // GATEWAY_METADATA,
 ];
 
 export const exploreAsyncapiClassMetadata = (metatype: Type<unknown>) => {
