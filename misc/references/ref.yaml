@@ -290,7 +290,7 @@ channels:
       message:
         payload:
           $ref: '#/components/schemas/FelineRto'
-        name: FelinesController#publishCreatedFeline
+        name: FelinesController#createFeline
     publish:
       message:
         payload:

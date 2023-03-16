@@ -44,6 +44,12 @@ export class FelinesController {
       payload: CreateFelineDto,
     },
   })
+  @AsyncApiSub({
+    channel: EventPatternsMS.createFeline,
+    message: {
+      payload: FelineRto,
+    },
+  })
   @EventPattern(EventPatternsMS.createFeline)
   async createFeline(createFelineDto: CreateFelineDto) {
     const feline = await this.felinesService.create(createFelineDto);
@@ -51,12 +57,6 @@ export class FelinesController {
     this.publishCreatedFeline(feline);
   }
 
-  @AsyncApiSub({
-    channel: EventPatternsMS.createFeline,
-    message: {
-      payload: FelineRto,
-    },
-  })
   publishCreatedFeline(feline: Feline) {
     const felineRto = new FelineRto(feline);
     return this.client.emit(EventPatternsMS.journal, felineRto);

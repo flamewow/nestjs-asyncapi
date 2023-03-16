@@ -1,8 +1,9 @@
+import { DECORATORS } from '../asyncapi.constants';
 import {
   AsyncApiOperationOptions,
   AsyncApiSpecificOperationOptions,
 } from '../interface';
-import { AsyncApiOperation } from './asyncapi-operation.decorator';
+import { AsyncApiOperationForMetaKey } from './asyncapi-operation-for-meta-key.decorator';
 
 export function AsyncApiSub(
   ...specificOperationOptions: AsyncApiSpecificOperationOptions[]
@@ -13,5 +14,5 @@ export function AsyncApiSub(
       type: 'sub',
     }),
   );
-  return AsyncApiOperation(...options);
+  return AsyncApiOperationForMetaKey(DECORATORS.AsyncApiSub, options);
 }
