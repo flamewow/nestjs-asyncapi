@@ -3,7 +3,7 @@ import {
   AsyncApiOperationOptions,
   AsyncApiSpecificOperationOptions,
 } from '../interface';
-import { AsyncApiOperationForMetaKey } from './asyncapi-operation.decorator';
+import { AsyncApiOperationForMetaKey } from './asyncapi-operation-for-meta-key.decorator';
 
 export function AsyncApiPub(
   ...specificOperationOptions: AsyncApiSpecificOperationOptions[]
