@@ -1,6 +1,6 @@
 {
   "name": "nestjs-asyncapi",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "NestJS AsyncAPI module - generate the documentation of your event-based services using decorators",
   "author": "Ilya Moroz",
   "license": "MIT",
