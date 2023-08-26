@@ -57,7 +57,7 @@ async function bootstrap() {
 
 AsyncApi module explores `Controllers` & `WebSocketGateway` by default.
 In most cases you won't need to add extra annotation,
-but if you need to define asyncApi operations in a class that's not a controller or gateway use `AsyncApiClass`
+but if you need to define asyncApi operations in a class that's not a controller or gateway use the `AsyncApi` class
 decorator.
 
 Mark pub/sub methods via `AsyncApiPub` or `AsyncApiSub` decorators<br/>
