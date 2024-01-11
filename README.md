@@ -1,7 +1,5 @@
 [![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
-<a href="https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md" target="blank"><img src="https://github.com/flamewow/nestjs-asyncapi/blob/main/misc/ua.png" alt="#StandWithUkraine" /></a>
-
 ## Description
 
 [AsyncApi](https://www.asyncapi.com/) module for [Nest](https://github.com/nestjs/nest).
