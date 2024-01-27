@@ -40,7 +40,7 @@ export class AsyncApiModule {
     templateOptions?: AsyncApiTemplateOptions,
   ) {
     const generator = new AsyncapiGenerator(templateOptions);
-    return await generator.generate(contract).catch((err) => {
+    return generator.generate(contract).catch((err) => {
       this.logger.error(err);
       throw err;
     });

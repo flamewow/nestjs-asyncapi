@@ -50,6 +50,7 @@
         "groups": [["builtin", "external"], "parent", "sibling", "index"],
         "newlines-between": "never"
       }
-    ]
+    ],
+    "no-return-await": "error"
   }
 }
