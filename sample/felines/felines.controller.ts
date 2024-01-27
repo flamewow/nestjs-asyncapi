@@ -58,7 +58,7 @@ export class FelinesController {
   }
 
   publishCreatedFeline(feline: Feline) {
-    const felineRto = new FelineRto(feline);
+    const felineRto = new FelineRto({ payload: feline });
     return this.client.emit(EventPatternsMS.journal, felineRto);
   }
 
@@ -69,6 +69,8 @@ export class FelinesController {
       name: 'demo',
     });
 
-    await this.createFeline(new FelineRto({ payload: cat }));
+    const felineRto = new CreateFelineDto({ payload: cat });
+
+    await this.createFeline(felineRto);
   }
 }

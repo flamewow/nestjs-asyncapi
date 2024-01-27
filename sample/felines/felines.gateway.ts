@@ -54,7 +54,7 @@ export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
     );
 
     const feline = await this.felinesService.create(createFelineDto);
-    await this.emitCreatedFeline(new FelineRto(feline));
+    await this.emitCreatedFeline(new FelineRto({ payload: feline }));
   }
 
   @AsyncApiSub({

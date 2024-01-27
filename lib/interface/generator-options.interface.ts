@@ -1,3 +1,4 @@
+import { AsyncApiDocument } from './asyncapi-common.interfaces';
 import { AsyncApiTemplateOptions } from './asyncapi-template-options.interface';
 
 export interface GeneratorOptions {
@@ -10,11 +11,11 @@ export interface GeneratorOptions {
   forceWrite: boolean;
   debug: boolean;
   install: boolean;
-  templateConfig: Record<string, any>;
-  hooks: Record<string, any>;
+  templateConfig: Record<string, unknown>;
+  hooks: Record<string, unknown>;
   templateParams: AsyncApiTemplateOptions;
-  generate: (document: any) => Promise<void>;
+  generate: (document: AsyncApiDocument) => Promise<void>;
   generateFromURL: (url: string) => Promise<void>;
   generateFromFile: (path: string) => Promise<void>;
-  generateFromString: (yaml: string, args?: any) => Promise<string>;
+  generateFromString: (yaml: string, args?: unknown) => Promise<string>;
 }

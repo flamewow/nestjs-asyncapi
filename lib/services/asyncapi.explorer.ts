@@ -21,7 +21,7 @@ export class AsyncApiExplorer {
     controllerKey ? `${controllerKey}_${methodKey}` : methodKey;
 
   public explorerAsyncapiServices(
-    wrapper: InstanceWrapper<any>,
+    wrapper: InstanceWrapper,
     modulePath?: string,
     globalPrefix?: string,
     operationIdFactory?: (controllerKey: string, methodKey: string) => string,
@@ -77,7 +77,7 @@ export class AsyncApiExplorer {
     _globalPrefix?: string,
   ): DenormalizedDoc[] {
     const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<
-      any,
+      unknown,
       DenormalizedDoc[]
     >(instance, prototype, (name) => {
       const targetCallback = prototype[name];

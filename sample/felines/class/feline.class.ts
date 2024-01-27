@@ -23,7 +23,7 @@ export abstract class Feline {
 
   birthDatetime: Date;
 
-  constructor(initializer: Record<string, any>) {
+  constructor(initializer: Record<string, unknown>) {
     Object.assign(this, initializer);
   }
 }

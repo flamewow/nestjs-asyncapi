@@ -1,9 +1,7 @@
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { Cat, Lion, Message, Tiger } from '../class';
+import { Cat, Feline, Lion, Message, Tiger } from '../class';
 
-type AllFelines = Cat | Lion | Tiger;
-
-export class FelineRto extends Message<AllFelines> {
+export class FelineRto extends Message<Feline> {
   @ApiProperty({
     oneOf: [
       { $ref: getSchemaPath(Cat) },
@@ -11,7 +9,7 @@ export class FelineRto extends Message<AllFelines> {
       { $ref: getSchemaPath(Tiger) },
     ],
   })
-  payload: Cat | Lion | Tiger;
+  payload: Feline;
 }
 
 export class FelineExtendedRto extends FelineRto {

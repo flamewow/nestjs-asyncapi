@@ -12,7 +12,7 @@ export interface RawAsyncApiMessage {
       [key: string]: {
         description: string;
         type: 'string';
-        [key: string]: any;
+        [key: string]: unknown;
       };
     };
   };
