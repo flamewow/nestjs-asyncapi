@@ -1,7 +1,11 @@
 import Generator from '@asyncapi/generator';
 import jsyaml from 'js-yaml';
 import os from 'os';
-import { AsyncApiTemplateOptions, GeneratorOptions } from '../interface';
+import {
+  AsyncApiDocument,
+  AsyncApiTemplateOptions,
+  GeneratorOptions,
+} from '../interface';
 
 export class AsyncapiGenerator {
   private readonly generator: GeneratorOptions;
@@ -18,9 +22,9 @@ export class AsyncapiGenerator {
     });
   }
 
-  public async generate(contract: any): Promise<string> {
+  public async generate(contract: AsyncApiDocument): Promise<string> {
     const yaml = jsyaml.dump(contract);
-    return await this.generator.generateFromString(yaml, {
+    return this.generator.generateFromString(yaml, {
       resolve: {
         file: false,
       },
