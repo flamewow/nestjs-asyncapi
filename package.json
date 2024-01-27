@@ -92,6 +92,7 @@
     "prepare": "husky install",
     "format": "prettier --write \"lib/**/*.{js,ts,json}\"  \"e2e/**/*.{js,ts,json}\"",
     "lint": "eslint --fix \"lib/**/*.ts\"  \"sample/**/*.ts\" \"test/**/*.ts\"",
+    "ts:lint": "tsc -noEmit -incremental",
     "pre-commit": "lint-staged",
     "prestart": "npm install && npm run build",
     "make:snapshots": "bash misc/take-snaphots.sh",
