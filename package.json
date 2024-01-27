@@ -38,8 +38,8 @@
     }
   },
   "dependencies": {
-    "@asyncapi/generator": "1.13.1",
-    "@asyncapi/html-template": "0.28.4",
+    "@asyncapi/generator": "1.17.0",
+    "@asyncapi/html-template": "2.1.1",
     "js-yaml": "4.1.0",
     "reflect-metadata": "0.1.13"
   },
