@@ -11,7 +11,7 @@ export abstract class Message<T extends Record<string, any>> {
 
   abstract payload: T;
 
-  constructor(partialData: Record<string, any>) {
+  constructor(partialData: Partial<Message<T>>) {
     Object.assign(this, partialData);
   }
 }

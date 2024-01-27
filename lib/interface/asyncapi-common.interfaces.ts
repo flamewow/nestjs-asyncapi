@@ -156,7 +156,7 @@ export interface OAuthFlowObject {
   scopes: ScopesObject;
 }
 
-export type ScopesObject = Record<string, any>;
+export type ScopesObject = Record<string, unknown>;
 
 export type ParameterObject = BaseParameterObject;
 
