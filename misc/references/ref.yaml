@@ -30,6 +30,40 @@ components:
     user-password:
       type: userPassword
   schemas:
+    Feline:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        age:
+          type: number
+        gender:
+          enum: &ref_2
+            - male
+            - female
+          type: string
+        dominantPaw:
+          enum: &ref_3
+            - left
+            - right
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        birthDatetime:
+          format: date-time
+          type: string
+      required:
+        - id
+        - name
+        - age
+        - gender
+        - dominantPaw
+        - tags
+        - birthDatetime
     CreateFelineDto:
       type: object
       properties:
@@ -45,6 +79,8 @@ components:
             - $ref: '#/components/schemas/Cat'
             - $ref: '#/components/schemas/Lion'
             - $ref: '#/components/schemas/Tiger'
+          allOf:
+            - $ref: '#/components/schemas/Feline'
         timestamp:
           format: date-time
           type: string
@@ -68,6 +104,8 @@ components:
             - $ref: '#/components/schemas/Cat'
             - $ref: '#/components/schemas/Lion'
             - $ref: '#/components/schemas/Tiger'
+          allOf:
+            - $ref: '#/components/schemas/Feline'
         timestamp:
           format: date-time
           type: string
@@ -88,6 +126,8 @@ components:
           example: 1.0.1
         payload:
           oneOf: *ref_1
+          allOf:
+            - $ref: '#/components/schemas/Feline'
         timestamp:
           format: date-time
           type: string
@@ -129,15 +169,11 @@ components:
         age:
           type: number
         gender:
+          enum: *ref_2
           type: string
-          enum:
-            - male
-            - female
         dominantPaw:
+          enum: *ref_3
           type: string
-          enum:
-            - left
-            - right
         tags:
           type: array
           items:
@@ -157,8 +193,6 @@ components:
     Lion:
       type: object
       properties:
-        roarVolume:
-          type: number
         id:
           type: number
         name:
@@ -166,15 +200,11 @@ components:
         age:
           type: number
         gender:
+          enum: *ref_2
           type: string
-          enum:
-            - male
-            - female
         dominantPaw:
+          enum: *ref_3
           type: string
-          enum:
-            - left
-            - right
         tags:
           type: array
           items:
@@ -182,8 +212,9 @@ components:
         birthDatetime:
           format: date-time
           type: string
+        roarVolume:
+          type: number
       required:
-        - roarVolume
         - id
         - name
         - age
@@ -191,77 +222,40 @@ components:
         - dominantPaw
         - tags
         - birthDatetime
+        - roarVolume
     Tiger:
       type: object
       properties:
+        id:
+          type: number
+        name:
+          type: string
+        age:
+          type: number
+        gender:
+          enum: *ref_2
+          type: string
+        dominantPaw:
+          enum: *ref_3
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        birthDatetime:
+          format: date-time
+          type: string
         numberOfStripes:
           type: number
-        id:
-          type: number
-        name:
-          type: string
-        age:
-          type: number
-        gender:
-          type: string
-          enum:
-            - male
-            - female
-        dominantPaw:
-          type: string
-          enum:
-            - left
-            - right
-        tags:
-          type: array
-          items:
-            type: string
-        birthDatetime:
-          format: date-time
-          type: string
       required:
+        - id
+        - name
+        - age
+        - gender
+        - dominantPaw
+        - tags
+        - birthDatetime
         - numberOfStripes
-        - id
-        - name
-        - age
-        - gender
-        - dominantPaw
-        - tags
-        - birthDatetime
-    Feline:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-        age:
-          type: number
-        gender:
-          type: string
-          enum:
-            - male
-            - female
-        dominantPaw:
-          type: string
-          enum:
-            - left
-            - right
-        tags:
-          type: array
-          items:
-            type: string
-        birthDatetime:
-          format: date-time
-          type: string
-      required:
-        - id
-        - name
-        - age
-        - gender
-        - dominantPaw
-        - tags
-        - birthDatetime
 defaultContentType: application/json
 channels:
   ws/create/feline:
