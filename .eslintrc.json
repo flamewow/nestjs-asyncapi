@@ -20,7 +20,6 @@
   },
   "ignorePatterns": [
     ".eslintrc.js",
-    "src/db/migrations"
   ],
   "rules": {
     "@typescript-eslint/interface-name-prefix": "off",
