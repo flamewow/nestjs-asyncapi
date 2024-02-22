@@ -5,7 +5,9 @@
 Generate [AsyncApi](https://www.asyncapi.com/) documentation (for event-based services, like websockets) in a similar
 to [nestjs/swagger](https://github.com/nestjs/swagger) fashion.
 
-[Documentation example](https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/v2.1.0/examples/simple.yml)
+### [Live Preview](https://flamewow.github.io/nestjs-asyncapi/live-preview)
+
+[AsyncApi playground](https://playground.asyncapi.io/?load=https://raw.githubusercontent.com/asyncapi/asyncapi/v2.1.0/examples/simple.yml)
 
 ## Installation
 
@@ -92,4 +94,4 @@ class DemoController {
 For more detailed examples please check out https://github.com/flamewow/nestjs-asyncapi/tree/main/sample sample app.
 
 <h5>Do you use this library and like it? Don't be shy to give it a star
-on <a href="https://github.com/flamewow/nestjs-asyncapi">github <span style="color:yellow;">★</span></a></h3>
+on <a href="https://github.com/flamewow/nestjs-asyncapi">github <span>★</span></a></h3>
