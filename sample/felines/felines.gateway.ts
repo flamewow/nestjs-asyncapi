@@ -17,6 +17,7 @@ import { AsyncApiPub, AsyncApiSub } from '#lib';
 
 const EventPatternsWS = {
   createFeline: 'ws/create/feline',
+  wantFeline: 'ws/want/feline',
 };
 
 /**
@@ -69,6 +70,12 @@ export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
         payload: FelineExtendedRto,
       },
     ],
+  })
+  @AsyncApiSub({
+    channel: EventPatternsWS.wantFeline,
+    message: {
+      payload: FelineRto,
+    },
   })
   async emitCreatedFeline(felineRto: FelineRto) {
     this.server.emit(EventPatternsWS.createFeline, felineRto);
