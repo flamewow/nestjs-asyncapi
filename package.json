@@ -46,7 +46,7 @@
   "devDependencies": {
     "@nestjs/cli": "10.3.2",
     "@nestjs/microservices": "10.3.3",
-    "@nestjs/platform-express": "10.3.3",
+    "@nestjs/platform-express": "10.3.7",
     "@nestjs/platform-fastify": "10.3.3",
     "@nestjs/platform-socket.io": "10.3.3",
     "@nestjs/schematics": "10.1.1",
