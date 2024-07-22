@@ -56,7 +56,7 @@
     "@types/jest": "29.5.11",
     "@types/js-yaml": "4.0.9",
     "@types/node": "20.11.14",
-    "@types/supertest": "2.0.12",
+    "@types/supertest": "2.0.16",
     "@types/url-join": "4.0.3",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
