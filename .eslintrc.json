@@ -19,7 +19,7 @@
     "jest": true
   },
   "ignorePatterns": [
-    ".eslintrc.js",
+    ".eslintrc.js"
   ],
   "rules": {
     "@typescript-eslint/interface-name-prefix": "off",
