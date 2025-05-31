@@ -29,7 +29,7 @@ $ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm i --save nestjs-asyncapi
 Include AsyncApi initialization into your bootstrap function.
 
 ```typescript
-import { AsyncApiDocumentBuilder } from 'nestjs-asyncapi';
+import { AsyncApiDocumentBuilder, AsyncApiModule } from 'nestjs-asyncapi';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
