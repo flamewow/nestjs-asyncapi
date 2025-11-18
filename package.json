@@ -40,7 +40,7 @@
   "dependencies": {
     "@asyncapi/generator": "1.13.1",
     "@asyncapi/html-template": "0.28.4",
-    "js-yaml": "4.1.0",
+    "js-yaml": "4.1.1",
     "reflect-metadata": "0.2.1"
   },
   "devDependencies": {
