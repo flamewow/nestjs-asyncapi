@@ -53,9 +53,9 @@ async function bootstrap() {
 }
 ```
 
-AsyncApi module explores `Controllers` & `WebSocketGateway` by default.
+AsyncApi module explores `Controllers`, `WebSocketGateway`, and `EventsHandler` (from `@nestjs/cqrs`) by default.
 In most cases you won't need to add extra annotation,
-but if you need to define asyncApi operations in a class that's not a controller or gateway use the `AsyncApi` class
+but if you need to define asyncApi operations in a class that's not a controller, gateway, or event handler use the `AsyncApi` class
 decorator.
 
 Mark pub/sub methods via `AsyncApiPub` or `AsyncApiSub` decorators<br/>
@@ -86,6 +86,21 @@ class DemoController {
     })
     async createFeline() {
         // logic here
+    }
+}
+
+// EventHandler example (CQRS)
+@EventsHandler(FelineCreatedEvent)
+class FelineCreatedHandler implements IEventHandler<FelineCreatedEvent> {
+    @AsyncApiPub({
+        channel: 'feline.created',
+        message: {
+            payload: FelineDto,
+            description: 'Event published when a new feline is created',
+        },
+    })
+    handle(event: FelineCreatedEvent) {
+        // publish event to message broker
     }
 }
 

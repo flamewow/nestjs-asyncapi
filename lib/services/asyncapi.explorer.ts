@@ -8,6 +8,7 @@ import {
   exploreAsyncapiClassMetadata,
   exploreAsyncApiOperationMetadata,
   exploreControllerMetadata,
+  exploreEventsHandlerMetadata,
   exploreGatewayMetadata,
 } from '../explorers';
 import { DenormalizedDoc, DenormalizedDocResolvers } from '../interface';
@@ -47,6 +48,7 @@ export class AsyncApiExplorer {
         exploreAsyncapiClassMetadata,
         exploreControllerMetadata,
         exploreGatewayMetadata,
+        exploreEventsHandlerMetadata,
       ],
       security: [],
       tags: [],
