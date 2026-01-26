@@ -40,6 +40,7 @@
   "dependencies": {
     "@asyncapi/generator": "1.13.1",
     "@asyncapi/html-template": "0.28.4",
+    "@nestjs/cqrs": "^11.0.3",
     "js-yaml": "4.1.0",
     "reflect-metadata": "0.2.1"
   },
