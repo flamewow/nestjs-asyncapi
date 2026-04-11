@@ -76,10 +76,8 @@ export class AsyncApiExplorer {
     _modulePath?: string,
     _globalPrefix?: string,
   ): DenormalizedDoc[] {
-    const denormalizedAsyncapiServices = this.metadataScanner.scanFromPrototype<
-      unknown,
-      DenormalizedDoc[]
-    >(instance, prototype, (name) => {
+    const methodNames = this.metadataScanner.getAllMethodNames(prototype);
+    const denormalizedAsyncapiServices = [...methodNames].map((name) => {
       const targetCallback = prototype[name];
       const methodMetadata = documentResolvers.root.reduce((_metadata, fn) => {
         const serviceMetadata = fn(metatype);

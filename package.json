@@ -27,10 +27,10 @@
     "microservices"
   ],
   "peerDependencies": {
-    "@nestjs/common": "^11.0.0 || ^10.0.0 || ^9.0.0",
-    "@nestjs/core": "^11.0.0 || ^10.0.0 || ^9.0.0",
-    "@nestjs/swagger": "^11.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0",
-    "@nestjs/websockets": "^11.0.0 || ^10.0.0 || ^9.0.0"
+    "@nestjs/common": "^12.0.0 || ^11.0.0 || ^10.0.0 || ^9.0.0",
+    "@nestjs/core": "^12.0.0 || ^11.0.0 || ^10.0.0 || ^9.0.0",
+    "@nestjs/swagger": "^12.0.0 || ^11.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0",
+    "@nestjs/websockets": "^12.0.0 || ^11.0.0 || ^10.0.0 || ^9.0.0"
   },
   "peerDependenciesMeta": {
     "@nestjs/websockets": {
@@ -44,14 +44,14 @@
     "reflect-metadata": "0.2.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "11.0.5",
-    "@nestjs/microservices": "11.0.11",
-    "@nestjs/platform-express": "11.0.11",
-    "@nestjs/platform-fastify": "11.0.11",
-    "@nestjs/platform-socket.io": "11.0.11",
-    "@nestjs/schematics": "11.0.2",
-    "@nestjs/testing": "11.0.11",
-    "@nestjs/websockets": "11.0.11",
+    "@nestjs/cli": "11.0.8",
+    "@nestjs/microservices": "11.1.9",
+    "@nestjs/platform-express": "11.1.9",
+    "@nestjs/platform-fastify": "11.1.9",
+    "@nestjs/platform-socket.io": "11.1.9",
+    "@nestjs/schematics": "11.0.9",
+    "@nestjs/testing": "11.1.9",
+    "@nestjs/websockets": "11.1.9",
     "@types/express": "4.17.21",
     "@types/jest": "29.5.11",
     "@types/js-yaml": "4.0.9",
