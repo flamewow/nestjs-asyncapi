@@ -35,4 +35,4 @@ lerna-debug.log*
 
 .env
 .local_dev_data
-.eslintcache
+.eslintcache.claude/settings.local.json
