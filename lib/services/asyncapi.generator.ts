@@ -30,6 +30,10 @@ export class AsyncapiGenerator {
     this.generator = new Generator('@asyncapi/html-template', this.outDir, {
       forceWrite: true,
       entrypoint: 'index.html.js',
+      // The html-template ships with a pre-transpiled '__transpiled/' directory.
+      // Skipping re-compilation avoids Babel processing the large
+      // asyncapi-ui.min.js bundle and its "deoptimised styling" warning.
+      compile: false,
       // Use 'fs' output: generator v2 generate() is Promise<void> and does not
       // return the rendered string even in 'string' mode.  We write to a temp
       // file instead and read it back below.

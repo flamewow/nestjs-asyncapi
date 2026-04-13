@@ -32,7 +32,7 @@ async function bootstrap(): Promise<void> {
 
   const baseUrl = `http://${HOST}:${PORT}`;
   const docUrl = baseUrl + DOC_RELATIVE_PATH;
-  Logger.log(`Server started at ${baseUrl}; AsyncApi at ${docUrl};`, BOOTSTRAP);
+  Logger.log(`Server started at ${baseUrl}  AsyncApi at ${docUrl} `, BOOTSTRAP);
 }
 
 bootstrap();
