@@ -13,7 +13,7 @@ import { Socket } from 'socket.io-client';
 import { FelinesService } from './/felines.service';
 import { CreateFelineDto } from './dto';
 import { FelineExtendedRto, FelineRto } from './rto';
-import { AsyncApiPub, AsyncApiSub } from '#lib';
+import { AsyncApiReceive, AsyncApiSend } from '#lib';
 
 const EventPatternsWS = {
   createFeline: 'ws/create/feline',
@@ -39,7 +39,7 @@ export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
   }
 
   @SubscribeMessage(EventPatternsWS.createFeline)
-  @AsyncApiPub({
+  @AsyncApiSend({
     channel: EventPatternsWS.createFeline,
     message: {
       payload: CreateFelineDto,
@@ -57,7 +57,7 @@ export class FelinesGateway implements OnGatewayInit, OnGatewayDisconnect {
     await this.emitCreatedFeline(new FelineRto({ payload: feline }));
   }
 
-  @AsyncApiSub({
+  @AsyncApiReceive({
     channel: EventPatternsWS.createFeline,
     message: [
       {

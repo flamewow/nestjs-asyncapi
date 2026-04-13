@@ -17,5 +17,5 @@ export interface GeneratorOptions {
   generate: (document: AsyncApiDocument) => Promise<void>;
   generateFromURL: (url: string) => Promise<void>;
   generateFromFile: (path: string) => Promise<void>;
-  generateFromString: (yaml: string, args?: unknown) => Promise<string>;
+  generateFromString: (yaml: string, args?: unknown) => Promise<void>;
 }

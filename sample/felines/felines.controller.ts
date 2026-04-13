@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Logger } from '@nestjs/common';
 import { ClientProxy, EventPattern } from '@nestjs/microservices';
 import { CreateFelineDto } from './dto';
-import { AsyncApiPub, AsyncApiSub } from '#lib';
+import { AsyncApiReceive, AsyncApiSend } from '#lib';
 import { Cat, Feline } from '#sample/felines/class';
 import { JournalingDataDto } from '#sample/felines/dto/journaling-data.dto';
 import { FELINES_MS } from '#sample/felines/felines.constants';
@@ -26,7 +26,7 @@ export class FelinesController {
     private readonly felinesService: FelinesService,
   ) {}
 
-  @AsyncApiSub({
+  @AsyncApiReceive({
     channel: EventPatternsMS.journal,
     message: {
       payload: JournalingDataDto,
@@ -38,13 +38,13 @@ export class FelinesController {
     this.logger.log(`journaling:\n${dataForJournalingString}`);
   }
 
-  @AsyncApiPub({
+  @AsyncApiSend({
     channel: EventPatternsMS.createFeline,
     message: {
       payload: CreateFelineDto,
     },
   })
-  @AsyncApiSub({
+  @AsyncApiReceive({
     channel: EventPatternsMS.createFeline,
     message: {
       payload: FelineRto,

@@ -54,7 +54,6 @@ export class AsyncapiScanner {
         let allProviders = new Map([...providers, ...controllers]);
 
         if (deepScanRoutes) {
-          // only load submodules routes if asked
           const isGlobal = (module: Type<any>) =>
             !container.isGlobalModule(module);
 
@@ -96,12 +95,17 @@ export class AsyncapiScanner {
 
     const schemas = this.explorer.getSchemas();
     this.addExtraModels(schemas, extraModels);
-    const normalizedChannels = this.transformer.normalizeChannels(
-      flatten(denormalizedChannels),
-    );
+
+    const { channels, operations, componentMessages } =
+      this.transformer.normalizeChannels(flatten(denormalizedChannels));
+
     return {
-      ...normalizedChannels,
-      components: { schemas },
+      channels,
+      operations,
+      components: {
+        schemas,
+        messages: componentMessages,
+      },
     };
   }
 

@@ -1,20 +1,28 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Propose a new feature or enhancement
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
-
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Problem**
+What are you trying to do that the library doesn't support today? Link to the relevant part of the [AsyncAPI 3.0 spec](https://www.asyncapi.com/docs/reference/specification/v3.0.0) if the feature maps to one.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Proposed solution**
+What should the API look like? A short code sketch helps:
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+```typescript
+// e.g. proposed decorator usage
+@AsyncApiSend({
+  channel: 'orders/created',
+  // new option you'd like to see
+  reply: { /* ... */ },
+})
+```
+
+**Alternatives considered**
+Workarounds you've tried, or other libraries that solve this differently.
 
 **Additional context**
-Add any other context or screenshots about the feature request here.
+Anything else — links to spec sections, related issues, or examples from other AsyncAPI tooling.

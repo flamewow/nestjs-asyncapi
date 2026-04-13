@@ -13,12 +13,12 @@ export async function makeAsyncapiDocument(
   app: INestApplicationContext,
 ): Promise<AsyncApiDocument> {
   const asyncApiServer: AsyncServerObject = {
-    url: `ws://${HOST}:${PORT}`,
+    host: `ws://${HOST}:${PORT}`,
     protocol: 'socket.io',
     protocolVersion: '4',
     description:
       'Allows you to connect using the websocket protocol to our Socket.io server.',
-    security: [{ 'user-password': [] }],
+    security: [{ $ref: '#/components/securitySchemes/user-password' }],
     variables: {
       port: {
         description: 'Secure connection (TLS) is available through port 443.',

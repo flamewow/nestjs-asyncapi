@@ -1,20 +1,20 @@
 import { createMethodDecorator } from '@nestjs/swagger/dist/decorators/helpers';
 import {
-  AsyncApiOperationHeaders,
   AsyncApiOperationOptions,
-  AsyncMessageObject,
-  AsyncOperationObject,
+  AsyncApiOperationOptionsRaw,
+  RawAsyncApiMessage,
 } from '../interface';
 import { OneAsyncApiMessage } from '../interface/asyncapi-message.interface';
+import { AsyncApiOperationHeaders } from '../interface/asyncapi-operation-headers.interface';
 
 function makeHeaders(headers?: AsyncApiOperationHeaders) {
   return headers
     ? {
-        type: 'object',
+        type: 'object' as const,
         properties: Object.entries(headers)
           .map(([key, value]) => ({
             [key]: {
-              type: 'string',
+              type: 'string' as const,
               ...value,
             },
           }))
@@ -23,16 +23,23 @@ function makeHeaders(headers?: AsyncApiOperationHeaders) {
     : undefined;
 }
 
+/**
+ * Sanitizes a message name so it can safely be used as a JSON Reference key.
+ * Replaces characters that are invalid in JSON Pointer fragments
+ * (`#`, `/`, spaces) with underscores.
+ */
+function sanitizeMessageName(name: string): string {
+  return name.replace(/[#/\s]+/g, '_');
+}
+
 function makeMessage(
   message: OneAsyncApiMessage,
   defaultName: string,
-): AsyncMessageObject {
+): RawAsyncApiMessage {
+  const rawName = message.name || defaultName;
   return {
-    ...message,
-    name: message.name || defaultName,
-    payload: {
-      type: message.payload,
-    },
+    name: sanitizeMessageName(rawName),
+    payload: { type: message.payload },
     headers: makeHeaders(message.headers),
   };
 }
@@ -44,22 +51,22 @@ export function AsyncApiOperationForMetaKey(
   return (target, propertyKey: string | symbol, descriptor) => {
     const methodName = `${target.constructor.name}#${String(propertyKey)}`;
 
-    const transformedOptions: AsyncOperationObject[] = options.map((i) => {
-      const message = Array.isArray(i.message)
-        ? {
-            oneOf: i.message.map((i, index) =>
-              makeMessage(i, `${methodName}#${index}`),
-            ),
-          }
-        : makeMessage(i.message, methodName);
+    const transformedOptions: AsyncApiOperationOptionsRaw[] = options.map(
+      (i) => {
+        const message = Array.isArray(i.message)
+          ? {
+              oneOf: i.message.map((m, index) =>
+                makeMessage(m, `${methodName}#${index}`),
+              ),
+            }
+          : makeMessage(i.message, methodName);
 
-      const transformedOptionInstance = {
-        ...i,
-        message,
-      };
-
-      return transformedOptionInstance;
-    });
+        return {
+          ...i,
+          message,
+        };
+      },
+    );
 
     return createMethodDecorator(metaKey, transformedOptions)(
       target,

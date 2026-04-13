@@ -1,41 +1,35 @@
-## PR Checklist
-Please check if your PR fulfills the following requirements:
+<!--
+Thank you for contributing to nestjs-asyncapi!
+Please make sure your branch name follows the convention enforced by `validate-branch-name`:
+  feat/... | fix/... | docs/... | chore/... | refactor/... | test/... | perf/... | style/... | release/...
+-->
 
-- [ ] The commit message follows our guidelines: https://github.com/nestjs/nest/blob/master/CONTRIBUTING.md
-- [ ] Tests for the changes have been added (for bug fixes / features)
-- [ ] Docs have been added / updated (for bug fixes / features)
+## What and why
 
+<!-- One short paragraph: what this PR changes and the motivation behind it. -->
 
-## PR Type
-What kind of change does this PR introduce?
+Closes #
 
-<!-- Please check the one that applies to this PR using "x". -->
-```
-[ ] Bugfix
-[ ] Feature
-[ ] Code style update (formatting, local variables)
-[ ] Refactoring (no functional changes, no api changes)
-[ ] Build related changes
-[ ] CI related changes
-[ ] Other... Please describe:
-```
+## Type of change
 
-## What is the current behavior?
-<!-- Please describe the current behavior that you are modifying, or link to a relevant issue. -->
+- [ ] Bug fix (non-breaking)
+- [ ] New feature (non-breaking)
+- [ ] Breaking change
+- [ ] Docs / chore / refactor (no runtime impact)
 
-Issue Number: N/A
+## How was this tested?
 
+<!-- e.g. "added an e2e case in test/express.e2e-spec.ts that asserts the new operation appears in components.messages" -->
 
-## What is the new behavior?
+- [ ] `npm run test:e2e` passes locally
+- [ ] `npm run lint` passes locally
+- [ ] Sample app (`npm run start:dev`) renders the docs page without errors
 
+## Breaking changes
 
-## Does this PR introduce a breaking change?
-```
-[ ] Yes
-[ ] No
-```
+<!-- If this is a breaking change, describe the migration path for existing users. Otherwise delete this section. -->
 
-<!-- If this PR contains a breaking change, please describe the impact and migration path for existing applications below. -->
+## Checklist
 
-
-## Other information
+- [ ] Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) (release-it generates the changelog from these)
+- [ ] If user-facing behavior changed, the README and/or migration guide were updated
