@@ -10,7 +10,7 @@ npm run start:dev   # sample app at http://0.0.0.0:4001, docs at /async-api
 ```
 
 > **Note:** The project `.npmrc` sets `registry=https://registry.npmjs.org` to override any npm registry configured globally.
-> `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` is also set — the AsyncAPI generator bundles puppeteer but we skip the chromium download.
+> Puppeteer's chromium download is skipped via `package.json` `"config": { "puppeteer_skip_chromium_download": true }`, which npm exposes as `npm_package_config_puppeteer_skip_chromium_download` — the AsyncAPI generator bundles puppeteer but we don't need chromium for HTML generation.
 
 ## Key commands
 
