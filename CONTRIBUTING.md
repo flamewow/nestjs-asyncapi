@@ -1,250 +1,117 @@
-# Contributing to Nest
+# Contributing to nestjs-asyncapi
 
-We would love for you to contribute to Nest and help make it even better than it is
-today! As a contributor, here are the guidelines we would like you to follow:
+Thanks for your interest in contributing! This document covers everything you need to know to get a change merged.
 
- - [Code of Conduct](#coc)
- - [Question or Problem?](#question)
- - [Issues and Bugs](#issue)
- - [Feature Requests](#feature)
- - [Submission Guidelines](#submit)
- - [Coding Rules](#rules)
- - [Commit Message Guidelines](#commit)
- <!-- - [Signing the CLA](#cla) -->
+## Table of contents
 
-<!-- ## <a name="coc"></a> Code of Conduct
-Help us keep Nest open and inclusive. Please read and follow our [Code of Conduct][coc]. -->
+- [Asking questions](#asking-questions)
+- [Reporting bugs](#reporting-bugs)
+- [Proposing features](#proposing-features)
+- [Local development](#local-development)
+- [Branch naming](#branch-naming)
+- [Commit messages](#commit-messages)
+- [Submitting a pull request](#submitting-a-pull-request)
+- [Releasing](#releasing) (maintainers)
 
-## <a name="question"></a> Got a Question or Problem?
+## Asking questions
 
-**Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests.** You've got much better chances of getting your question answered on [Stack Overflow](https://stackoverflow.com/questions/tagged/nestjs) where the questions should be tagged with tag `nestjs`.
+Open a [GitHub issue](https://github.com/flamewow/nestjs-asyncapi/issues/new/choose) — the bug-report template doubles as the question template. Please include the same environment info (library version, NestJS version, Node version, HTTP adapter).
 
-Stack Overflow is a much better place to ask questions since:
+Before opening one, search existing issues — the answer may already be there.
 
-<!-- - there are thousands of people willing to help on Stack Overflow [maybe one day] -->
-- questions and answers stay available for public viewing so your question / answer might help someone else
-- Stack Overflow's voting system assures that the best answers are prominently visible.
+## Reporting bugs
 
-To save your and our time, we will systematically close all issues that are requests for general support and redirect people to Stack Overflow.
+Use the **Bug report** template. A minimal reproduction (a small repo, Gist, or self-contained snippet) is required: without one we can't confirm or fix the issue.
 
-If you would like to chat about the question in real-time, you can reach out via [our gitter channel][gitter].
+## Proposing features
 
-## <a name="issue"></a> Found a Bug?
-If you find a bug in the source code, you can help us by
-[submitting an issue](#submit-issue) to our [GitHub Repository][github]. Even better, you can
-[submit a Pull Request](#submit-pr) with a fix.
+Use the **Feature request** template. For anything non-trivial, please open the issue **before** sending a PR so we can agree on the API shape — this avoids wasted work.
 
-## <a name="feature"></a> Missing a Feature?
-You can *request* a new feature by [submitting an issue](#submit-issue) to our GitHub
-Repository. If you would like to *implement* a new feature, please submit an issue with
-a proposal for your work first, to be sure that we can use it.
-Please consider what kind of change it is:
+If the feature maps to part of the [AsyncAPI 3.0 specification](https://www.asyncapi.com/docs/reference/specification/v3.0.0), link the relevant section.
 
-* For a **Major Feature**, first open an issue and outline your proposal so that it can be
-discussed. This will also allow us to better coordinate our efforts, prevent duplication of work,
-and help you to craft the change so that it is successfully accepted into the project. For your issue name, please prefix your proposal with `[discussion]`, for example "[discussion]: your feature idea".
-* **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
+## Local development
 
-## <a name="submit"></a> Submission Guidelines
+Requirements:
 
-### <a name="submit-issue"></a> Submitting an Issue
+- Node.js (see `.nvmrc` for the version used in CI)
+- npm (bundled with Node)
 
-Before you submit an issue, please search the issue tracker, maybe an issue for your problem already exists and the discussion might inform you of workarounds readily available.
+Setup:
 
-We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs we will systematically ask you to provide a minimal reproduction scenario using a repository or [Gist](https://gist.github.com/). Having a live, reproducible scenario gives us wealth of important information without going back & forth to you with additional questions like:
-
-- version of NestJS used
-- 3rd-party libraries and their versions
-- and most importantly - a use-case that fails
-
-<!--
-// TODO we need to create a playground, similar to plunkr
-
-A minimal reproduce scenario using a repository or Gist allows us to quickly confirm a bug (or point out coding problem) as well as confirm that we are fixing the right problem. If neither of these are not a suitable way to demonstrate the problem (for example for issues related to our npm packaging), please create a standalone git repository demonstrating the problem. -->
-
-<!-- We will be insisting on a minimal reproduce scenario in order to save maintainers time and ultimately be able to fix more bugs. Interestingly, from our experience users often find coding problems themselves while preparing a minimal plunk. We understand that sometimes it might be hard to extract essentials bits of code from a larger code-base but we really need to isolate the problem before we can fix it. -->
-
-Unfortunately, we are not able to investigate / fix bugs without a minimal reproduction, so if we don't hear back from you we are going to close an issue that don't have enough info to be reproduced.
-
-You can file new issues by filling out our [new issue form](https://github.com/flamewow/nestjs-asyncapi/issues/new).
-
-
-### <a name="submit-pr"></a> Submitting a Pull Request (PR)
-Before you submit your Pull Request (PR) consider the following guidelines:
-
-1. Search [GitHub](https://github.com/flamewow/nestjs-asyncapi/pulls) for an open or closed PR
-  that relates to your submission. You don't want to duplicate effort.
-<!-- 1. Please sign our [Contributor License Agreement (CLA)](#cla) before sending PRs.
-  We cannot accept code without this. -->
-1. Fork the nestjs/nest repo.
-1. Make your changes in a new git branch:
-
-     ```shell
-     git checkout -b my-fix-branch main
-     ```
-
-1. Create your patch, **including appropriate test cases**.
-1. Follow our [Coding Rules](#rules).
-1. Run the full Nest test suite, as described in the [developer documentation][dev-doc],
-  and ensure that all tests pass.
-1. Commit your changes using a descriptive commit message that follows our
-  [commit message conventions](#commit). Adherence to these conventions
-  is necessary because release notes are automatically generated from these messages.
-
-     ```shell
-     git commit -a
-     ```
-    Note: the optional commit `-a` command line option will automatically "add" and "rm" edited files.
-
-1. Push your branch to GitHub:
-
-    ```shell
-    git push origin my-fix-branch
-    ```
-
-1. In GitHub, send a pull request to `nestjs:main`.
-* If we suggest changes then:
-  * Make the required updates.
-  * Re-run the Nest test suites to ensure tests are still passing.
-  * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
-
-    ```shell
-    git rebase main -i
-    git push -f
-    ```
-
-That's it! Thank you for your contribution!
-
-#### After your pull request is merged
-
-After your pull request is merged, you can safely delete your branch and pull the changes
-from the main (upstream) repository:
-
-* Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
-
-    ```shell
-    git push origin --delete my-fix-branch
-    ```
-
-* Check out the main branch:
-
-    ```shell
-    git checkout main -f
-    ```
-
-* Delete the local branch:
-
-    ```shell
-    git branch -D my-fix-branch
-    ```
-
-* Update your main with the latest upstream version:
-
-    ```shell
-    git pull --ff upstream main
-    ```
-
-## <a name="rules"></a> Coding Rules
-To ensure consistency throughout the source code, keep these rules in mind as you are working:
-
-* All features or bug fixes **must be tested** by one or more specs (unit-tests).
-<!--
-// We're working on auto-documentation.
-* All public API methods **must be documented**. (Details TBC). -->
-* We follow [Google's JavaScript Style Guide][js-style-guide], but wrap all code at
-  **100 characters**. An automated formatter is available (`npm run format`).
-
-## <a name="commit"></a> Commit Message Guidelines
-
-We have very precise rules over how our git commit messages can be formatted.  This leads to **more
-readable messages** that are easy to follow when looking through the **project history**.  But also,
-we use the git commit messages to **generate the Nest change log**.
-
-### Commit Message Format
-Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
-format that includes a **type**, a **scope** and a **subject**:
-
-```
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
+```bash
+git clone https://github.com/flamewow/nestjs-asyncapi.git
+cd nestjs-asyncapi
+npm install
 ```
 
-The **header** is mandatory and the **scope** of the header is optional.
+Common commands:
 
-Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
-to read on GitHub as well as in various git tools.
+| Command | Purpose |
+|---|---|
+| `npm run build` | Compile `lib/` to `dist/` |
+| `npm run start:dev` | Run the sample app at <http://0.0.0.0:4001>, docs at `/async-api` |
+| `npm run test:e2e` | Run e2e tests (Express + Fastify) — the only test suite |
+| `npm run lint` | ESLint with auto-fix |
+| `npm run format` | Prettier |
 
-Footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
+The `sample/` directory is a real NestJS app that exercises decorators against both Express and Fastify adapters, including microservices and WebSocket gateways. It's the fastest way to manually verify a change end-to-end.
 
-Samples:
+> Puppeteer's chromium download is skipped via `package.json` `"config".puppeteer_skip_chromium_download`; you don't need chromium installed to develop here.
+
+## Branch naming
+
+Branch names are validated by a Husky pre-commit hook (`validate-branch-name`). The pattern:
 
 ```
-docs(changelog) update change log to beta.5
-```
-```
-fix(@nestjs/core) need to depend on latest rxjs and zone.js
-
-The version in our package.json gets copied to the one we publish, and users need the latest of these.
+^(main|dev)$ | ^(feat|fix|release|test|refactor|docs|perf|style|chore)/.+$
 ```
 
-### Revert
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
+Examples: `feat/operation-reply`, `fix/channel-key-sanitization`, `docs/migration-guide`.
 
-### Type
-Must be one of the following:
+## Commit messages
 
-* **build**: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-* **chore**: Updating tasks etc; no production code change
-* **ci**: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-* **docs**: Documentation only changes
-* **feat**: A new feature
-* **fix**: A bug fix
-* **perf**: A code change that improves performance
-* **refactor**: A code change that neither fixes a bug nor adds a feature
-* **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-* **test**: Adding missing tests or correcting existing tests
+We follow [Conventional Commits](https://www.conventionalcommits.org/). The release tooling (`release-it`) generates the changelog from these, so the prefix matters:
 
+```
+<type>(<optional scope>): <subject>
 
-### Subject
-The subject contains succinct description of the change:
+[optional body]
 
-* use the imperative, present tense: "change" not "changed" nor "changes"
-* don't capitalize first letter
-* no dot (.) at the end
+[optional footer]
+```
 
-### Body
-Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
-The body should include the motivation for the change and contrast this with previous behavior.
+Allowed types: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `perf`, `style`, `build`, `ci`, `revert`.
 
-### Footer
-The footer should contain any information about **Breaking Changes** and is also the place to
-reference GitHub issues that this commit **Closes**.
+Breaking changes go in the footer:
 
-**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
+```
+feat()!: rename @AsyncApiPub to @AsyncApiSend
 
-A detailed explanation can be found in this [document][commit-message-format].
+BREAKING CHANGE: see docs/migration-v1-to-v2.md
+```
 
-<!-- ## <a name="cla"></a> Signing the CLA
+## Submitting a pull request
 
-Please sign our Contributor License Agreement (CLA) before sending pull requests. For any code
-changes to be accepted, the CLA must be signed. It's a quick process, we promise!
+1. Fork the repo and branch off `main`.
+2. Make your change. **Add or update e2e tests** — the suite is in `test/` and covers Express + Fastify. There are no unit tests; behavior is verified through the rendered document.
+3. Run the full local check:
+   ```bash
+   npm run lint && npm run test:e2e
+   ```
+4. Open the PR using the template. Reference the issue it closes.
+5. CI will run build + e2e tests. Address any failures before requesting review.
 
-* For individuals we have a [simple click-through form][individual-cla].
-* For corporations we'll need you to
-  [print, sign and one of scan+email, fax or mail the form][corporate-cla]. -->
+For breaking changes, also update `docs/migration-v1-to-v2.md` (or open a successor migration guide).
 
+## Releasing
 
-<!-- [angular-group]: https://groups.google.com/forum/#!forum/angular -->
-<!-- [coc]: https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md -->
-[commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#
-[corporate-cla]: http://code.google.com/legal/corporate-cla-v1.0.html
-[github]: https://github.com/flamewow/nestjs-asyncapi
-[individual-cla]: http://code.google.com/legal/individual-cla-v1.0.html
-[js-style-guide]: https://google.github.io/styleguide/jsguide.html
-[jsfiddle]: http://jsfiddle.net
-[plunker]: http://plnkr.co/edit
-[runnable]: http://runnable.com
-<!-- [stackoverflow]: http://stackoverflow.com/questions/tagged/angular -->
+> For maintainers only.
+
+```bash
+npm run release          # interactive release-it flow
+npm run publish:npm      # publish stable to npm
+npm run publish:next     # publish under the `next` tag
+npm run publish:beta     # publish under the `beta` tag
+```
+
+`release-it` will tag the commit, push, and create a GitHub release. The `prepublish:npm` hook runs `npm run build` so the published tarball always reflects the source.

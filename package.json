@@ -6,10 +6,17 @@
   "license": "MIT",
   "main": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
+  "files": [
+    "dist/lib"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/flamewow/nestjs-asyncapi"
   },
+  "bugs": {
+    "url": "https://github.com/flamewow/nestjs-asyncapi/issues"
+  },
+  "homepage": "https://github.com/flamewow/nestjs-asyncapi#readme",
   "validate-branch-name": {
     "pattern": "^(main|dev){1}$|^(feat|fix|release|test|refactor|docs|perf|style|chore)/.+$",
     "errorMsg": "The branch name isn't valid."
@@ -27,7 +34,7 @@
     "microservices"
   ],
   "engines": {
-    "node": ">=24.15.0"
+    "node": ">=20.0.0"
   },
   "imports": {
     "#lib": "./dist/lib/index.js",
@@ -37,10 +44,10 @@
     "#test/*": "./dist/test/*.js"
   },
   "peerDependencies": {
-    "@nestjs/common": "^11.0.0 || ^10.0.0 || ^9.0.0",
-    "@nestjs/core": "^11.0.0 || ^10.0.0 || ^9.0.0",
-    "@nestjs/swagger": "^11.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0",
-    "@nestjs/websockets": "^11.0.0 || ^10.0.0 || ^9.0.0"
+    "@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0-0",
+    "@nestjs/core": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0-0",
+    "@nestjs/swagger": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^11.0.0",
+    "@nestjs/websockets": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0-0"
   },
   "peerDependenciesMeta": {
     "@nestjs/websockets": {

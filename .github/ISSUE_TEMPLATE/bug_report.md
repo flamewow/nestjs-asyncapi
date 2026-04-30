@@ -1,41 +1,37 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report a bug in nestjs-asyncapi
 title: ''
-labels: ''
+labels: bug
 assignees: ''
-
 ---
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Reproduction**
+A minimal reproduction is essential — issues without one will be closed.
+Please share a repo, a [Gist](https://gist.github.com/), or a code snippet that reproduces the bug.
+
+Steps to reproduce:
+1. ...
+2. ...
+3. ...
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+What you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
+**Actual behavior**
+What actually happens. Include the rendered AsyncAPI document, error messages, or stack traces if relevant.
 
 **Environment**
 
-Nest version: X.Y.Z 
-
-Check whether this is still an issue in the most recent Nest version
- 
-For Tooling issues:
-- Node version: XX  <!-- run `node --version` -->
-- Platform:  <!-- Mac, Linux, Windows -->
-
-Others:
-- Anything else relevant?  Operating system version, IDE, package manager, ...
+- `nestjs-asyncapi` version: <!-- e.g. 2.0.0 -->
+- `@nestjs/common` version: <!-- run `npm ls @nestjs/common` -->
+- `@nestjs/swagger` version: <!-- run `npm ls @nestjs/swagger` -->
+- HTTP adapter: <!-- Express / Fastify -->
+- Node version: <!-- run `node --version` -->
+- OS: <!-- macOS / Linux / Windows -->
 
 **Additional context**
-Add any other context about the problem here.
+Any other context — screenshots of the rendered docs page, related issues, etc.
