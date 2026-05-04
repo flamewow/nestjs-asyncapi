@@ -61,7 +61,7 @@ Jest config: `test/configs/jest-e2e.config.ts`. Includes a custom `jest-swagger-
 
 ## NestJS version support
 
-- **peerDependencies** support NestJS v9–v12 (`^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0`)
+- **peerDependencies** support NestJS v10–v11 (`^10.0.0 || ^11.0.0`)
 - **devDependencies** pin the latest stable v11 for local development
 - v12 is in alpha (`12.0.0-alpha.2` on npm as of April 2026) — peerDeps are ready, but v12 is not yet stable enough for devDeps
 

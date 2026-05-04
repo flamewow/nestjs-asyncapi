@@ -47,9 +47,9 @@ The library bundles `@asyncapi/generator` (which depends on Puppeteer) but doesn
 
 | Peer | Supported |
 |---|---|
-| `@nestjs/common` | `^9.0.0 \|\| ^10.0.0 \|\| ^11.0.0 \|\| ^12.0.0-0` |
+| `@nestjs/common` | `^10.0.0 \|\| ^11.0.0 \|\| ^12.0.0-0` |
 | `@nestjs/core` | same |
-| `@nestjs/swagger` | `^6.0.0 \|\| ^7.0.0 \|\| ^8.0.0 \|\| ^11.0.0` |
+| `@nestjs/swagger` | `^7.0.0 \|\| ^8.0.0 \|\| ^11.0.0` |
 | `@nestjs/websockets` | same as `@nestjs/common` (optional) |
 
 Node ≥ 20.0.0.
