@@ -49,6 +49,9 @@ export function AsyncApiOperationForMetaKey(
   options: AsyncApiOperationOptions[],
 ): MethodDecorator {
   return (target, propertyKey: string | symbol, descriptor) => {
+    const savedOptions: Record<string, AsyncOperationObject> | undefined =
+      Reflect.getMetadata(metaKey, target[propertyKey]);
+
     const methodName = `${target.constructor.name}#${String(propertyKey)}`;
 
     const transformedOptions: AsyncApiOperationOptionsRaw[] = options.map(
@@ -68,7 +71,11 @@ export function AsyncApiOperationForMetaKey(
       },
     );
 
-    return createMethodDecorator(metaKey, transformedOptions)(
+    let lastOptions = transformedOptions;
+    if (savedOptions)
+      lastOptions = [...Object.values(savedOptions), ...lastOptions];
+
+    return createMethodDecorator(metaKey, lastOptions)(
       target,
       propertyKey,
       descriptor,
