@@ -44,10 +44,10 @@
     "#test/*": "./dist/test/*.js"
   },
   "peerDependencies": {
-    "@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0-0",
-    "@nestjs/core": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0-0",
-    "@nestjs/swagger": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^11.0.0",
-    "@nestjs/websockets": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0-0"
+    "@nestjs/common": "^10.0.0 || ^11.0.0 || ^12.0.0-0",
+    "@nestjs/core": "^^10.0.0 || ^11.0.0 || ^12.0.0-0",
+    "@nestjs/swagger": "^7.0.0 || ^8.0.0 || ^11.0.0",
+    "@nestjs/websockets": "^10.0.0 || ^11.0.0 || ^12.0.0-0"
   },
   "peerDependenciesMeta": {
     "@nestjs/websockets": {

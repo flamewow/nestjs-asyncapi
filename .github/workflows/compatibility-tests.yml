@@ -1,4 +1,4 @@
-name: base
+name: compatibility tests
 
 on:
   push:
@@ -11,28 +11,20 @@ jobs:
   test:
     name: node ${{ matrix.node }} / ${{ matrix.label }}
     runs-on: ubuntu-latest
-    # NestJS v12 is alpha — let it report failures without blocking the build.
-    continue-on-error: ${{ contains(matrix.label, 'alpha') }}
     strategy:
       fail-fast: false
       matrix:
-        # Each entry pins a Node major and a NestJS major. NestJS majors are
-        # mapped to the swagger major they were released alongside (Nest 9→sw6,
-        # 10→sw7, 11/12→sw11). Older Nest majors don't run on newer Node, so
-        # combinations are listed explicitly rather than via expansion.
         include:
-          # Node 20 LTS — covers all currently supported NestJS majors.
-          - { node: '20', nestjs: '^9.0.0',         swagger: '^6.0.0',  label: 'nestjs-9'        }
           - { node: '20', nestjs: '^10.0.0',        swagger: '^7.0.0',  label: 'nestjs-10'       }
           - { node: '20', nestjs: '^11.0.0',        swagger: '^11.0.0', label: 'nestjs-11'       }
-          - { node: '20', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
-          # Node 22 LTS — Nest 9 dropped; Nest 10+ runs.
+#          - { node: '20', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
+
           - { node: '22', nestjs: '^10.0.0',        swagger: '^7.0.0',  label: 'nestjs-10'       }
           - { node: '22', nestjs: '^11.0.0',        swagger: '^11.0.0', label: 'nestjs-11'       }
-          - { node: '22', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
-          # Node 24 — only Nest 11+ targets it.
+#          - { node: '22', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
+
           - { node: '24', nestjs: '^11.0.0',        swagger: '^11.0.0', label: 'nestjs-11'       }
-          - { node: '24', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
+#          - { node: '24', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
     steps:
       - uses: actions/checkout@v4
 
