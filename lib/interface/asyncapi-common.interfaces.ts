@@ -2,7 +2,6 @@ import {
   InfoObject,
   ReferenceObject,
   SchemaObject,
-  ServerVariableObject,
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import {
   AmqpChannelBinding,
@@ -14,31 +13,60 @@ import {
   KafkaOperationBinding,
   KafkaServerBinding,
 } from '../binding';
-import { AsyncOperationPayload } from './asyncapi-operation-payload.interface';
 import { AsyncServerObject } from './asyncapi-server.interface';
+
+/**
+ * Extends the OpenAPI InfoObject with the `tags` field defined by AsyncAPI v3.
+ * In v3, tags are declared under `info`, not at the root of the document.
+ */
+export interface AsyncApiInfoObject extends InfoObject {
+  tags?: AsyncTagObject[];
+}
 
 export interface AsyncApiDocument {
   asyncapi: string;
   id?: string;
-  info: InfoObject;
+  info: AsyncApiInfoObject;
   servers?: Record<string, AsyncServerObject>;
-  channels: AsyncChannelsObject;
+  channels?: AsyncChannelsObject;
+  operations?: AsyncOperationsObject;
   components?: AsyncComponentsObject;
-  tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
   defaultContentType?: string;
 }
 
 export type AsyncChannelsObject = Record<string, AsyncChannelObject>;
+
 export interface AsyncChannelObject {
+  address?: string;
   description?: string;
-  subscribe?: AsyncOperationObject;
-  publish?: AsyncOperationObject;
+  messages?: Record<string, AsyncMessageObject | ReferenceObject>;
   parameters?: Record<string, ParameterObject>;
   bindings?: Record<string, KafkaChannelBinding | AmqpChannelBinding>;
+  tags?: AsyncTagObject[];
+  externalDocs?: ExternalDocumentationObject;
 }
 
-export interface AsyncServerVariableObject extends ServerVariableObject {
+export type AsyncOperationsObject = Record<string, AsyncOperationObject>;
+
+export interface AsyncOperationObject {
+  action: 'send' | 'receive';
+  channel: ReferenceObject;
+  title?: string;
+  summary?: string;
+  description?: string;
+  security?: SecurityObject[];
+  tags?: AsyncTagObject[];
+  externalDocs?: ExternalDocumentationObject;
+  bindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
+  traits?: (AsyncOperationTraitObject | ReferenceObject)[];
+  messages?: ReferenceObject[];
+}
+
+export interface AsyncServerVariableObject {
+  enum?: string[];
+  default?: string;
+  description?: string;
   examples?: string[];
 }
 
@@ -62,43 +90,22 @@ export interface AsyncComponentsObject {
 }
 
 export interface AsyncMessageObject extends AsyncMessageTraitObject {
-  payload?: {
-    type?: AsyncOperationPayload;
-    $ref?: AsyncOperationPayload;
-  };
-}
-
-export type MessageType = AsyncMessageObject | ReferenceObject;
-export interface OneOfMessageType {
-  oneOf: MessageType[];
-}
-
-export type AsyncOperationMessage = OneOfMessageType | MessageType;
-
-export interface AsyncOperationObject {
-  channel: string;
-  operationId?: string;
-  summary?: string;
-  description?: string;
-  tags?: AsyncTagObject[];
-  externalDocs?: ExternalDocumentationObject;
-  bindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
-  traits?: Record<string, AsyncOperationTraitObject>;
-  message?: AsyncOperationMessage;
+  payload?: SchemaObject | ReferenceObject;
 }
 
 export interface AsyncOperationTraitObject {
-  operationId?: string;
+  title?: string;
   summary?: string;
   description?: string;
+  security?: SecurityObject[];
   tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
   bindings?: Record<string, KafkaOperationBinding | AmqpOperationBinding>;
 }
 
 export interface AsyncMessageTraitObject {
-  headers?: SchemaObject;
-  correlationId?: AsyncCorrelationObject;
+  headers?: SchemaObject | ReferenceObject;
+  correlationId?: AsyncCorrelationObject | ReferenceObject;
   schemaFormat?: string;
   contentType?: string;
   name?: string;
@@ -108,6 +115,7 @@ export interface AsyncMessageTraitObject {
   tags?: AsyncTagObject[];
   externalDocs?: ExternalDocumentationObject;
   bindings?: Record<string, KafkaMessageBinding | AmqpMessageBinding>;
+  traits?: (AsyncMessageTraitObject | ReferenceObject)[];
 }
 
 export interface AsyncCorrelationObject {
@@ -132,7 +140,7 @@ export interface AsyncSecuritySchemeObject {
   openIdConnectUrl?: string;
 }
 
-export declare type SecuritySchemeType =
+export type SecuritySchemeType =
   | 'userPassword'
   | 'apiKey'
   | 'X509'

@@ -16,34 +16,27 @@ export const exploreAsyncApiOperationMetadata = (
     DECORATORS.AsyncApiOperation,
     method,
   );
-  const metadataSubs: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
-    DECORATORS.AsyncApiSub,
+  const metadataReceives: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
+    DECORATORS.AsyncApiReceive,
     method,
   );
-  const metadataPubs: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
-    DECORATORS.AsyncApiPub,
+  const metadataSends: AsyncApiOperationOptionsRaw[] = Reflect.getMetadata(
+    DECORATORS.AsyncApiSend,
     method,
   );
 
   const metadataCombined = [
     ...(metadataOperations ? Object.values(metadataOperations) : []),
-    ...(metadataSubs ? Object.values(metadataSubs) : []),
-    ...(metadataPubs ? Object.values(metadataPubs) : []),
+    ...(metadataReceives ? Object.values(metadataReceives) : []),
+    ...(metadataSends ? Object.values(metadataSends) : []),
   ];
 
   return metadataCombined.map((option: AsyncApiOperationOptionsRaw) => {
     const { channel, type } = option;
-
-    const methodTypeData = {
-      ...option,
-      ...operationObjectFactory.create(option, ['application/json'], schemas),
-      channel: undefined,
-      type: undefined,
-    };
-
-    return {
-      channel,
-      [type]: methodTypeData,
-    };
+    const denormalizedOperation = operationObjectFactory.create(
+      option,
+      schemas,
+    );
+    return { channel, [type]: denormalizedOperation };
   });
 };

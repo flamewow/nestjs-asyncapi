@@ -17,7 +17,7 @@ export class AsyncApiModule {
 
   public static createDocument(
     app: INestApplicationContext,
-    config: Omit<AsyncApiDocument, 'channels'>,
+    config: Omit<AsyncApiDocument, 'channels' | 'operations'>,
     options: AsyncApiDocumentOptions = {},
   ): AsyncApiDocument {
     const asyncapiScanner = new AsyncapiScanner();
@@ -29,7 +29,7 @@ export class AsyncApiModule {
     };
 
     return {
-      asyncapi: '2.5.0',
+      asyncapi: '3.0.0',
       ...config,
       ...document,
     };

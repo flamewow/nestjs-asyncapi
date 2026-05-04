@@ -1,0 +1,55 @@
+name: compatibility tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: node ${{ matrix.node }} / ${{ matrix.label }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { node: '20', nestjs: '^10.0.0',        swagger: '^7.0.0',  label: 'nestjs-10'       }
+          - { node: '20', nestjs: '^11.0.0',        swagger: '^11.0.0', label: 'nestjs-11'       }
+#          - { node: '20', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
+
+          - { node: '22', nestjs: '^10.0.0',        swagger: '^7.0.0',  label: 'nestjs-10'       }
+          - { node: '22', nestjs: '^11.0.0',        swagger: '^11.0.0', label: 'nestjs-11'       }
+#          - { node: '22', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
+
+          - { node: '24', nestjs: '^11.0.0',        swagger: '^11.0.0', label: 'nestjs-11'       }
+#          - { node: '24', nestjs: '12.0.0-alpha.2', swagger: '^11.0.0', label: 'nestjs-12-alpha' }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - name: install pinned dependencies
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+
+      - name: override @nestjs/* to ${{ matrix.nestjs }}
+        run: |
+          npm install --no-save \
+            @nestjs/common@${{ matrix.nestjs }} \
+            @nestjs/core@${{ matrix.nestjs }} \
+            @nestjs/microservices@${{ matrix.nestjs }} \
+            @nestjs/platform-express@${{ matrix.nestjs }} \
+            @nestjs/platform-fastify@${{ matrix.nestjs }} \
+            @nestjs/platform-socket.io@${{ matrix.nestjs }} \
+            @nestjs/testing@${{ matrix.nestjs }} \
+            @nestjs/websockets@${{ matrix.nestjs }} \
+            @nestjs/swagger@${{ matrix.swagger }}
+
+      - run: npm run build
+      - run: npm run test:e2e

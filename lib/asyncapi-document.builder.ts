@@ -1,33 +1,33 @@
 import {
   ExternalDocumentationObject,
   SecuritySchemeObject,
-  TagObject,
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { isUndefined, negate, pickBy } from 'lodash';
 import {
   AsyncApiDocument,
   AsyncSecuritySchemeObject,
   AsyncServerObject,
+  AsyncTagObject,
 } from './interface';
 
 export class AsyncApiDocumentBuilder {
   private readonly buildDocumentBase = (): Omit<
     AsyncApiDocument,
-    'channels'
+    'channels' | 'operations'
   > => ({
-    asyncapi: '2.5.0',
+    asyncapi: '3.0.0',
     info: {
       title: '',
       description: '',
       version: '1.0.0',
       contact: {},
+      tags: [],
     },
-    tags: [],
     servers: {},
     components: {},
   });
 
-  private readonly document: Omit<AsyncApiDocument, 'channels'> =
+  private readonly document: Omit<AsyncApiDocument, 'channels' | 'operations'> =
     this.buildDocumentBase();
 
   public setTitle(title: string): this {
@@ -71,7 +71,6 @@ export class AsyncApiDocumentBuilder {
     for (const { name, server } of servers) {
       this.addServer(name, server);
     }
-
     return this;
   }
 
@@ -90,15 +89,12 @@ export class AsyncApiDocumentBuilder {
     description = '',
     externalDocs?: ExternalDocumentationObject,
   ): this {
-    this.document.tags = this.document.tags.concat(
+    // In AsyncAPI v3, tags are declared under info.tags, not at the root.
+    this.document.info.tags = (this.document.info.tags ?? []).concat(
       pickBy(
-        {
-          name,
-          description,
-          externalDocs,
-        },
+        { name, description, externalDocs },
         negate(isUndefined),
-      ) as TagObject,
+      ) as AsyncTagObject,
     );
     return this;
   }
@@ -184,7 +180,10 @@ export class AsyncApiDocumentBuilder {
     return this;
   }
 
-  public build(): Omit<AsyncApiDocument, 'components' | 'channels'> {
+  public build(): Omit<
+    AsyncApiDocument,
+    'components' | 'channels' | 'operations'
+  > {
     return this.document;
   }
 }

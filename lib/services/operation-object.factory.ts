@@ -6,8 +6,8 @@ import { getSchemaPath } from '@nestjs/swagger/dist/utils';
 import {
   AsyncApiOperationOptionsRaw,
   AsyncMessageObject,
-  AsyncOperationObject,
-  OneOfMessageType,
+  DenormalizedOperation,
+  RawAsyncApiMessage,
 } from '../interface';
 
 export class OperationObjectFactory {
@@ -20,48 +20,43 @@ export class OperationObjectFactory {
 
   create(
     operation: AsyncApiOperationOptionsRaw,
-    produces: string[],
     schemas: Record<string, SchemaObject>,
-  ): AsyncOperationObject {
-    const { message } = operation;
-    const { oneOf } = message as OneOfMessageType;
+  ): DenormalizedOperation {
+    const { message, channel: _channel, type: _type, ...rest } = operation;
+    const rawMessages = 'oneOf' in message ? message.oneOf : [message];
 
-    if (oneOf) {
-      return {
-        ...operation,
-        message: {
-          oneOf: oneOf.map((i) => ({
-            ...i,
-            payload: {
-              $ref: getSchemaPath(
-                this.getDtoName(i as AsyncMessageObject, schemas),
-              ),
-            },
-          })),
-        },
-      };
+    const messages: Record<string, AsyncMessageObject> = {};
+    for (const raw of rawMessages) {
+      const resolved = this.resolveMessage(raw, schemas);
+      messages[resolved.name] = resolved.message;
     }
 
-    return {
-      ...operation,
-      message: {
-        ...operation.message,
-        payload: {
-          $ref: getSchemaPath(
-            this.getDtoName(message as AsyncMessageObject, schemas),
-          ),
-        },
-      },
+    return { ...rest, messages };
+  }
+
+  private resolveMessage(
+    raw: RawAsyncApiMessage,
+    schemas: Record<string, SchemaObject>,
+  ): { name: string; message: AsyncMessageObject } {
+    const dtoName = this.getDtoName(raw, schemas);
+    const { payload: _payload, ...rest } = raw;
+
+    const message: AsyncMessageObject = {
+      ...rest,
+      payload: { $ref: getSchemaPath(dtoName) },
     };
+
+    // Use the explicit name if provided, otherwise fall back to the DTO class name.
+    const name = raw.name || dtoName;
+    return { name, message };
   }
 
   private getDtoName(
-    message: AsyncMessageObject,
+    raw: RawAsyncApiMessage,
     schemas: Record<string, SchemaObject>,
   ): string {
-    const messagePayloadType = message.payload.type as Function;
     return this.schemaObjectFactory.exploreModelSchema(
-      messagePayloadType,
+      raw.payload.type as Function,
       schemas,
     );
   }

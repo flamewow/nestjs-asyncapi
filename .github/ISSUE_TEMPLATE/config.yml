@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: AsyncAPI specification
+    url: https://www.asyncapi.com/docs/reference/specification/v3.0.0
+    about: Questions about the AsyncAPI 3.0 spec itself (not this library) are best answered upstream.
+  - name: NestJS support
+    url: https://docs.nestjs.com/support
+    about: General NestJS questions unrelated to AsyncAPI doc generation.

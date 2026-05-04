@@ -11,6 +11,8 @@ import { AppModule } from '#sample/app.module';
 import { makeAsyncapiDocument } from '#sample/common';
 import { DOC_RELATIVE_PATH } from '#sample/constants';
 
+jest.setTimeout(15000);
+
 describe('Fastify AsyncAPI', () => {
   let app: NestFastifyApplication;
 

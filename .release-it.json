@@ -3,6 +3,15 @@
     "commitMessage": "chore(): release v${version}"
   },
   "github": {
-    "release": true
+    "release": true,
+    "releaseName": "v${version}"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits"
+      },
+      "infile": "CHANGELOG.md"
+    }
   }
 }
