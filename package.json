@@ -76,7 +76,7 @@
     "@nestjs/testing": "^11.1.19",
     "@nestjs/websockets": "^11.1.19",
     "@release-it/conventional-changelog": "^11.0.0",
-    "@types/express": "4.17.21",
+    "@types/express": "4.17.25",
     "@types/jest": "29.5.11",
     "@types/js-yaml": "4.0.9",
     "@types/node": "20.11.14",
