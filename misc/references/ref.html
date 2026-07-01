@@ -327,6 +327,7 @@
             "x-parser-schema-id": "<anonymous-schema-2>"
           },
           "payload": {
+            "additionalProperties": true,
             "oneOf": [
               {
                 "type": "object",
@@ -547,13 +548,11 @@
             "x-parser-schema-id": "<anonymous-schema-41>"
           },
           "payload": {
+            "additionalProperties": true,
             "oneOf": [
               "$ref:$.components.schemas.CreateFelineDto.properties.payload.oneOf[0]",
               "$ref:$.components.schemas.CreateFelineDto.properties.payload.oneOf[1]",
               "$ref:$.components.schemas.CreateFelineDto.properties.payload.oneOf[2]"
-            ],
-            "allOf": [
-              "$ref:$.components.schemas.Feline"
             ],
             "x-parser-schema-id": "<anonymous-schema-42>"
           },
@@ -586,13 +585,11 @@
             "x-parser-schema-id": "<anonymous-schema-45>"
           },
           "payload": {
+            "additionalProperties": true,
             "oneOf": [
               "$ref:$.components.schemas.CreateFelineDto.properties.payload.oneOf[0]",
               "$ref:$.components.schemas.CreateFelineDto.properties.payload.oneOf[1]",
               "$ref:$.components.schemas.CreateFelineDto.properties.payload.oneOf[2]"
-            ],
-            "allOf": [
-              "$ref:$.components.schemas.Feline"
             ],
             "x-parser-schema-id": "<anonymous-schema-46>"
           },
@@ -626,6 +623,7 @@
           },
           "payload": {
             "type": "object",
+            "additionalProperties": true,
             "x-parser-schema-id": "<anonymous-schema-50>"
           },
           "timestamp": {

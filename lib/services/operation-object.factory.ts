@@ -1,14 +1,16 @@
+import { getSchemaPath } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-properties-accessor';
-import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
-import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
-import { getSchemaPath } from '@nestjs/swagger/dist/utils';
 import {
   AsyncApiOperationOptionsRaw,
   AsyncMessageObject,
   DenormalizedOperation,
   RawAsyncApiMessage,
 } from '../interface';
+import {
+  ModelPropertiesAccessor,
+  SchemaObjectFactory,
+  SwaggerTypesMapper,
+} from '../utils/swagger-internals';
 
 export class OperationObjectFactory {
   private readonly modelPropertiesAccessor = new ModelPropertiesAccessor();

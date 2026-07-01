@@ -72,7 +72,7 @@
     "@nestjs/platform-fastify": "^11.1.19",
     "@nestjs/platform-socket.io": "^11.1.19",
     "@nestjs/schematics": "^11.1.0",
-    "@nestjs/swagger": "^11.4.2",
+    "@nestjs/swagger": "^11.4.5",
     "@nestjs/testing": "^11.1.19",
     "@nestjs/websockets": "^11.1.19",
     "@release-it/conventional-changelog": "^11.0.0",
