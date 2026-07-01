@@ -54,6 +54,8 @@ The library bundles `@asyncapi/generator` (which depends on Puppeteer) but doesn
 
 Node ≥ 20.0.0.
 
+> **`@nestjs/swagger` 11.4.3+ is fully supported.** 11.4.3 added a strict `exports` map that blocks deep-imports of swagger internals; `nestjs-asyncapi` no longer relies on any, so no version pin or `overrides` workaround is needed ([#596](https://github.com/flamewow/nestjs-asyncapi/issues/596)).
+
 ## Quick start
 
 ```typescript

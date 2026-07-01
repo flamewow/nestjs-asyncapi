@@ -5,16 +5,18 @@ import { NestContainer } from '@nestjs/core/injector/container';
 import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
 import { Module } from '@nestjs/core/injector/module';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-properties-accessor';
-import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object-factory';
-import { SwaggerTypesMapper } from '@nestjs/swagger/dist/services/swagger-types-mapper';
-import { stripLastSlash } from '@nestjs/swagger/dist/utils/strip-last-slash.util';
 import { flatten, isEmpty } from 'lodash';
 import {
   AsyncApiDocument,
   AsyncApiDocumentOptions,
   DenormalizedDoc,
 } from '../interface';
+import {
+  ModelPropertiesAccessor,
+  SchemaObjectFactory,
+  SwaggerTypesMapper,
+} from '../utils/swagger-internals';
+import { stripLastSlash } from '../utils/swagger-paths.util';
 import { AsyncApiExplorer } from './asyncapi.explorer';
 import { AsyncapiTransformer } from './asyncapi.transformer';
 

@@ -3,7 +3,6 @@ import {
   INestApplicationContext,
   Logger,
 } from '@nestjs/common';
-import { validatePath } from '@nestjs/swagger/dist/utils/validate-path.util';
 import jsyaml from 'js-yaml';
 import {
   AsyncApiDocument,
@@ -11,6 +10,7 @@ import {
   AsyncApiTemplateOptions,
 } from './interface';
 import { AsyncapiGenerator, AsyncapiScanner } from './services';
+import { validatePath } from './utils/swagger-paths.util';
 
 export class AsyncApiModule {
   private static readonly logger = new Logger(AsyncApiModule.name);

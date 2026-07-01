@@ -67,6 +67,20 @@ Jest config: `test/configs/jest-e2e.config.ts`. Includes a custom `jest-swagger-
 
 The key v12 API change already handled: `metadataScanner.scanFromPrototype` was replaced with `metadataScanner.getAllMethodNames` in `lib/services/asyncapi.explorer.ts`.
 
+## @nestjs/swagger internals (issue #596)
+
+`@nestjs/swagger@11.4.3` added a strict `exports` map that only exposes `.`, `./plugin` and `./package.json`. That breaks any runtime deep-import of swagger internals (e.g. `@nestjs/swagger/dist/utils/validate-path.util`) with `ERR_PACKAGE_PATH_NOT_EXPORTED` — the app compiles but crashes on boot. Tracking: https://github.com/flamewow/nestjs-asyncapi/issues/596
+
+How we avoid it (so the library works on swagger v7 / v8 / v11 including ≥11.4.3):
+
+- `getSchemaPath` is imported from the **public** `@nestjs/swagger` entry point.
+- `validatePath` / `stripLastSlash` are inlined in `lib/utils/swagger-paths.util.ts`.
+- `createMethodDecorator` / `createMixedDecorator` are inlined verbatim in `lib/decorators/helpers.ts`.
+- The schema-generation engine classes `SchemaObjectFactory` / `ModelPropertiesAccessor` / `SwaggerTypesMapper` have **no public replacement**, so `lib/utils/swagger-internals.ts` resolves swagger's install dir via its (exported) `package.json` and loads them by **absolute file path** — absolute-path `require`s bypass the `exports` gate.
+- Remaining `@nestjs/swagger/dist/interfaces/open-api-spec.interface` imports are **type-only** (erased at compile time under classic `node` module resolution), so they emit no runtime `require`.
+
+Rule of thumb: never add a runtime (value) `import` from `@nestjs/swagger/dist/*`. Use the public entry point, inline a trivial helper, or route through `lib/utils/swagger-internals.ts`.
+
 ## nest-cli.json
 
 - `sourceRoot`: `sample/` (the sample app is the CLI entry point)
